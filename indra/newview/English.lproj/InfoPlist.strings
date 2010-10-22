@@ -1,0 +1,7 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleName = "Kirstens S20";
+
+CFBundleShortVersionString = "Kirstens S20 version 2.2.1.40";
+CFBundleGetInfoString = "Second Life version 2.2.1.0, Copyright 2004-2010 Linden Research, Inc.";
+

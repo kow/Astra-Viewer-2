@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Some ENV var
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+# Preparing temp workspace sandbox
+rm -rf /tmp/kvinst
+mkdir /tmp/kvinst
+cd /tmp/kvinst
+
+# Uncompressing archive built by develop.py, without suffix .tar.bz2
+# If develop.py configure for .tar.gz change tar options to "xvzf"
+tar xvjf $1.tar.bz2
+mv /tmp/kvinst/* $RUN_PATH/Kirstens_S20
+
+# Installer buil
+makeself  $RUN_PATH/Kirstens_S20 $RUN_PATH/Kirstens_S20.run "Kirstens Viewer S20" ./install.sh
+echo "Archive in a BZIP2 or write to KV users to do a chmod +x after download this"
+
+# Cleaning
+rm -rf /tmp/kvinst
+rm -rf $RUN_PATH/Kirstens_S20

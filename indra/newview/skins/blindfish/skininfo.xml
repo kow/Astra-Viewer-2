@@ -1,0 +1,10 @@
+<llsd>
+    <map>
+    <key>skin_name</key>
+        <string>Blindfish</string>
+    <key>authors</key>
+        <string>Mandrax Sperber</string>
+    <key>description</key>
+        <string>Higher contrast and larger font sizes.</string>
+    </map>
+</llsd>

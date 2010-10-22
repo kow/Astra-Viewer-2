@@ -1,0 +1,5 @@
+SLASSET_MD5=http://secondlife.com/developers/opensource/downloads/viewer-external/hg/repo/cg_viewer-2-0/rev/208184/open_source/md5sums-viewer-2-0-2.1.1.208184.txt
+SLASSET_ART=http://secondlife.com/developers/opensource/downloads/viewer-external/hg/repo/cg_viewer-2-0/rev/208184/open_source/slviewer-artwork-viewer-2-0-2.1.1.208184.zip
+SLASSET_LIBS_WIN32=http://secondlife.com/developers/opensource/downloads/viewer-external/hg/repo/cg_viewer-2-0/rev/208184/open_source/slviewer-win32-libs-viewer-2-0-2.1.1.208184.zip
+SLASSET_LIBS_LINUXI386=http://secondlife.com/developers/opensource/downloads/viewer-external/hg/repo/cg_viewer-2-0/rev/208184/open_source/slviewer-linux-libs-viewer-2-0-2.1.1.208184.tar.gz
+SLASSET_LIBS_DARWIN=http://secondlife.com/developers/opensource/downloads/viewer-external/hg/repo/cg_viewer-2-0/rev/208184/open_source/slviewer-darwin-libs-viewer-2-0-2.1.1.208184.tar.gz
