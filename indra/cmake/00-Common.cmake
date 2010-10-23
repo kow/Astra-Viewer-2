@@ -38,7 +38,7 @@ if (WINDOWS)
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /Zi /MDd /MP"
       CACHE STRING "C++ compiler debug options" FORCE)
   set(CMAKE_CXX_FLAGS_RELWITHDEBINFO 
-      "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Od /Zi /MD /MP"
+      "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Od /Zi /MD /MP /Gm"
       CACHE STRING "C++ compiler release-with-debug options" FORCE)
   set(CMAKE_CXX_FLAGS_RELEASE
       "${CMAKE_CXX_FLAGS_RELEASE} ${LL_CXX_FLAGS} /O2 /Zi /MD /MP"
@@ -49,11 +49,12 @@ if (WINDOWS)
 
   add_definitions(
       /DLL_WINDOWS=1
+      /DDOM_DYNAMIC
       /DUNICODE
       /D_UNICODE 
       /GS
       /TP
-      /W3
+      /W2
       /c
       /Zc:forScope
       /nologo
@@ -67,6 +68,7 @@ if (WINDOWS)
    
     add_definitions(
       /Zc:wchar_t-
+      /arch:SSE2
       )
   endif (MSVC80 OR MSVC90)
   
@@ -172,10 +174,6 @@ if (LINUX)
       link_directories(/usr/lib/mysql4/mysql)
     endif (EXISTS /usr/lib/mysql4/mysql)
 
-#    add_definitions(
-#        -msse2
-#        -mfpmath=sse
-#        )
   endif (SERVER)
 
   if (VIEWER)
@@ -183,6 +181,8 @@ if (LINUX)
     add_definitions(-fvisibility=hidden)
     # don't catch SIGCHLD in our base application class for the viewer - some of our 3rd party libs may need their *own* SIGCHLD handler to work.  Sigh!  The viewer doesn't need to catch SIGCHLD anyway.
     add_definitions(-DLL_IGNORE_SIGCHLD)
+    #add_definitions(-march=pentium4 -mfpmath=sse)
+    #add_definitions(-ftree-vectorize) # THIS CRASHES GCC 3.1-3.2
     if (NOT STANDALONE)
       # this stops us requiring a really recent glibc at runtime
       add_definitions(-fno-stack-protector)
