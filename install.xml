@@ -527,7 +527,7 @@
         <key>copyright</key>
         <string>Copyright (c) 2000 Cass Everitt; Copyright (c) 2000 NVIDIA Corporation; All rights reserved.</string>
         <key>description</key>
-        <string>nVidia NVParse SDK: platform-independent C++ Apple OpenGL helper library</string>
+        <string>nVidia NVParse SDK: platform-indepenedent C++ Apple OpenGL helper library</string>
         <key>license</key>
         <string>glh_linear</string>
         <key>packages</key>

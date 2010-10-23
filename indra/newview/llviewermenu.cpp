@@ -167,7 +167,6 @@ LLMenuItemCallGL* gBusyMenu = NULL;
 // Local prototypes
 
 // File Menu
-const char* upload_pick(void* data);
 void handle_compress_image(void*);
 
 

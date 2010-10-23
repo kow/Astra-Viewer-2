@@ -37,6 +37,7 @@ class LLAvatarList;
 class LLAvatarName;
 class LLFilterEditor;
 class LLGroupList;
+class LLMenuButton;
 class LLTabContainer;
 
 class LLPanelPeople 
@@ -108,10 +109,6 @@ private:
 	void					onShareButtonClicked();
 	void					onMoreButtonClicked();
 	void					onActivateButtonClicked();
-	void					onRecentViewSortButtonClicked();
-	void					onNearbyViewSortButtonClicked();
-	void					onFriendsViewSortButtonClicked();
-	void					onGroupsViewSortButtonClicked();
 	void					onAvatarListDoubleClicked(LLUICtrl* ctrl);
 	void					onAvatarListCommitted(LLAvatarList* list);
 	void					onGroupPlusButtonClicked();
@@ -164,6 +161,11 @@ private:
 	Updater*				mFriendListUpdater;
 	Updater*				mNearbyListUpdater;
 	Updater*				mRecentListUpdater;
+
+	LLMenuButton*			mNearbyGearButton;
+	LLMenuButton*			mFriendsGearButton;
+	LLMenuButton*			mGroupsGearButton;
+	LLMenuButton*			mRecentGearButton;
 
 	std::string				mFilterSubString;
 	std::string				mFilterSubStringOrig;

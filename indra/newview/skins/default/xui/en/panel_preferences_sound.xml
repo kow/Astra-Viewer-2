@@ -288,6 +288,7 @@
 		left_pad="5"
 		name="enable_voice_check"
 		width="110"/>
+	<!-- -->
 	<check_box
 		name="media_meta_data_show"
 		control_name="ShowStreamMetadata"

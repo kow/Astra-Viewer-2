@@ -33,6 +33,7 @@
 #include "m3math.h"
 #include "llmatrix4a.h"
 
+#include "llagent.h" //for gAgent.needsRenderAvatar()
 #include "lldrawable.h"
 #include "lldrawpoolbump.h"
 #include "llface.h"

@@ -64,16 +64,7 @@ public:
 		llassert(mMenu);
 	}
 
-	void show(LLView* spawning_view)
-	{
-		if (!mMenu) return;
-
-		mMenu->buildDrawLabels();
-		mMenu->updateParent(LLMenuGL::sMenuContainer);
-		S32 menu_x = 0;
-		S32 menu_y = spawning_view->getRect().getHeight() + mMenu->getRect().getHeight();
-		LLMenuGL::showPopup(spawning_view, mMenu, menu_x, menu_y);
-	}
+	LLMenuGL* getMenu() { return mMenu; }
 
 private:
 
@@ -256,13 +247,6 @@ bool LLPanelWearing::isActionEnabled(const LLSD& userdata)
 	}
 
 	return false;
-}
-
-// virtual
-void LLPanelWearing::showGearMenu(LLView* spawning_view)
-{
-	if (!mGearMenu) return;
-	mGearMenu->show(spawning_view);
 }
 
 boost::signals2::connection LLPanelWearing::setSelectionChangeCallback(commit_callback_t cb)

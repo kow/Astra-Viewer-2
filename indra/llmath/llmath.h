@@ -29,7 +29,6 @@
 
 #include <cmath>
 #include <cstdlib>
-#include <complex>
 #include "lldefs.h"
 //#include "llstl.h" // *TODO: Remove when LLString is gone
 //#include "llstring.h" // *TODO: Remove when LLString is gone

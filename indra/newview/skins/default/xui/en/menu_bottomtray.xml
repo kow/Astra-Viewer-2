@@ -96,7 +96,7 @@
          function="CheckControl"
          parameter="ShowWorldMapButton" />
     </menu_item_check>
-     <menu_item_check
+    <menu_item_check
      label="Inventory button"
      layout="topleft"
      name="ShowInventoryButton">
