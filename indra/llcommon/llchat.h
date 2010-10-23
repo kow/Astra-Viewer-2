@@ -28,7 +28,7 @@
 #ifndef LL_LLCHAT_H
 #define LL_LLCHAT_H
 
-#include "llstring.h" // S20
+#include "llstring.h" // S21
 #include "lluuid.h"
 #include "v3math.h"
 
@@ -88,7 +88,7 @@ public:
 		mChatStyle(CHAT_STYLE_NORMAL),
 		mSessionID()
 	{ }
-// S20	
+// S21	
 	LLChat(const LLChat &chat)
 	:	mText(chat.mText),
 		mFromName(chat.mFromName),
@@ -101,7 +101,7 @@ public:
 		mPosAgent(chat.mPosAgent),
 		mURL(chat.mURL)
 	{ }
-// S20
+// S21
 	std::string		mText;		// UTF-8 line of text
 	std::string		mFromName;	// agent or object name
 	LLUUID			mFromID;	// agent id or object id

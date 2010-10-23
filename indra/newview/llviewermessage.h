@@ -75,8 +75,8 @@ void send_sound_trigger(const LLUUID& sound_id, F32 gain);
 void process_improved_im(LLMessageSystem *msg, void **user_data);
 void process_script_question(LLMessageSystem *msg, void **user_data);
 void process_chat_from_simulator(LLMessageSystem *mesgsys, void **user_data);
-void add_translate_chat(const LLChat& chat, const BOOL history); // S20
-void check_translate_chat(const std::string& mesg, LLChat& chat, const BOOL history); // S20
+void add_translate_chat(const LLChat& chat, const BOOL history); // S21
+void check_translate_chat(const std::string& mesg, LLChat& chat, const BOOL history); // S21
 
 //void process_agent_to_new_region(LLMessageSystem *mesgsys, void **user_data);
 void send_agent_update(BOOL force_send, BOOL send_reliable = FALSE);

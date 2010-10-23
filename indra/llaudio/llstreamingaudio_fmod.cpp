@@ -37,7 +37,7 @@
 class LLAudioStreamManagerFMOD
 {
 public:
-	LLAudioStreamManagerFMOD(const std::string& url, LLStreamingAudio_FMOD *interface); // S20
+	LLAudioStreamManagerFMOD(const std::string& url, LLStreamingAudio_FMOD *interface); // S21
 	int	startStream();
 	bool stopStream(); // Returns true if the stream was successfully stopped.
 	bool ready();
@@ -46,14 +46,14 @@ public:
 
 	int getOpenState();
 protected:
-	static signed char F_CALLBACKAPI metadataCallback(char *name, char *value, void *userdata); // S20
-	LLStreamingAudio_FMOD *mStreamingInterface; // S20
+	static signed char F_CALLBACKAPI metadataCallback(char *name, char *value, void *userdata); // S21
+	LLStreamingAudio_FMOD *mStreamingInterface; // S21
 	FSOUND_STREAM* mInternetStream;
 	bool mReady;
 
 	std::string mInternetStreamURL;
-	std::string mArtist; // S20
-	std::string mTitle;  // S20
+	std::string mArtist; // S21
+	std::string mTitle;  // S21
 };
 
 
@@ -100,7 +100,7 @@ void LLStreamingAudio_FMOD::start(const std::string& url)
 	if (!url.empty())
 	{
 		llinfos << "Starting internet stream: " << url << llendl;
-		mCurrentInternetStreamp = new LLAudioStreamManagerFMOD(url, this); // S20
+		mCurrentInternetStreamp = new LLAudioStreamManagerFMOD(url, this); // S21
 		mURL = url;
 	}
 	else
@@ -278,7 +278,7 @@ void LLStreamingAudio_FMOD::setGain(F32 vol)
 
 ///////////////////////////////////////////////////////
 // manager of possibly-multiple internet audio streams
-// S20
+// S21
 LLAudioStreamManagerFMOD::LLAudioStreamManagerFMOD(const std::string& url, LLStreamingAudio_FMOD* interface) :
 	mInternetStream(NULL),
 	mReady(false),
@@ -309,7 +309,7 @@ int LLAudioStreamManagerFMOD::startStream()
 
 	// Make sure the stream is set to 2D mode.
 	FSOUND_Stream_SetMode(mInternetStream, FSOUND_2D);
-	FSOUND_Stream_Net_SetMetadataCallback(mInternetStream, metadataCallback, this); // S20
+	FSOUND_Stream_Net_SetMetadataCallback(mInternetStream, metadataCallback, this); // S21
 
 	return FSOUND_Stream_PlayEx(FSOUND_FREE, mInternetStream, NULL, true);
 }
@@ -361,7 +361,7 @@ int LLAudioStreamManagerFMOD::getOpenState()
 	return open_state;
 }
 
-//static S20
+//static S21
 signed char F_CALLBACKAPI LLAudioStreamManagerFMOD::metadataCallback(char *name, char *value, void *userdata)
 {
 	LLAudioStreamManagerFMOD* self = (LLAudioStreamManagerFMOD*)userdata;

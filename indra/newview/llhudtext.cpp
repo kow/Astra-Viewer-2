@@ -95,8 +95,8 @@ LLHUDText::LLHUDText(const U8 type) :
 {
 	mColor = LLColor4(1.f, 1.f, 1.f, 1.f);
 	mDoFade = TRUE;
-	mFadeDistance = gSavedSettings.getF32("HoverTextDistance"); // S20 KL
-	mFadeRange = gSavedSettings.getF32("HoverTextFadeDistance"); // S20 KL
+	mFadeDistance = gSavedSettings.getF32("HoverTextDistance"); // S21 KL
+	mFadeRange = gSavedSettings.getF32("HoverTextFadeDistance"); // S21 KL
 	mZCompare = TRUE;
 	mOffscreen = FALSE;
 	mRadius = 0.1f;

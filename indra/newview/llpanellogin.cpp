@@ -711,7 +711,7 @@ void LLPanelLogin::updateLocationCombo( bool force_visible )
 	sInstance->getChildView("start_location_combo")->setVisible( show_start);
 	sInstance->getChildView("start_location_text")->setVisible( show_start);
 	
-	BOOL show_server = true; // S20 always displays server combo box
+	BOOL show_server = true; // S21 always displays server combo box
 	sInstance->getChildView("server_combo_text")->setVisible( show_server);	
 	sInstance->getChildView("server_combo")->setVisible( show_server);
 }

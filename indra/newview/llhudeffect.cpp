@@ -71,7 +71,7 @@ void LLHUDEffect::unpackData(LLMessageSystem *mesgsys, S32 blocknum)
 
 void LLHUDEffect::render()
 {
-	llwarns << "Never call this!" << llendl; // S20 why an error? If it is never called.
+	llwarns << "Never call this!" << llendl; // S21 why an error? If it is never called.
 }
 
 void LLHUDEffect::setID(const LLUUID &id)

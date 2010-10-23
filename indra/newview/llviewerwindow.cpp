@@ -101,7 +101,7 @@
 #include "llfloaterbuildoptions.h"
 #include "llfloaterbuyland.h"
 #include "llfloatercamera.h"
-#include "llfloatersidebarctrl.h" // S20
+#include "llfloatersidebarctrl.h" // S21
 #include "llfloaterland.h"
 #include "llfloaterinspect.h"
 #include "llfloatermap.h"
@@ -1624,7 +1624,7 @@ void LLViewerWindow::initWorldUI()
 	LLPanel* nav_bar_container = getRootView()->getChild<LLPanel>("nav_bar_container");
 
 	LLNavigationBar* navbar = LLNavigationBar::getInstance();
-	navbar->setFollows(FOLLOWS_TOP|FOLLOWS_LEFT|FOLLOWS_RIGHT); // S20
+	navbar->setFollows(FOLLOWS_TOP|FOLLOWS_LEFT|FOLLOWS_RIGHT); // S21
 	navbar->setShape(nav_bar_container->getLocalRect());
 	navbar->setBackgroundColor(gMenuBarView->getBackgroundColor().get());
 	nav_bar_container->addChild(navbar);
@@ -1949,7 +1949,7 @@ void LLViewerWindow::setMenuBackgroundColor(bool god_mode, bool dev_grid)
     }
 	else if (!god_mode && isProject)
 	{
-		new_bg_color = LLUIColorTable::instance().getColor( "MenuBarBgColor" ); // KL in S20 case no special colours for top bar
+		new_bg_color = LLUIColorTable::instance().getColor( "MenuBarBgColor" ); // KL in S21 case no special colours for top bar
     }
     else if(!god_mode && !LLGridManager::getInstance()->isInProductionGrid())
     {

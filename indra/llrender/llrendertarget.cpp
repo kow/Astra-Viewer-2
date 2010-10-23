@@ -680,7 +680,7 @@ void LLMultisampleBuffer::addColorAttachment(U32 color_fmt)
 			llwarns << "GL_FRAMEBUFFER_UNSUPPORTED_EXT, LLMultisampleBuffer::addColorAttachment(U32 color_fmt)" << llendl; // Much more useful than a WTF.
 			break;
 		default:
-			llwarns << "MultisampleBuffer Failure" << llendl; // S20
+			llwarns << "MultisampleBuffer Failure" << llendl; // S21
 		}
 
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);

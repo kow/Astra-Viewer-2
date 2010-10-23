@@ -128,13 +128,13 @@ protected:
 class LLAvatarItemDistanceComparator : public LLAvatarItemComparator
 {
 public:
-// S20
+// S21
 	LLAvatarItemDistanceComparator() {};
 
 	void updateAvatarsPositions(LLPanelPeople::id_to_pos_map_t positions)
 	{
 		mAvatarsPositions = positions;
-// S20
+// S21
 	};
 
 protected:
@@ -523,7 +523,7 @@ BOOL LLPanelPeople::postBuild()
 	mNearbyList->setNoItemsMsg(getString("no_one_near"));
 	mNearbyList->setNoFilteredItemsMsg(getString("no_one_filtered_near"));
 	mNearbyList->setShowIcons("NearbyListShowIcons");
-	mNearbyList->setShowExtraInformation(true); // S20
+	mNearbyList->setShowExtraInformation(true); // S21
 
 	mRecentList = getChild<LLPanel>(RECENT_TAB_NAME)->getChild<LLAvatarList>("avatar_list");
 	mRecentList->setNoItemsCommentText(getString("no_recent_people"));
@@ -639,7 +639,7 @@ BOOL LLPanelPeople::postBuild()
 
 	mOnlineFriendList->setRefreshCompleteCallback(boost::bind(&LLPanelPeople::onFriendListRefreshComplete, this, _1, _2));
 	mAllFriendList->setRefreshCompleteCallback(boost::bind(&LLPanelPeople::onFriendListRefreshComplete, this, _1, _2));
-	mNearbyList->setExtraDataCallback(boost::bind(&LLPanelPeople::getAvatarInformation, this, _1)); // S20
+	mNearbyList->setExtraDataCallback(boost::bind(&LLPanelPeople::getAvatarInformation, this, _1)); // S21
 
 	return TRUE;
 }
@@ -731,7 +731,7 @@ void LLPanelPeople::updateNearbyList()
 		return;
 
 	std::vector<LLVector3d> positions;
- // S20
+ // S21
 	LLWorld::getInstance()->getAvatars(&mNearbyList->getIDs(), &positions, gAgent.getPositionGlobal(), gSavedSettings.getF32("NearMeRange"));
 	
 	std::vector<LLVector3d>::const_iterator pos_it = positions.begin(), pos_end = positions.end();
@@ -745,7 +745,7 @@ void LLPanelPeople::updateNearbyList()
 	}
 	mNearbyList->setDirty();
 
-	DISTANCE_COMPARATOR.updateAvatarsPositions(mAvatarPositions); // S20
+	DISTANCE_COMPARATOR.updateAvatarsPositions(mAvatarPositions); // S21
 	LLActiveSpeakerMgr::instance().update(TRUE);
 }
 
@@ -967,7 +967,7 @@ void LLPanelPeople::setSortOrder(LLAvatarList* list, ESortOrder order, bool save
 			gSavedSettings.setU32(setting, order);
 	}
 }
-// S20
+// S21
 void LLPanelPeople::onVisibilityChange(const LLSD& new_visibility)
 {
 	if (new_visibility.asBoolean() == FALSE)
@@ -1038,8 +1038,8 @@ void LLPanelPeople::onFilterEdit(const std::string& search_string)
 void LLPanelPeople::onTabSelected(const LLSD& param)
 {
 	std::string tab_name = getChild<LLPanel>(param.asString())->getName();
-	mNearbyListUpdater->setActive(tab_name == NEARBY_TAB_NAME); // S20
-	mNearbyList->setExtraDataUpdatePeriod((tab_name == NEARBY_TAB_NAME) ? NEARBY_LIST_UPDATE_INTERVAL : 0); // S20
+	mNearbyListUpdater->setActive(tab_name == NEARBY_TAB_NAME); // S21
+	mNearbyList->setExtraDataUpdatePeriod((tab_name == NEARBY_TAB_NAME) ? NEARBY_LIST_UPDATE_INTERVAL : 0); // S21
 	updateButtons();
 
 	showFriendsAccordionsIfNeeded();
@@ -1528,7 +1528,7 @@ bool LLPanelPeople::isAccordionCollapsedByUser(const std::string& name)
 {
 	return isAccordionCollapsedByUser(getChild<LLUICtrl>(name));
 }
-// S20
+// S21
 std::string LLPanelPeople::getAvatarInformation(const LLUUID& avatar)
 {
 	F32 distance = dist_vec(gAgent.getPositionGlobal(), mAvatarPositions[avatar]);

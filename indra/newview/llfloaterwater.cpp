@@ -46,9 +46,9 @@
 #include "llboost.h"
 #include "llmultisliderctrl.h"
 
-#include "llagent.h"  // S20
-#include "llinventorymodel.h" // S20
-#include "llviewerinventory.h" // S20
+#include "llagent.h"  // S21
+#include "llinventorymodel.h" // S21
+#include "llviewerinventory.h" // S21
 #include "v4math.h"
 #include "llviewerdisplay.h"
 #include "llviewercontrol.h"
@@ -139,7 +139,7 @@ void LLFloaterWater::initCallbacks(void) {
 	getChild<LLUICtrl>("WaterNewPreset")->setCommitCallback(boost::bind(&LLFloaterWater::onNewPreset, this));
 	getChild<LLUICtrl>("WaterSavePreset")->setCommitCallback(boost::bind(&LLFloaterWater::onSavePreset, this));
 	getChild<LLUICtrl>("WaterDeletePreset")->setCommitCallback(boost::bind(&LLFloaterWater::onDeletePreset, this));
-	getChild<LLUICtrl>("WaterSaveNotecard")->setCommitCallback(boost::bind(&LLFloaterWater::onSaveNotecard, this)); // S20
+	getChild<LLUICtrl>("WaterSaveNotecard")->setCommitCallback(boost::bind(&LLFloaterWater::onSaveNotecard, this)); // S21
 
 	// wave direction
 	getChild<LLUICtrl>("WaterWave1DirX")->setCommitCallback(boost::bind(&LLFloaterWater::onVector2ControlXMoved, this, _1, &param_mgr->mWave1Dir));
@@ -530,7 +530,7 @@ void LLFloaterWater::onSavePreset()
 	LLNotificationsUtil::add("WLSavePresetAlert", LLSD(), LLSD(), boost::bind(&LLFloaterWater::saveAlertCallback, this, _1, _2));
 }
 
-class LLFloaterWaterNotecardCreatedCallback : public LLInventoryCallback // S20
+class LLFloaterWaterNotecardCreatedCallback : public LLInventoryCallback // S21
 {
 public:
 	void fire(const LLUUID& inv_item);
@@ -565,7 +565,7 @@ void LLFloaterWater::onSaveNotecard()
 							  gInventory.findCategoryUUIDForType(LLFolderType::FT_NOTECARD),
 							  LLTransactionID::tnull,
 							  name,
-							  "Water settings (Kitty & S20 Viewer compatible)",
+							  "Water settings (Kitty & S21 Viewer compatible)",
 							  LLAssetType::AT_NOTECARD,
 							  LLInventoryType::IT_NOTECARD,
 							  NOT_WEARABLE,

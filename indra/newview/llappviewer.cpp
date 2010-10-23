@@ -308,7 +308,7 @@ static BOOL gDoDisconnect = FALSE;
 static std::string gLaunchFileOnQuit;
 
 // Used on Win32 for other apps to identify our window (eg, win_setup)
-const char* const VIEWER_WINDOW_CLASSNAME = "Kirstens S20";  // S20
+const char* const VIEWER_WINDOW_CLASSNAME = "Kirstens S21";  // S21
 
 //----------------------------------------------------------------------------
 
@@ -613,7 +613,7 @@ bool LLAppViewer::init()
 
 	// Need to do this initialization before we do anything else, since anything
 	// that touches files should really go through the lldir API
-	gDirUtilp->initAppDirs("Kirstens S20"); // S20
+	gDirUtilp->initAppDirs("Kirstens S21"); // S21
 	// set skin search path to default, will be overridden later
 	// this allows simple skinned file lookups to work
 	gDirUtilp->setSkinFolder("default");
@@ -668,7 +668,7 @@ bool LLAppViewer::init()
 	// *FIX: The following code isn't grouped into functions yet.
 
 	// Statistics / debug timer initialization
-	//init_statistics(); // Not starting up in S20
+	//init_statistics(); // Not starting up in S21
 	
 	//
 	// Various introspection concerning the libs we're using - particularly
@@ -1767,12 +1767,12 @@ bool LLAppViewer::initLogging()
 
 	// Remove the last ".old" log file.
 	std::string old_log_file = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,
-							     "KirstensS20.old"); // S20
+							     "KirstensS21.old"); // S21
 	LLFile::remove(old_log_file);
 
 	// Rename current log file to ".old"
 	std::string log_file = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,
-							     "KirstensS20.log"); // S20
+							     "KirstensS21.log"); // S21
 	LLFile::rename(log_file, old_log_file);
 
 	// Set the log file to SecondLife.log
@@ -2177,7 +2177,7 @@ bool LLAppViewer::initConfiguration()
     const LLControlVariable* skinfolder = gSavedSettings.getControl("SkinCurrent");
     if(skinfolder && LLStringUtil::null != skinfolder->getValue().asString())
     {   
-  	  gDirUtilp->setSkinFolder(skinfolder->getValue().asString());   // S20
+  	  gDirUtilp->setSkinFolder(skinfolder->getValue().asString());   // S21
 		// hack to force the skin to default.
         //gDirUtilp->setSkinFolder(skinfolder->getValue().asString());
   	  // gDirUtilp->setSkinFolder("default");  // Viewer 2.0 original

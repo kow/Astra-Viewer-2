@@ -54,12 +54,12 @@
 #include "lltrans.h"
 
 static const S32 RESIZE_BAR_THICKNESS = 3;
-// S20
+// S21
 const static std::string IM_TIME("time");
 const static std::string IM_TEXT("message");
 const static std::string IM_FROM("from");
 const static std::string IM_FROM_ID("from_id");
-// S20
+// S21
 LLNearbyChat::LLNearbyChat(const LLSD& key) 
 	: LLDockableFloater(NULL, false, false, key)
 	,mChatHistory(NULL)
@@ -184,7 +184,7 @@ void	LLNearbyChat::addMessage(const LLChat& chat,bool archive,const LLSD &args)
 
 	if (gSavedPerAccountSettings.getBOOL("LogNearbyChat"))
 	{
-		LLLogChat::saveHistory("chat", chat.mFromName, chat.mFromID, chat.mText); // S20
+		LLLogChat::saveHistory("chat", chat.mFromName, chat.mFromID, chat.mText); // S21
 	}
 }
 
@@ -291,7 +291,7 @@ void LLNearbyChat::loadHistory()
 		chat.mTimeStr = msg[IM_TIME].asString();
 		chat.mChatStyle = CHAT_STYLE_HISTORY;
 
-        // S20
+        // S21
 		chat.mSourceType = CHAT_SOURCE_AGENT;
 		if (from_id.isNull() && SYSTEM_FROM == from)
 		{	

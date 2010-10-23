@@ -117,7 +117,7 @@ LLDir_Mac::LLDir_Mac()
 	CFStringRef		stringRef = NULL;
 	OSStatus		error = noErr;
 	FSRef			fileRef;
-	CFStringRef		secondLifeString = CFSTR("Kirstens S20"); // S20
+	CFStringRef		secondLifeString = CFSTR("Kirstens S21"); // S21
 	
 	mainBundleRef = CFBundleGetMainBundle();
 		
@@ -193,7 +193,7 @@ LLDir_Mac::LLDir_Mac()
 		if (error == noErr)
 		{
 			FSRefToLLString(&cacheDirRef, mOSCacheDir);
-			(void)CFCreateDirectory(&cacheDirRef, CFSTR("Kirstens S20"),NULL); // S20
+			(void)CFCreateDirectory(&cacheDirRef, CFSTR("Kirstens S21"),NULL); // S21
 		}
 		
 		// mOSUserAppDir

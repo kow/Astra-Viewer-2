@@ -1469,7 +1469,7 @@ void LLAssetStorage::reportMetric( const LLUUID& asset_id, const LLAssetType::ET
 {
 	if( !metric_recipient )
 	{
-		llinfos << "Couldn't store LLAssetStorage::reportMetric - no metrics_recipient" << llendl; // S20
+		llinfos << "Couldn't store LLAssetStorage::reportMetric - no metrics_recipient" << llendl; // S21
 		return;
 	}
 

@@ -473,8 +473,8 @@
 <!--	   <button-->
 <!--     follows="left|top"-->
 <!--     height="23"-->
-<!--     label="S20 Customisation"-->
-<!--     label_selected="S20 Customisation"-->
+<!--     label="S21 Customisation"-->
+<!--     label_selected="S21 Customisation"-->
 <!--     layout="topleft"-->
 <!--     left="400"-->
 <!--     name="GraphicsHardwareButton"-->

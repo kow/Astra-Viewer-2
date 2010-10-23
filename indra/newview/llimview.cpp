@@ -64,12 +64,12 @@
 #include "llviewercontrol.h"
 #include "llviewerparcelmgr.h"
 
-// S20
+// S21
 const static std::string IM_TIME("time");
 const static std::string IM_TEXT("message");
 const static std::string IM_FROM("from");
 const static std::string IM_FROM_ID("from_id");
-// S20
+// S21
 const static std::string ADHOC_NAME_SUFFIX(" Conference");
 
 const static std::string NEARBY_P2P_BY_OTHER("nearby_P2P_by_other");
@@ -428,8 +428,8 @@ void LLIMModel::LLIMSession::addMessagesFromHistory(const std::list<LLSD>& histo
 		const LLSD& msg = *it;
 
 		std::string from = msg[IM_FROM];
-		LLUUID from_id = LLUUID::null;     // S20
-		if (msg[IM_FROM_ID].isUndefined())  // S20
+		LLUUID from_id = LLUUID::null;     // S21
+		if (msg[IM_FROM_ID].isUndefined())  // S21
 		{
 			gCacheName->getUUID(from, from_id);
 		}
@@ -526,7 +526,7 @@ bool LLIMModel::LLIMSession::isOtherParticipantAvaline()
 
 void LLIMModel::LLIMSession::onAvatarNameCache(const LLUUID& avatar_id, const LLAvatarName& av_name)
 {
-	mHistoryFileName = av_name.mUsername; // S20
+	mHistoryFileName = av_name.mUsername; // S21
 }
 
 void LLIMModel::LLIMSession::buildHistoryFileName()
@@ -546,7 +546,7 @@ void LLIMModel::LLIMSession::buildHistoryFileName()
 		
 		//in case of incoming ad-hoc sessions
 		mHistoryFileName = mName + " " + LLLogChat::timestamp(true) + " " + mSessionID.asString().substr(0, 4);
-	    // look up username to use as the log name S20
+	    // look up username to use as the log name S21
 		LLAvatarNameCache::get(mOtherParticipantID, boost::bind(&LLIMModel::LLIMSession::onAvatarNameCache, this, _1, _2));
 	}
 }

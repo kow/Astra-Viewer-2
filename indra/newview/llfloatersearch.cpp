@@ -101,7 +101,7 @@ BOOL LLFloaterSearch::postBuild()
 	return TRUE;
 }
 
-void LLFloaterSearch::onOpen(const LLSD& key) // S20 search persistance DO NOT alter / merge with care
+void LLFloaterSearch::onOpen(const LLSD& key) // S21 search persistance DO NOT alter / merge with care
 {
 	if ( (key.has("category")) || ((mBrowser) && (mBrowser->getCurrentNavUrl().empty())) ) 
  	{ 
@@ -113,7 +113,7 @@ void LLFloaterSearch::onClose(bool app_quitting)
 {
 	// tear down the web view so we don't show the previous search
 	// result when the floater is opened next time
-	//destroy();	// S20 don't tear down the web view so the last search result persists, leaving this empty for now.
+	//destroy();	// S21 don't tear down the web view so the last search result persists, leaving this empty for now.
 }
 
 void LLFloaterSearch::handleMediaEvent(LLPluginClassMedia *self, EMediaEvent event)

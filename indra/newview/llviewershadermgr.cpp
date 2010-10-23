@@ -95,7 +95,7 @@ LLGLSLShader			gGlowProgram;
 LLGLSLShader			gGlowExtractProgram;
 LLGLSLShader			gPostColorFilterProgram;
 LLGLSLShader			gPostNightVisionProgram;
-LLGLSLShader			gPostAnaglyphVisionProgram; // S20
+LLGLSLShader			gPostAnaglyphVisionProgram; // S21
 
 
 // Deferred rendering shaders
@@ -169,7 +169,7 @@ LLViewerShaderMgr::LLViewerShaderMgr() :
 	mShaderList.push_back(&gGlowExtractProgram);
 	mShaderList.push_back(&gPostColorFilterProgram);	
 	mShaderList.push_back(&gPostNightVisionProgram);
-	mShaderList.push_back(&gPostAnaglyphVisionProgram); // S20
+	mShaderList.push_back(&gPostAnaglyphVisionProgram); // S21
 	
 }
 
@@ -833,7 +833,7 @@ BOOL LLViewerShaderMgr::loadShadersEffects()
 	
 
 	// KL enabling loading of postprocess shaders 
-	// S20
+	// S21
 	
 	//load Color Filter Shader
 	if (success)

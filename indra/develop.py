@@ -72,7 +72,7 @@ class PlatformSetup(object):
     standalone = 'OFF'
     unattended = 'OFF'
     universal = 'OFF'
-    project_name = 'Kirstens-S20'
+    project_name = 'Kirstens-S21'
     distcc = True
     cmake_opts = []
     word_size = 32
@@ -661,9 +661,9 @@ class WindowsSetup(PlatformSetup):
             executable = os.path.join('tools','vstool','VSTool.exe')
             vstool_cmd = (executable +
                           ' --solution ' +
-                          os.path.join(build_dir,'Kirstens-S20.sln') +
+                          os.path.join(build_dir,'Kirstens-S21.sln') +
                           ' --config ' + self.build_type +
-                          ' --startup Kirstens-S20')
+                          ' --startup Kirstens-S21')
             print 'Running %r in %r' % (vstool_cmd, getcwd())
             self.run(vstool_cmd, name=executable)        
             print >> open(stamp, 'w'), self.build_type

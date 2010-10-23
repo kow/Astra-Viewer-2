@@ -581,7 +581,7 @@ set(viewer_SOURCE_FILES
     llstreamtitles.cpp
     )
 
-set(VIEWER_BINARY_NAME "Kirstens-S20" CACHE STRING
+set(VIEWER_BINARY_NAME "Kirstens-S21" CACHE STRING
     "The name of the viewer executable to create.")
 
 if (LINUX)
@@ -1136,10 +1136,10 @@ if (DARWIN)
 
   # Add resource files to the project.
   set(viewer_RESOURCE_FILES
-    Kirstens-S20.icns
+    Kirstens-S21.icns
     macview.r
     gpu_table.txt
-    Info-Kirstens-S20.plist
+    Info-Kirstens-S21.plist
     SecondLife.nib/
     # CMake doesn't seem to support Xcode language variants well just yet
     English.lproj/InfoPlist.strings
@@ -1221,8 +1221,8 @@ if (WINDOWS)
         res/lltooltranslate.cur
         res/lltoolzoomin.cur
         res/lltoolzoomout.cur
-        res/kirstens-S20_icon.BMP
-        res/kirstens-S20_icon.ico
+        res/kirstens-S21_icon.BMP
+        res/kirstens-S21_icon.ico
         res/resource.h
         res/toolpickobject.cur
         res/toolpickobject2.cur
@@ -1695,7 +1695,7 @@ set(ARTWORK_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE PATH
 
 
 if (LINUX)
-  set(product Kirstens S20-${ARCH}-${viewer_VERSION})
+  set(product Kirstens S21-${ARCH}-${viewer_VERSION})
 
   add_custom_command(
       OUTPUT ${product}.tar.bz2
@@ -1751,7 +1751,7 @@ if (LINUX)
 endif (LINUX)
 
 if (DARWIN)
-  set(product "Kirstens S20")
+  set(product "Kirstens S21")
   set_target_properties(
     ${VIEWER_BINARY_NAME}
     PROPERTIES
@@ -1760,7 +1760,7 @@ if (DARWIN)
     MACOSX_BUNDLE_ICON_FILE "secondlife.icns"
     MACOSX_BUNDLE_GUI_IDENTIFIER "Second Life"
     MACOSX_BUNDLE_LONG_VERSION_STRING "ververver"
-    MACOSX_BUNDLE_BUNDLE_NAME "Kirstens S20"
+    MACOSX_BUNDLE_BUNDLE_NAME "Kirstens S21"
     MACOSX_BUNDLE_SHORT_VERSION_STRING "asdf"
     MACOSX_BUNDLE_BUNDLE_VERSION "asdf"
     MACOSX_BUNDLE_COPYRIGHT "copyright linden lab 2007 - localize me and run me through a legal wringer"
@@ -1824,13 +1824,13 @@ if (PACKAGE)
   if (DARWIN)
     set(VIEWER_DIST_DIR "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${product}.app")
     set(VIEWER_SYMBOL_FILE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/secondlife-symbols-darwin.tar.bz2")
-    set(VIEWER_EXE_GLOBS "'Kirstens S20' SLPlugin")
+    set(VIEWER_EXE_GLOBS "'Kirstens S21' SLPlugin")
     set(VIEWER_LIB_GLOB "*.dylib")
   endif (DARWIN)
   if (LINUX)
     set(VIEWER_DIST_DIR "${CMAKE_CURRENT_BINARY_DIR}/packaged")
     set(VIEWER_SYMBOL_FILE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/secondlife-symbols-linux.tar.bz2")
-    set(VIEWER_EXE_GLOBS "do-not-directly-run-kirstens-s20-bin SLPlugin")
+    set(VIEWER_EXE_GLOBS "do-not-directly-run-kirstens-s21-bin SLPlugin")
     set(VIEWER_LIB_GLOB "*${CMAKE_SHARED_MODULE_SUFFIX}*")
     set(VIEWER_COPY_MANIFEST copy_l_viewer_manifest)
   endif (LINUX)

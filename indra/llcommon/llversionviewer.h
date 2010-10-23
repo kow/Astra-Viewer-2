@@ -32,6 +32,6 @@ const S32 LL_VERSION_MINOR = 2;
 const S32 LL_VERSION_PATCH = 1;
 const S32 LL_VERSION_BUILD = 40; // Kirstens Viewer Build Number
 
-const char * const LL_CHANNEL = "Kirstens S20";  // This is OUR channel TPV compliance
+const char * const LL_CHANNEL = "Kirstens S21";  // This is OUR channel TPV compliance
 
 #endif

@@ -28,7 +28,7 @@
 #define LL_LLMOVEVIEW_H
 
 // Library includes
-#include "llsingleton.h" // S20
+#include "llsingleton.h" // S21
 #include "lltransientdockablefloater.h"
 
 class LLButton;

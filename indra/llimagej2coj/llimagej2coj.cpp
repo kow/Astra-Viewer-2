@@ -36,7 +36,7 @@
 const char* fallbackEngineInfoLLImageJ2CImpl()
 {
 	static std::string version_string =
-		std::string("S20J: " OPENJPEG_VERSION ", Runtime Version: ") // S20J experimental versions of Openjpeg, using different compile setups,cuda or OpenCL :)
+		std::string("S21J: " OPENJPEG_VERSION ", Runtime Version: ") // S20J experimental versions of Openjpeg, using different compile setups,cuda or OpenCL :)
 		+ opj_version();
 	return version_string.c_str();
 }

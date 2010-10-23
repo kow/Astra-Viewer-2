@@ -54,7 +54,7 @@
  */
 class LLFlatListView : public LLScrollContainer, public LLEditMenuHandler
 {
-	//LOG_CLASS(LLFlatListView); // S20
+	//LOG_CLASS(LLFlatListView); // S21
 public:
 
 	/**

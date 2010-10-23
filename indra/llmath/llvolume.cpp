@@ -1862,7 +1862,7 @@ void LLVolume::createVolumeFaces()
 			vf.mNumS = face.mCount;
 			if (vf.mNumS < 0)
 			{
-				llwarns << "Volume face corruption detected." << llendl; // S20
+				llwarns << "Volume face corruption detected." << llendl; // S21
 			}
 
 			vf.mBeginT = 0;
@@ -1910,7 +1910,7 @@ void LLVolume::createVolumeFaces()
 						vf.mNumS = vf.mNumS*2;
 						if (vf.mNumS < 0)
 						{
-							llwarns << "Volume face corruption detected." << llendl; // S20
+							llwarns << "Volume face corruption detected." << llendl; // S21
 						}
 					}
 				}
@@ -4523,7 +4523,7 @@ BOOL LLVolumeFace::createUnCutCubeCap(LLVolume* volume, BOOL partial_build)
 	}
 	
 	mCenter = (min + max) * 0.5f;
-// S20 enables GEN_TRI_STRIP by default
+// S21 enables GEN_TRI_STRIP by default
 	if (!partial_build)
 	{
 		mTriStrip.clear();

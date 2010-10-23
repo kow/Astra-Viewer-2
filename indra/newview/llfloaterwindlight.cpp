@@ -195,7 +195,7 @@ void LLFloaterWindLight::initCallbacks(void) {
 	getChild<LLUICtrl>("WLNewPreset")->setCommitCallback(boost::bind(&LLFloaterWindLight::onNewPreset, this));
 	getChild<LLUICtrl>("WLSavePreset")->setCommitCallback(boost::bind(&LLFloaterWindLight::onSavePreset, this));
 	getChild<LLUICtrl>("WLDeletePreset")->setCommitCallback(boost::bind(&LLFloaterWindLight::onDeletePreset, this));
-	getChild<LLUICtrl>("WLSaveNotecard")->setCommitCallback(boost::bind(&LLFloaterWindLight::onSaveNotecard, this)); // S20
+	getChild<LLUICtrl>("WLSaveNotecard")->setCommitCallback(boost::bind(&LLFloaterWindLight::onSaveNotecard, this)); // S21
 
 	comboBox->setCommitCallback(boost::bind(&LLFloaterWindLight::onChangePresetName, this, _1));
 
@@ -739,7 +739,7 @@ void LLFloaterWindLight::onSaveNotecard()
 							  gInventory.findCategoryUUIDForType(LLFolderType::FT_NOTECARD),
 							  LLTransactionID::tnull,
 							  name,
-							  "WindLight settings (Kitty & S20 Viewer compatible)",
+							  "WindLight settings (Kitty & S21 Viewer compatible)",
 							  LLAssetType::AT_NOTECARD,
 							  LLInventoryType::IT_NOTECARD,
 							  NOT_WEARABLE,

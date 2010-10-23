@@ -2880,7 +2880,7 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 			}
 			else
 			{
-				args["NAME_SLURL"] = LLSLURL("agent", from_id, "about").getSLURLString(); // S20 ok Watch XUI for NAME_SLURL
+				args["NAME_SLURL"] = LLSLURL("agent", from_id, "about").getSLURLString(); // S21 ok Watch XUI for NAME_SLURL
 				if(message.empty())
 				{
 					//support for frienship offers from clients before July 2008
@@ -3174,7 +3174,7 @@ void process_chat_from_simulator(LLMessageSystem *msg, void **user_data)
 		// Make swirly things only for talking objects. (not script debug messages, though)
 		if (chat.mSourceType == CHAT_SOURCE_OBJECT 
 			&& chat.mChatType != CHAT_TYPE_DEBUG_MSG
-            && gSavedSettings.getBOOL("MachinimaCamNoScriptLights") == false) // S20
+            && gSavedSettings.getBOOL("MachinimaCamNoScriptLights") == false) // S21
 		{
 			LLPointer<LLViewerPartSourceChat> psc = new LLViewerPartSourceChat(chatter->getPositionAgent());
 			psc->setSourceObject(chatter);

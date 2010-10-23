@@ -58,7 +58,7 @@ class LLLineEditor
 public:
 
 	typedef boost::function<void (LLLineEditor* caller)> keystroke_callback_t;
-	// S20 this was set to 254 bytes ( Setting it x4 higher @ 1016 bytes ) old system used 1024 chars.
+	// S21 this was set to 254 bytes ( Setting it x4 higher @ 1016 bytes ) old system used 1024 chars.
 	struct MaxLength : public LLInitParam::Choice<MaxLength>
 	{
 		Alternative<S32> bytes, chars;

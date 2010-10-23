@@ -252,7 +252,7 @@ private:
 	F64 mLastTimeDiff;  // used for time stat updates
 };
 
-static const F32 SEND_STATS_PERIOD = 3000.0f; // KL still send stats but at a much reduced rate. S20
+static const F32 SEND_STATS_PERIOD = 3000.0f; // KL still send stats but at a much reduced rate. S21
 
 // The following are from (older?) statistics code found in appviewer.
 void init_statistics();

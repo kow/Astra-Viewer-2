@@ -63,7 +63,7 @@ LLTextureAtlas::~LLTextureAtlas()
 {
 	if(mSpatialGroupList.size() > 0)
 	{
-		llwarns << "Not clean up the spatial groups!" << llendl ; // S20
+		llwarns << "Not clean up the spatial groups!" << llendl ; // S21
 	}
 	releaseUsageBits() ;
 }

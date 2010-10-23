@@ -1,7 +1,7 @@
 /** 
  * @file qtoolalign.cpp
  * @brief A tool to align objects
- * @slight modification for use in S20 thanks Qarl!
+ * @slight modification for use in S21 thanks Qarl!
  */
 
 #include "llviewerprecompiledheaders.h"

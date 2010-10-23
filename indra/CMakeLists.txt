@@ -13,8 +13,8 @@ if (COMMAND cmake_policy)
   cmake_policy(SET CMP0003 OLD)
 endif (COMMAND cmake_policy)
 
-set(ROOT_PROJECT_NAME "Kirstens-S20" CACHE STRING
-    "The root project/makefile/solution name. Defaults to Kirstens-S20.")
+set(ROOT_PROJECT_NAME "Kirstens-S21" CACHE STRING
+    "The root project/makefile/solution name. Defaults to Kirstens-S21.")
 project(${ROOT_PROJECT_NAME})
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
@@ -99,7 +99,7 @@ if (VIEWER)
   endif (LINUX)
 
   add_subdirectory(${VIEWER_PREFIX}newview)
-  add_dependencies(viewer Kirstens-S20)
+  add_dependencies(viewer Kirstens-S21)
 endif (VIEWER)
 
 # Linux builds the viewer and server in 2 separate projects

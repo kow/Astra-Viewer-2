@@ -210,7 +210,7 @@ void LLIMFloater::sendMsg()
 			// Truncate and convert to UTF8 for transport
 			std::string utf8_text = wstring_to_utf8str(text);
 			utf8_text = utf8str_truncate(utf8_text, MAX_MSG_BUF_SIZE - 1);
-			// S20
+			// S21
 			if (gSavedSettings.getBOOL("AutoCloseOOC"))
 			{
 				// Try to find any unclosed OOC chat (i.e. an opening
@@ -240,7 +240,7 @@ void LLIMFloater::sendMsg()
 					utf8_text.replace(0, 1, "/me ");
 				}
 			}
-			// S20
+			// S21
 			if (mSessionInitialized)
 			{
 				LLIMModel::sendMessage(utf8_text, mSessionID,
@@ -502,7 +502,7 @@ LLIMFloater* LLIMFloater::show(const LLUUID& session_id)
 //static
 bool LLIMFloater::resetAllowedRectPadding(const LLSD& newvalue)
 {
-	// S20
+	// S21
 	// Has a slightly different way of doing the side bar
 	// Do not alter!
 	return true;
@@ -519,8 +519,8 @@ void LLIMFloater::getAllowedRect(LLRect& rect)
 	static S32 right_padding = 0;
 	if (right_padding == 0)
 	{
-		right_padding = 32; //S20
-    // KL S20 is much different than standard 2.0 and the Padding is all thats required.
+		right_padding = 32; //S21
+    // KL S21 is much different than standard 2.0 and the Padding is all thats required.
 	}
 	rect.mRight -= right_padding;
 }

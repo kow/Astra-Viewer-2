@@ -174,7 +174,7 @@ BOOL LLDataPacker::unpackFixed(F32 &value, const char *name,
 }
 
 //---------------------------------------------------------------------------
-// LLDataPackerBinaryBuffer implementation S20 Version
+// LLDataPackerBinaryBuffer implementation S21 Version
 //---------------------------------------------------------------------------
 
 BOOL LLDataPackerBinaryBuffer::packString(const std::string& value, const char *name)

@@ -100,7 +100,7 @@ void LLPanelProfileView::onOpen(const LLSD& key)
 	if(id.notNull() && getAvatarId() != id)
 	{
 		setAvatarId(id);
-		getChild<LLUICtrl>("agent_id")->setValue(id); // S20
+		getChild<LLUICtrl>("agent_id")->setValue(id); // S21
 		// clear name fields, which might have old data
 		getChild<LLUICtrl>("user_name")->setValue( LLSD() );
 		getChild<LLUICtrl>("user_slid")->setValue( LLSD() );

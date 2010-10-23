@@ -314,12 +314,12 @@ inline LLFace* LLDrawable::getFace(const S32 i) const
 
 	if ((U32) i >= mFaces.size())
 	{
-		llwarns << "Invalid face index." << llendl; // S20
+		llwarns << "Invalid face index." << llendl; // S21
 	}
 
 	if (!mFaces[i])
 	{
-		llwarns << "Null face found." << llendl; // S20
+		llwarns << "Null face found." << llendl; // S21
 	}
 	
 	return mFaces[i];

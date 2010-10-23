@@ -194,7 +194,7 @@
 #include "lldxhardware.h"
 #endif
 
-#include "llstreamtitles.h" // S20
+#include "llstreamtitles.h" // S21
 //
 // exported globals
 //
@@ -1563,7 +1563,7 @@ bool idle_startup()
 			LLAvatarTracker::instance().addBuddyList(list);
  		}
 
-		// S20 No tutorial setup the Floater HUD is now used for Viewer Live Help.				
+		// S21 No tutorial setup the Floater HUD is now used for Viewer Live Help.				
 
 		LLSD event_notifications = response["event_notifications"];
 		if(event_notifications.isDefined())
@@ -2610,7 +2610,7 @@ void LLStartUp::multimediaInit()
 	// LLViewerMedia::initClass();
 	LLViewerParcelMedia::initClass();
 	
-	// Stream title display S20
+	// Stream title display S21
 	new LLStreamTitles();
 }
 

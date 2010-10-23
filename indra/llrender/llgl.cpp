@@ -1385,9 +1385,9 @@ void LLGLState::checkTextureChannels(const std::string& msg)
 		}
 		else
 		{
-			llwarns << "GL texture state corruption detected.  " << msg << llendl; // S20
+			llwarns << "GL texture state corruption detected.  " << msg << llendl; // S21
 		} 
-	    stop_glerror(); // S20
+	    stop_glerror(); // S21
 	}
 }
 

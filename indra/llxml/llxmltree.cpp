@@ -77,7 +77,7 @@ BOOL LLXmlTree::parseFile(const std::string &path, BOOL keep_contents)
 	return success;
 }
 
-// S20
+// S21
 BOOL LLXmlTree::parseString(const std::string &string, BOOL keep_contents)
 {
 	delete mRoot;
@@ -93,7 +93,7 @@ BOOL LLXmlTree::parseString(const std::string &string, BOOL keep_contents)
 	}
 	return success;
 }
-// S20
+// S21
 void LLXmlTree::dump()
 {
 	if( mRoot )
@@ -541,7 +541,7 @@ BOOL LLXmlTreeParser::parseFile(const std::string &path, LLXmlTreeNode** root, B
 
 	*root = mRoot;
 	mRoot = NULL;
-// S20	
+// S21	
 	if( success )
 	{
 		llassert( !mCurrent );
@@ -562,7 +562,7 @@ BOOL LLXmlTreeParser::parseString(const std::string &string, LLXmlTreeNode** roo
 	
 	*root = mRoot;
 	mRoot = NULL;
-// S20	
+// S21	
 	if( success )
 	{
 		llassert( !mCurrent );

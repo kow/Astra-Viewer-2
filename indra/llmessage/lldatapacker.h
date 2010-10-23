@@ -192,14 +192,14 @@ protected:
 
 inline BOOL LLDataPackerBinaryBuffer::verifyLength(const S32 data_size, const char *name)
 {
-	// Verify that the buffer members are meaningful S20
+	// Verify that the buffer members are meaningful S21
     llassert(mBufferp != NULL);
     llassert(mCurBufferp != NULL);
     llassert(mBufferSize > 0);
     llassert(mCurBufferp >= mBufferp);
     llassert(mCurBufferp < (mBufferp + mBufferSize));
 
-	// Verify we're not attempting to read or write beyond the buffer boundaries  S20
+	// Verify we're not attempting to read or write beyond the buffer boundaries  S21
 	if (((mCurBufferp - mBufferp) + data_size) > mBufferSize)
 	{
 		llwarns << "Buffer overflow in BinaryBuffer length verify, field name " << name << " !" << llendl;
@@ -321,14 +321,14 @@ inline void	LLDataPackerAsciiBuffer::assignBuffer(char* bufferp, S32 size)
 
 inline BOOL LLDataPackerAsciiBuffer::verifyLength(const S32 data_size, const char *name)
 {
-	// Verify that the buffer members are meaningful S20
+	// Verify that the buffer members are meaningful S21
     llassert(mBufferp != NULL);
     llassert(mCurBufferp != NULL);
     llassert(mBufferSize > 0);
     llassert(mCurBufferp >= mBufferp);
     llassert(mCurBufferp < (mBufferp + mBufferSize));
 
-	// Verify we're not attempting to read or write beyond the buffer boundaries S20
+	// Verify we're not attempting to read or write beyond the buffer boundaries S21
 	if (((mCurBufferp - mBufferp) + data_size) > mBufferSize)
 	{
 		llwarns << "Buffer overflow in AsciiBuffer length verify, field name " << name << " !" << llendl;

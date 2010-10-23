@@ -67,9 +67,9 @@
 #include "llviewerobjectlist.h"
 #include "llviewerwindow.h"
 #include "llvoavatarself.h"
-#include "llwaterparammanager.h" // S20
+#include "llwaterparammanager.h" // S21
 #include "llwearablelist.h"
-#include "llwlparammanager.h" // S20
+#include "llwlparammanager.h" // S21
 
 typedef std::pair<LLUUID, LLUUID> two_uuids_t;
 typedef std::list<two_uuids_t> two_uuids_list_t;
@@ -3695,7 +3695,7 @@ BOOL LLCallingCardBridge::dragOrDrop(MASK mask, BOOL drop,
 }
 
 // +=================================================+
-// |        LLNotecardBridge     S20 Version         |
+// |        LLNotecardBridge     S21 Version         |
 // +=================================================+
 
 void LLNotecardBridge::openItem()

@@ -75,7 +75,7 @@ BOOL LLPanelMe::postBuild()
 void LLPanelMe::onOpen(const LLSD& key)
 {
 	LLPanelProfile::onOpen(key);
-	getChild<LLUICtrl>("agent_id")->setValue(gAgent.getID()); // KL S20
+	getChild<LLUICtrl>("agent_id")->setValue(gAgent.getID()); // KL S21
 
 	// Force Edit My Profile if this is the first time when user is opening Me Panel (EXT-5068)
 	bool opened = gSavedSettings.getBOOL("MePanelOpened");

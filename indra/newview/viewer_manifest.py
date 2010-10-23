@@ -125,7 +125,7 @@ class ViewerManifest(LLManifest):
     def channel(self):
         return self.args['channel']
     def channel_unique(self):
-        return self.channel().replace("Kirstens S20", "").strip()
+        return self.channel().replace("Kirstens S21", "").strip()
     def channel_oneword(self):
         return "".join(self.channel_unique().split())
     def channel_lowerword(self):
@@ -167,7 +167,7 @@ class WindowsManifest(ViewerManifest):
     def final_exe(self):
         if self.default_channel():
             if self.default_grid():
-                return "Kirstens-S20.exe"
+                return "Kirstens-S21.exe"
             else:
                 return "SecondLife.exe"
         else:
@@ -238,7 +238,7 @@ class WindowsManifest(ViewerManifest):
 
         if self.is_packaging_viewer():
             # Find secondlife-bin.exe in the 'configuration' dir, then rename it to the result of final_exe.
-            self.path(src='%s/Kirstens-S20.exe' % self.args['configuration'], dst=self.final_exe())
+            self.path(src='%s/Kirstens-S21.exe' % self.args['configuration'], dst=self.final_exe())
 
         # Plugin host application
         self.path(os.path.join(os.pardir,
@@ -482,38 +482,38 @@ class WindowsManifest(ViewerManifest):
         if self.default_channel():
             if self.default_grid():
                 # release viewer
-                installer_file = "Kirstens S20 %(version_dashes)s Setup.exe"
+                installer_file = "Kirstens S21 %(version_dashes)s Setup.exe"
                 grid_vars_template = """
                 OutFile "%(installer_file)s"
                 !define INSTFLAGS "%(flags)s"
-                !define INSTNAME   "Kirstens S20"
-                !define SHORTCUT   "Kirstens S20"
+                !define INSTNAME   "Kirstens S21"
+                !define SHORTCUT   "Kirstens S21"
                 !define URLNAME   "secondlife"
-                Caption "Kirstens S20 ${VERSION}"
+                Caption "Kirstens S21 ${VERSION}"
                 """
             else:
                 # beta grid viewer
-                installer_file = "Kirstens S20 %(version_dashes)s_(%(grid_caps)s) Setup.exe"
+                installer_file = "Kirstens S21 %(version_dashes)s_(%(grid_caps)s) Setup.exe"
                 grid_vars_template = """
                 OutFile "%(installer_file)s"
                 !define INSTFLAGS "%(flags)s"
-                !define INSTNAME   "Kirstens S20 %(grid_caps)s"
-                !define SHORTCUT   "Kirstens S20 (%(grid_caps)s)"
+                !define INSTNAME   "Kirstens S21 %(grid_caps)s"
+                !define SHORTCUT   "Kirstens S21 (%(grid_caps)s)"
                 !define URLNAME   "secondlife%(grid)s"
                 !define UNINSTALL_SETTINGS 1
-                Caption "Kirstens S20 %(grid)s ${VERSION}"
+                Caption "Kirstens S21 %(grid)s ${VERSION}"
                 """
         else:
             # some other channel on some grid
-            installer_file = "Kirstens S20 %(version_dashes)s_%(channel_oneword)s Setup.exe"
+            installer_file = "Kirstens S21 %(version_dashes)s_%(channel_oneword)s Setup.exe"
             grid_vars_template = """
             OutFile "%(installer_file)s"
             !define INSTFLAGS "%(flags)s"
-            !define INSTNAME   "Kirstens S20 %(channel_oneword)s"
-            !define SHORTCUT   "Kirstens S20 %(channel)s"
+            !define INSTNAME   "Kirstens S21 %(channel_oneword)s"
+            !define SHORTCUT   "Kirstens S21 %(channel)s"
             !define URLNAME   "secondlife"
             !define UNINSTALL_SETTINGS 1
-            Caption "Kirstens S20 %(channel)s ${VERSION}"
+            Caption "Kirstens S21 %(channel)s ${VERSION}"
             """
         if 'installer_name' in self.args:
             installer_file = self.args['installer_name']
@@ -564,10 +564,10 @@ class DarwinManifest(ViewerManifest):
 
     def construct(self):
         # copy over the build result (this is a no-op if run within the xcode script)
-        self.path(self.args['configuration'] + "/Kirstens S20.app", dst="")
+        self.path(self.args['configuration'] + "/Kirstens S21.app", dst="")
 
         if self.prefix(src="", dst="Contents"):  # everything goes in Contents
-            self.path("Info-Kirstens-S20.plist", dst="Info.plist")
+            self.path("Info-Kirstens-S21.plist", dst="Info.plist")
 
             # copy additional libs in <bundle>/Contents/MacOS/
             self.path("../../libraries/universal-darwin/lib_release/libndofdev.dylib", dst="MacOS/libndofdev.dylib")
@@ -582,12 +582,12 @@ class DarwinManifest(ViewerManifest):
 
                 self.path("licenses-darwin.txt", dst="licenses.txt")
                 self.path("featuretable_mac.txt")
-                self.path("Kirstens-S20.nib")
+                self.path("Kirstens-S21.nib")
 
                 # If we are not using the default channel, use the 'Firstlook
                 # icon' to show that it isn't a stable release.
                 if self.default_channel() and self.default_grid():
-                        self.path("Kirstens-S20.icns")
+                        self.path("Kirstens-S21.icns")
                 else:
                     self.path("secondlife_firstlook.icns", "secondlife.icns")
                 self.path("SecondLife.nib")
@@ -705,20 +705,20 @@ class DarwinManifest(ViewerManifest):
         if ("package" in self.args['actions'] or 
             "unpacked" in self.args['actions']):
             self.run_command('strip -S %(viewer_binary)r' %
-                             { 'viewer_binary' : self.dst_path_of('Contents/MacOS/Kirstens S20')})
+                             { 'viewer_binary' : self.dst_path_of('Contents/MacOS/Kirstens S21')})
 
 
     def package_finish(self):
-        channel_standin = 'Kirstens S20'  # hah, our default channel is not usable on its own
+        channel_standin = 'Kirstens S21'  # hah, our default channel is not usable on its own
         if not self.default_channel():
             channel_standin = self.channel()
 
-        imagename="Kirstens-S20_" + '_'.join(self.args['version'])
+        imagename="Kirstens-S21_" + '_'.join(self.args['version'])
 
         # MBW -- If the mounted volume name changes, it breaks the .DS_Store's background image and icon positioning.
         #  If we really need differently named volumes, we'll need to create multiple DS_Store file images, or use some other trick.
 
-        volname="Kirstens S20 Installer"  # DO NOT CHANGE without understanding comment above
+        volname="Kirstens S21 Installer"  # DO NOT CHANGE without understanding comment above
 
         if self.default_channel():
             if not self.default_grid():
@@ -746,7 +746,7 @@ class DarwinManifest(ViewerManifest):
             # Copy everything in to the mounted .dmg
 
             if self.default_channel() and not self.default_grid():
-                app_name = "Kirstens S20 " + self.args['grid']
+                app_name = "Kirstens S21 " + self.args['grid']
             else:
                 app_name = channel_standin.strip()
 
@@ -837,7 +837,7 @@ class LinuxManifest(ViewerManifest):
         if 'installer_name' in self.args:
             installer_name = self.args['installer_name']
         else:
-            installer_name_components = ['Kirstens-S20_', self.args.get('arch')]
+            installer_name_components = ['Kirstens-S21_', self.args.get('arch')]
             installer_name_components.extend(self.args['version'])
             installer_name = "_".join(installer_name_components)
             if self.default_channel():
@@ -894,7 +894,7 @@ class Linux_i686Manifest(LinuxManifest):
                 print "Skipping %s - not found" % libfile
                 pass
 
-        self.path("Kirstens-S20","bin/do-not-directly-run-kirstens-s20-bin")
+        self.path("Kirstens-S21","bin/do-not-directly-run-kirstens-s20-bin")
 
         self.path("../linux_crash_logger/linux-crash-logger","bin/linux-crash-logger.bin")
         self.path("../linux_updater/linux-updater", "bin/linux-updater.bin")

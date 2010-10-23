@@ -66,7 +66,7 @@
 #include "lltrans.h"
 #include "llcallingcard.h"
 
-// S20 MS
+// S21 MS
 #include "llviewermenu.h"
 #include "llslurl.h"			// IDEVO
 
@@ -300,7 +300,7 @@ void LLAvatarActions::startConference(const uuid_vec_t& ids)
 	make_ui_sound("UISndStartIM");
 }
 
-// S20 MS
+// S21 MS
 // static
 void LLAvatarActions::zoomIn(const LLUUID& avatarId)
 {

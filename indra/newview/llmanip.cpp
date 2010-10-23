@@ -55,7 +55,7 @@
 #include "llglheaders.h"
 
 // Local constants...
-const S32 VERTICAL_OFFSET = 100; // S20 KL - Compensate for the differing UI setup used.
+const S32 VERTICAL_OFFSET = 100; // S21 KL - Compensate for the differing UI setup used.
 
 F32		LLManip::sHelpTextVisibleTime = 2.f;
 F32		LLManip::sHelpTextFadeTime = 2.f;

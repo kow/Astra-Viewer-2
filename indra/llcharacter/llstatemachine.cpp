@@ -88,7 +88,7 @@ BOOL LLStateDiagram::addTransition(LLFSMState& start_state, LLFSMState& end_stat
 	Transitions::iterator transition_it = state_transitions->find(&transition);
 	if (transition_it != state_transitions->end())
 	{
-		llwarns << "LLStateTable::addDirectedTransition() : transition already exists" << llendl; // S20
+		llwarns << "LLStateTable::addDirectedTransition() : transition already exists" << llendl; // S21
 		return FALSE; // transition already exists
 	}
 
