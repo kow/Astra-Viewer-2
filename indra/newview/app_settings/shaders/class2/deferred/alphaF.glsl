@@ -4,6 +4,8 @@
  * $LicenseInfo:firstyear=2007&license=viewerlgpl$
  * $/LicenseInfo$
  */
+ 
+#version 120
 
 #extension GL_ARB_texture_rectangle : enable
 
@@ -115,7 +117,7 @@ void main()
 
 	//gl_FragColor = gl_Color;
 	gl_FragColor = color;
-	//gl_FragColor = vec4(1,0,1,1)*shadow;
+	//gl_FragColor = vec4(1,shadow,1,1);
 	
 }
 

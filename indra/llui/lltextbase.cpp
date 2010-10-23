@@ -1591,7 +1591,10 @@ void LLTextBase::setText(const LLStringExplicit &utf8str, const LLStyle::Params&
 	// appendText modifies mCursorPos...
 	appendText(text, false, input_params);
 	// ...so move cursor to top after appending text
-	startOfDoc();
+	if (!mTrackEnd)
+	{
+		startOfDoc();
+	}
 
 	onValueChange(0, getLength());
 }
@@ -1622,7 +1625,7 @@ void LLTextBase::appendTextImpl(const std::string &new_text, const LLStyle::Para
 	style_params.fillFrom(getDefaultStyleParams());
 
 	S32 part = (S32)LLTextParser::WHOLE;
-	if(mParseHTML)
+	if (mParseHTML && !style_params.is_link) // Don't search for URLs inside a link segment (STORM-358).
 	{
 		S32 start=0,end=0;
 		LLUrlMatch match;
@@ -1630,6 +1633,9 @@ void LLTextBase::appendTextImpl(const std::string &new_text, const LLStyle::Para
 		while ( LLUrlRegistry::instance().findUrl(text, match,
 		        boost::bind(&LLTextBase::replaceUrl, this, _1, _2, _3)) )
 		{
+			
+			LLTextUtil::processUrlMatch(&match,this);
+
 			start = match.getStart();
 			end = match.getEnd()+1;
 
@@ -1651,10 +1657,6 @@ void LLTextBase::appendTextImpl(const std::string &new_text, const LLStyle::Para
 				std::string subtext=text.substr(0,start);
 				appendAndHighlightText(subtext, part, style_params); 
 			}
-
-			// inserts an avatar icon preceding the Url if appropriate
-			LLTextUtil::processUrlMatch(&match,this);
-
 			// output the styled Url
 			appendAndHighlightTextImpl(match.getLabel(), part, link_params, match.underlineOnHoverOnly());
 			
@@ -1997,8 +1999,8 @@ S32 LLTextBase::getDocIndexFromLocalCoord( S32 local_x, S32 local_y, BOOL round,
 		else if (hit_past_end_of_line && segmentp->getEnd() > line_iter->mDocIndexEnd - 1)	
 		{
 			// segment wraps to next line, so just set doc pos to the end of the line
- 			// segment wraps to next line, so just set doc pos to start of next line (represented by mDocIndexEnd)
- 			pos = llmin(getLength(), line_iter->mDocIndexEnd);
+			// segment wraps to next line, so just set doc pos to start of next line (represented by mDocIndexEnd)
+			pos = llmin(getLength(), line_iter->mDocIndexEnd);
 			break;
 		}
 		start_x += text_width;
