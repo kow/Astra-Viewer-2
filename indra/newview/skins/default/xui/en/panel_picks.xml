@@ -77,7 +77,7 @@ bg_opaque_color="Black_50"
        background_opaque="true"
          bevel_style="none"
          enabled="false"
-         
+         auto_resize="false"
          follows="bottom|left|right"
          left="1"
          height="27"

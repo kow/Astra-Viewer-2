@@ -129,7 +129,7 @@ BOOL LLFloaterHardwareSettings::postBuild()
 
 void LLFloaterHardwareSettings::apply()
 {
-	// Anisotropic rendering
+/*	// Anisotropic rendering
 	BOOL old_anisotropic = LLImageGL::sGlobalUseAnisotropic;
 	LLImageGL::sGlobalUseAnisotropic = getChild<LLUICtrl>("ani")->getValue();
 
@@ -151,8 +151,8 @@ void LLFloaterHardwareSettings::apply()
 	else if (old_anisotropic != LLImageGL::sGlobalUseAnisotropic)
 	{
 		gViewerWindow->restartDisplay(logged_in);
-	}
-
+	} */ 
+    // KL will just leave out to see what occurs for now during merging phase
 	refresh();
 }
 

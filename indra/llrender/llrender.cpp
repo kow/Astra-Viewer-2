@@ -895,7 +895,7 @@ LLVector3 LLRender::getUITranslation()
 {
 	if (mUIOffset.empty())
 	{
-		return LLVector3::zero;
+		return LLVector3(0,0,0);
 	}
 	return mUIOffset.back();
 }
@@ -904,7 +904,7 @@ LLVector3 LLRender::getUIScale()
 {
 	if (mUIScale.empty())
 	{
-		return LLVector3(1.f, 1.f, 1.f);
+		return LLVector3(1,1,1);
 	}
 	return mUIScale.back();
 }

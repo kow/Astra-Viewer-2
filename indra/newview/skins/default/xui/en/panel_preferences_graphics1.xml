@@ -772,50 +772,16 @@ width="517">
         label="Glow MaxAlpha:"
         label_width="100" left="10" max_val="0.1" min_val="0" mouse_opaque="true"
         name="MaxAlpha" show_text="true" width="210" />
-<!--        <check_box-->
-<!--        visibility_control="ShowAdvancedGraphicsSettings"-->
-<!--        control_name="RenderDeferredFullscreenLights"-->
-<!--        height="16"-->
-<!--        initial_value="true"-->
-<!--        label="Deferred Fullscreen Lights"-->
-<!--        layout="topleft"-->
-<!--        left_delta="0"-->
-<!--        name="FullscreenLights"-->
-<!--        top_pad="4"-->
-<!--        width="256"/>-->
-<!--        <check_box-->
-<!--        visibility_control="ShowAdvancedGraphicsSettings"-->
-<!--        control_name="RenderDeferredLocalLights"-->
-<!--        height="16"-->
-<!--        initial_value="true"-->
-<!--        label="Deferred Local Lights"-->
-<!--        layout="topleft"-->
-<!--        left_delta="0"-->
-<!--        name="LocalLights"-->
-<!--        top_pad="2"-->
-<!--        width="256"/>-->
-<!--        <check_box-->
-<!--        visibility_control="ShowAdvancedGraphicsSettings"-->
-<!--        control_name="RenderGlow"-->
-<!--        height="16"-->
-<!--        initial_value="true"-->
-<!--        label="Render Glow"-->
-<!--        layout="topleft"-->
-<!--        left_delta="0"-->
-<!--        name="EnableGlow"-->
-<!--        top_pad="2"-->
-<!--        width="256"/>-->
-<!--	<check_box-->
-<!--        visibility_control="ShowAdvancedGraphicsSettings"-->
-<!--        control_name="RenderSpotLightsInNondeferred"-->
-<!--        height="16"-->
-<!--        initial_value="true"-->
-<!--        label="Spotlights"-->
-<!--        layout="topleft"-->
-<!--        left_delta="0"-->
-<!--        name="SpotLights"-->
-<!--        top_pad="2"-->
-<!--        width="256"/>-->
+	<check_box
+		control_name="RenderLocalLights"
+		height="16"
+		initial_value="true"
+		label="Local Lights"
+		layout="topleft"
+		left_delta="0"
+		name="LocalLights"
+		top_pad="1"
+		width="256" />
         <text
         type="string"
         length="1"

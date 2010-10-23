@@ -17,7 +17,7 @@
      layout="topleft"
      left_delta="3"
      left="0"
-     
+     max_length="1024"
      name="chat_box"
      text_pad_left="5"
      text_pad_right="25"
@@ -56,7 +56,6 @@
            parameter="nearby_chat" />
     </button>
      <icon
-         
          follows="right"
          height="28"
          image_name="spacer24-2.tga"

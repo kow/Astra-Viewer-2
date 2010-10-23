@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <texture_picker border_color="DefaultHighlightLight">
   <multiselect_text font="SansSerifSmall"/>
-  <caption_text  
+  <caption_text text="Multiple" 
                 halign="center" 
                 font="SansSerifSmall"
                 v_pad="2"/>

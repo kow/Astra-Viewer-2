@@ -774,10 +774,12 @@ void LLVOVolume::updateTextureVirtualSize()
 	if (isSculpted())
 	{
 		LLSculptParams *sculpt_params = (LLSculptParams *)getParameterEntry(LLNetworkData::PARAMS_SCULPT);
-		LLUUID id =  sculpt_params->getSculptTexture(); 
+		LLUUID id =  sculpt_params->getSculptTexture();
 		
 		updateSculptTexture();
 		
+		
+
 		if (mSculptTexture.notNull())
 		{
 			mSculptTexture->setBoostLevel(llmax((S32)mSculptTexture->getBoostLevel(),
@@ -818,6 +820,7 @@ void LLVOVolume::updateTextureVirtualSize()
 										  mSculptTexture->getHeight(), mSculptTexture->getWidth()));
 			}
 		}
+
 	}
 
 	if (getLightTextureID().notNull())
@@ -833,7 +836,7 @@ void LLVOVolume::updateTextureVirtualSize()
 																	*camera));
 		}	
 	}
-
+	
 	if (gPipeline.hasRenderDebugMask(LLPipeline::RENDER_DEBUG_TEXTURE_AREA))
 	{
 		setDebugText(llformat("%.0f:%.0f", (F32) sqrt(min_vsize),(F32) sqrt(max_vsize)));

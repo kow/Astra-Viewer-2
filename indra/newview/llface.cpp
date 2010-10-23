@@ -194,6 +194,11 @@ void LLFace::init(LLDrawable* drawablep, LLViewerObject* objp)
 
 void LLFace::destroy()
 {
+	if (gDebugGL)
+	{
+		gPipeline.checkReferences(this);
+	}
+
 	if(mTexture.notNull())
 	{
 		mTexture->removeFace(this) ;
@@ -1206,7 +1211,7 @@ BOOL LLFace::getGeometryVolume(const LLVolume& volume,
 	}
 
 	// INDICES
-	if (full_rebuild) // ello ello Sse code O.O
+	if (full_rebuild)
 	{
 		mVertexBuffer->getIndexStrider(indicesp, mIndicesIndex);
 		__m128i* dst = (__m128i*) indicesp.get();
