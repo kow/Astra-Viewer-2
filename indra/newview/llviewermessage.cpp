@@ -2795,7 +2795,7 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 			{
 				LLVector3 pos, look_at;
 				U64 region_handle;
-				U8 region_access = SIM_ACCESS_MIN;
+				U8 region_access;
 				std::string region_info = ll_safe_string((char*)binary_bucket, binary_bucket_size);
 				std::string region_access_str = LLStringUtil::null;
 				std::string region_access_icn = LLStringUtil::null;
@@ -2880,7 +2880,7 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 			}
 			else
 			{
-				args["NAME_SLURL"] = LLSLURL("agent", from_id, "about").getSLURLString(); // S21 ok Watch XUI for NAME_SLURL
+				args["NAME_SLURL"] = LLSLURL("agent", from_id, "about").getSLURLString();
 				if(message.empty())
 				{
 					//support for frienship offers from clients before July 2008

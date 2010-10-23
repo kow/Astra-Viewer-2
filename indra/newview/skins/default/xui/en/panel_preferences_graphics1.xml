@@ -780,7 +780,7 @@ width="517">
 		layout="topleft"
 		left_delta="0"
 		name="LocalLights"
-		top_pad="1"
+		top_pad="10"
 		width="256" />
         <text
         type="string"

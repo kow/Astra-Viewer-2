@@ -326,16 +326,16 @@ void LLWLParamManager::savePreset(const std::string & name)
 	std::string escaped_filename(curl_str);
 	curl_free(curl_str);
 	curl_str = NULL;
-	
+
 	escaped_filename += ".xml";
-	
+
 	// make an empty llsd
 	LLSD paramsData(LLSD::emptyMap());
 	std::string pathName(gDirUtilp->getExpandedFilename( LL_PATH_USER_SETTINGS , "windlight/skies", escaped_filename));
-	
+
 	// fill it with LLSD windlight params
 	paramsData = mParamList[name].getAll();
-	
+
 	// write to file
 	llofstream presetsXML(pathName);
 	LLPointer<LLSDFormatter> formatter = new LLSDXMLFormatter();

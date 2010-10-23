@@ -252,7 +252,7 @@ class WindowsManifest(ViewerManifest):
                        dst=""):
 
             self.enable_crt_manifest_check()
-
+            
             # Get kdu dll, continue if missing.
             try:
                 self.path('llkdu.dll', dst='llkdu.dll')
@@ -265,11 +265,31 @@ class WindowsManifest(ViewerManifest):
                 self.path('libapr-1.dll')
                 self.path('libaprutil-1.dll')
                 self.path('libapriconv-1.dll')
+                
             except RuntimeError, err:
                 print err.message
                 print "Skipping llcommon.dll (assuming llcommon was linked statically)"
 
             self.disable_manifest_check()
+
+            # Mesh 3rd party libs needed for auto LOD and collada reading
+            try:
+                if self.args['configuration'].lower() == 'debug':
+                    self.path("libcollada14dom21-d.dll")
+                else:
+                    self.path("libcollada14dom21.dll")
+                    
+                self.path("glod.dll")
+            except RuntimeError, err:
+                print err.message
+                print "Skipping COLLADA and GLOD libraries (assumming linked statically)"
+
+
+            # Get fmod dll, continue if missing
+            try:
+                self.path("fmod.dll")
+            except:
+                print "Skipping fmod.dll"
 
             # For textures
             if self.args['configuration'].lower() == 'debug':
@@ -315,14 +335,8 @@ class WindowsManifest(ViewerManifest):
         # For use in crash reporting (generates minidumps)
         self.path("dbghelp.dll")
 
-        try:
-            # FMOD for sound
-            self.path("fmod.dll")
-        except:
-            print "Skipping FMOD - not found"
-
         self.enable_no_crt_manifest_check()
-        
+
         # Media plugins - QuickTime
         if self.prefix(src='../media_plugins/quicktime/%s' % self.args['configuration'], dst="llplugin"):
             self.path("media_plugin_quicktime.dll")
@@ -642,6 +656,7 @@ class DarwinManifest(ViewerManifest):
                                     "libaprutil-1.0.3.8.dylib",
                                     "libexpat.0.5.0.dylib",
                                     "libexception_handler.dylib",
+                                    "libGLOD.dylib",
                                     ):
                         self.path(os.path.join(libdir, libfile), libfile)
 
@@ -668,6 +683,7 @@ class DarwinManifest(ViewerManifest):
                                     "libaprutil-1.0.3.8.dylib",
                                     "libexpat.0.5.0.dylib",
                                     "libexception_handler.dylib",
+                                    "libGLOD.dylib",
                                     ):
                         target_lib = os.path.join('../../..', libfile)
                         self.run_command("ln -sf %(target)r %(link)r" % 
@@ -920,6 +936,7 @@ class Linux_i686Manifest(LinuxManifest):
             self.path("libdb-4.2.so")
             self.path("libcrypto.so.0.9.7")
             self.path("libexpat.so.1")
+            self.path("libglod.so")
             self.path("libssl.so.0.9.7")
             self.path("libuuid.so.1")
             self.path("libSDL-1.2.so.0")
@@ -928,6 +945,8 @@ class Linux_i686Manifest(LinuxManifest):
             self.path("libalut.so")
             self.path("libopenal.so", "libopenal.so.1")
             self.path("libopenal.so", "libvivoxoal.so.1") # vivox's sdk expects this soname
+            self.path("libtcmalloc_minimal.so", "libtcmalloc_minimal.so") #formerly called google perf tools
+            self.path("libtcmalloc_minimal.so.0", "libtcmalloc_minimal.so.0") #formerly called google perf tools
             try:
                     self.path("libkdu.so")
                     pass

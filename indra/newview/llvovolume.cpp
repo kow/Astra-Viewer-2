@@ -3859,7 +3859,6 @@ void LLVolumeGeometryManager::registerFace(LLSpatialGroup* group, LLFace* facep,
 		model_mat = &(drawable->getRegion()->mRenderMatrix);
 	}
 
-
 	U8 bump = (type == LLRenderPass::PASS_BUMP || type == LLRenderPass::PASS_POST_BUMP) ? facep->getTextureEntry()->getBumpmap() : 0;
 	
 	LLViewerTexture* tex = facep->getTexture();
@@ -4589,7 +4588,7 @@ void LLVolumeGeometryManager::genDrawInfo(LLSpatialGroup* group, U32 mask, std::
 				// can we safely treat this as an alpha mask?
 				if (facep->canRenderAsMask())
 				{
-					if (te->getFullbright() || LLPipeline::sNoAlpha) // KL watch this 
+					if (te->getFullbright() || LLPipeline::sNoAlpha)
 					{
 						registerFace(group, facep, LLRenderPass::PASS_FULLBRIGHT_ALPHA_MASK);
 					}

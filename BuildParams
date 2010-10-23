@@ -39,8 +39,8 @@ snowstorm_viewer-development.email = viewer-development-builds@lists.secondlife.
 # ========================================
 # Viewer Beta
 # ========================================
-viewer-beta.viewer_channel = "Second Life Beta"
-viewer-beta.login_channel = "Second Life Beta"
+viewer-beta.viewer_channel = "Second Life Beta Viewer"
+viewer-beta.login_channel = "Second Life Beta Viewer"
 viewer-beta.build_debug_release_separately = true
 viewer-beta.build_viewer_update_version_manager = true
 
