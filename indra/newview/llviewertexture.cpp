@@ -1409,8 +1409,15 @@ BOOL LLViewerFetchedTexture::createTexture(S32 usename/*= 0*/)
 			mOrigWidth = mRawImage->getWidth();
 			mOrigHeight = mRawImage->getHeight();
 
-			// leave black border, do not scale image content
-			mRawImage->expandToPowerOfTwo(MAX_IMAGE_SIZE, FALSE);
+			
+			if (mBoostLevel == BOOST_PREVIEW)
+			{ 
+				mRawImage->biasedScaleToPowerOfTwo(1024);
+			}
+			else
+			{ // leave black border, do not scale image content
+				mRawImage->expandToPowerOfTwo(MAX_IMAGE_SIZE, FALSE);
+			}
 			
 			mFullWidth = mRawImage->getWidth();
 			mFullHeight = mRawImage->getHeight();
@@ -1571,7 +1578,7 @@ F32 LLViewerFetchedTexture::calcDecodePriority()
 
 	S32 cur_discard = getCurrentDiscardLevelForFetching();
 	bool have_all_data = (cur_discard >= 0 && (cur_discard <= mDesiredDiscardLevel));
-	F32 pixel_priority = fsqrtf(mMaxVirtualSize);
+	F32 pixel_priority = (F32) sqrt(mMaxVirtualSize);
 
 	F32 priority = 0.f;
 
@@ -2852,7 +2859,7 @@ BOOL LLViewerFetchedTexture::insertToAtlas()
 	}
 
 	//process the waiting_list
-	for(ll_face_list_t::iterator iter = waiting_list.begin(); iter != waiting_list.end(); ++iter)
+	for(std::vector<LLFace*>::iterator iter = waiting_list.begin(); iter != waiting_list.end(); ++iter)
 	{
 		facep = (LLFace*)*iter ;	
 		groupp = facep->getDrawable()->getSpatialGroup() ;

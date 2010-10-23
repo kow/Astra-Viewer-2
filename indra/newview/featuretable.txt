@@ -1,4 +1,4 @@
-version 23
+version 24
 
 // NOTE: This is mostly identical to featuretable_mac.txt with a few differences
 // Should be combined into one table
@@ -39,6 +39,7 @@ RenderGround				1	1
 RenderMaxPartCount			1	8192
 RenderNightBrightness		1	1.0
 RenderObjectBump			1	1
+RenderLocalLights			1	1
 RenderReflectionDetail		1	4
 RenderTerrainDetail			1	1
 RenderTerrainLODFactor		1	2.0
@@ -55,10 +56,11 @@ Disregard128DefaultDrawDistance	1	1
 Disregard96DefaultDrawDistance	1	1
 RenderTextureMemoryMultiple		1	1.0
 RenderShaderLightingMaxLevel	1	3
+RenderDeferred				1	1
 SkyUseClassicClouds			1	0
-RenderDeferred				1	0
-RenderDeferredSSAO			1	0
-RenderShadowDetail			1	0
+RenderDeferredSSAO			1	1
+RenderShadowDetail			1	2
+RenderUseFBO				1	1
 WatchdogDisabled				1	1
 RenderUseStreamVBO			1	1
 RenderUseFBO				1	1
@@ -77,6 +79,7 @@ RenderFlexTimeFactor		1	0
 RenderGlowResolutionPow		1	8
 RenderMaxPartCount			1	0
 RenderObjectBump			1	0
+RenderLocalLights			1	0
 RenderReflectionDetail		1	0
 RenderTerrainDetail			1	0
 RenderTerrainLODFactor		1	1
@@ -105,6 +108,7 @@ RenderFlexTimeFactor		1	1.0
 RenderGlowResolutionPow		1	8
 RenderMaxPartCount			1	2048
 RenderObjectBump			1	1
+RenderLocalLights			1	1
 RenderReflectionDetail		1	0
 RenderTerrainDetail			1	1
 RenderTerrainLODFactor		1	1.0
@@ -132,6 +136,7 @@ RenderFlexTimeFactor		1	1.0
 RenderGlowResolutionPow		1	9
 RenderMaxPartCount			1	4096
 RenderObjectBump			1	1
+RenderLocalLights			1	1
 RenderReflectionDetail		1	2
 RenderTerrainDetail			1	1
 RenderTerrainLODFactor		1	2.0
@@ -159,6 +164,7 @@ RenderFlexTimeFactor		1	1.0
 RenderGlowResolutionPow		1	9
 RenderMaxPartCount			1	8192
 RenderObjectBump			1	1
+RenderLocalLights			1	1
 RenderReflectionDetail		1	4
 RenderTerrainDetail			1	1
 RenderTerrainLODFactor		1	2.0
@@ -168,9 +174,9 @@ RenderVolumeLODFactor		1	2.0
 VertexShaderEnable			1	1
 WindLightUseAtmosShaders	1	1
 WLSkyDetail					1	128
-RenderDeferred				1	0
-RenderDeferredSSAO			1	0
-RenderShadowDetail			1	0
+RenderDeferred				1	1
+RenderDeferredSSAO			1	1
+RenderShadowDetail			1	2
 RenderUseFBO				1	1
 
 //
@@ -229,6 +235,7 @@ RenderDeferred				0	0
 RenderDeferredSSAO			0	0
 RenderShadowDetail			0	0
 
+
 //
 // "Default" setups for safe, low, medium, high
 //
@@ -237,6 +244,7 @@ RenderAnisotropic			1	0
 RenderAvatarCloth			0	0
 RenderAvatarVP				0	0
 RenderObjectBump			0	0
+RenderLocalLights			1	0
 RenderMaxPartCount			1	1024
 RenderTerrainDetail 		1	0
 RenderUseImpostors			0	0
@@ -248,6 +256,7 @@ RenderDeferredSSAO			0	0
 RenderShadowDetail			0	0
 RenderUseFBO				1	0
 		
+
 //
 // CPU based feature masks
 //
@@ -453,6 +462,7 @@ RenderAvatarCloth			0	0
 
 list ATI
 RenderUseStreamVBO			1	0
+RenderAvatarVP				1	0
 
 /// Tweaked NVIDIA
 
@@ -553,4 +563,3 @@ list NVIDIA_GeForce_Go_7800
 RenderShaderLightingMaxLevel	1	2
 list NVIDIA_GeForce_Go_7900
 RenderShaderLightingMaxLevel	1	2
-

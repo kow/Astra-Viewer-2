@@ -857,6 +857,10 @@ U32 info_display_from_string(std::string info_display)
 	{
 		return LLPipeline::RENDER_DEBUG_BBOXES;
 	}
+	else if ("normals" == info_display)
+	{
+		return LLPipeline::RENDER_DEBUG_NORMALS;
+	}
 	else if ("points" == info_display)
 	{
 		return LLPipeline::RENDER_DEBUG_POINTS;
@@ -868,6 +872,10 @@ U32 info_display_from_string(std::string info_display)
 	else if ("shadow frusta" == info_display)
 	{
 		return LLPipeline::RENDER_DEBUG_SHADOW_FRUSTA;
+	}
+	else if ("physics shapes" == info_display)
+	{
+		return LLPipeline::RENDER_DEBUG_PHYSICS_SHAPES;
 	}
 	else if ("occlusion" == info_display)
 	{

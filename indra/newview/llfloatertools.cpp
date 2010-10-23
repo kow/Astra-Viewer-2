@@ -351,7 +351,6 @@ LLFloaterTools::LLFloaterTools(const LLSD& key)
 	mFactoryMap["Contents"] = LLCallbackMap(createPanelContents, this);//LLPanelContents
 	mFactoryMap["land info panel"] = LLCallbackMap(createPanelLandInfo, this);//LLPanelLandInfo
 	
-	//Called from floater reg: LLUICtrlFactory::getInstance()->buildFloater(this,"floater_tools.xml",FALSE);
 	mCommitCallbackRegistrar.add("BuildTool.setTool",			boost::bind(&LLFloaterTools::setTool,this, _2));
 	mCommitCallbackRegistrar.add("BuildTool.commitZoom",		boost::bind(&commit_slider_zoom, _1));
 	mCommitCallbackRegistrar.add("BuildTool.commitRadioFocus",	boost::bind(&commit_radio_group_focus, _1));
@@ -414,14 +413,41 @@ void LLFloaterTools::refresh()
 
 	// Refresh object and prim count labels
 	LLLocale locale(LLLocale::USER_LOCALE);
-	std::string obj_count_string;
-	LLResMgr::getInstance()->getIntegerString(obj_count_string, LLSelectMgr::getInstance()->getSelection()->getRootObjectCount());
-	getChild<LLUICtrl>("obj_count")->setTextArg("[COUNT]", obj_count_string);	
-	std::string prim_count_string;
-	LLResMgr::getInstance()->getIntegerString(prim_count_string, LLSelectMgr::getInstance()->getSelection()->getObjectCount());
-	getChild<LLUICtrl>("prim_count")->setTextArg("[COUNT]", prim_count_string);
 
-	// calculate selection rendering cost
+	// Get the number of objects selected
+	std::string root_object_count_string;
+	std::string object_count_string;
+
+	LLResMgr::getInstance()->getIntegerString(
+		root_object_count_string,
+		LLSelectMgr::getInstance()->getSelection()->getRootObjectCount());
+	LLResMgr::getInstance()->getIntegerString(
+		object_count_string,
+		LLSelectMgr::getInstance()->getSelection()->getObjectCount());
+
+	F32 obj_cost =
+		LLSelectMgr::getInstance()->getSelection()->getSelectedObjectCost();
+	F32 link_cost =
+		LLSelectMgr::getInstance()->getSelection()->getSelectedLinksetCost();
+	F32 obj_physics_cost =
+		LLSelectMgr::getInstance()->getSelection()->getSelectedPhysicsCost();
+	F32 link_physics_cost =
+		LLSelectMgr::getInstance()->getSelection()->getSelectedLinksetPhysicsCost();
+
+	// Update the text for the counts
+	childSetTextArg(
+		"linked_set_count",
+		"[COUNT]",
+		root_object_count_string);
+	childSetTextArg("object_count", "[COUNT]", object_count_string);
+
+	// Update the text for the resource costs
+	childSetTextArg("linked_set_cost","[COST]",llformat("%.1f", link_cost));
+	childSetTextArg("object_cost", "[COST]", llformat("%.1f", obj_cost));
+	childSetTextArg("linked_set_cost","[PHYSICS]",llformat("%.1f", link_physics_cost));
+	childSetTextArg("object_cost", "[PHYSICS]", llformat("%.1f", obj_physics_cost));
+
+	// Display rendering cost if needed
 	if (sShowObjectCost)
 	{
 		std::string prim_cost_string;
@@ -432,9 +458,10 @@ void LLFloaterTools::refresh()
 
 	// disable the object and prim counts if nothing selected
 	bool have_selection = ! LLSelectMgr::getInstance()->getSelection()->isEmpty();
-	getChildView("obj_count")->setEnabled(have_selection);
-	getChildView("prim_count")->setEnabled(have_selection);
-	getChildView("RenderingCost")->setEnabled(have_selection && sShowObjectCost);
+	childSetEnabled("linked_set_count", have_selection);
+	childSetEnabled("object_count", have_selection);
+	childSetEnabled("linked_set_cost", have_selection);
+	childSetEnabled("object_cost", have_selection);
 
 	// Refresh child tabs
 	mPanelPermissions->refresh();
@@ -986,7 +1013,7 @@ void LLFloaterTools::onClickGridOptions()
 S32 LLFloaterTools::calcRenderCost()
 {
 	S32 cost = 0;
-	std::set<LLUUID> textures;
+	LLVOVolume::texture_cost_t textures;
 
 	for (LLObjectSelection::iterator selection_iter = LLSelectMgr::getInstance()->getSelection()->begin();
 		  selection_iter != LLSelectMgr::getInstance()->getSelection()->end();
@@ -995,11 +1022,17 @@ S32 LLFloaterTools::calcRenderCost()
 		LLSelectNode *select_node = *selection_iter;
 		if (select_node)
 		{
-			LLVOVolume *viewer_volume = (LLVOVolume*)select_node->getObject();
-			if (viewer_volume)
+			LLViewerObject *vobj = select_node->getObject();
+			if (vobj->getVolume())
 			{
-				cost += viewer_volume->getRenderCost(textures);
-				cost += textures.size() * LLVOVolume::ARC_TEXTURE_COST;
+				LLVOVolume* volume = (LLVOVolume*) vobj;
+
+				cost += volume->getRenderCost(textures);
+				for (LLVOVolume::texture_cost_t::iterator iter = textures.begin(); iter != textures.end(); ++iter)
+				{
+					// add the cost of each individual texture in the linkset
+					cost += iter->second;
+				}
 				textures.clear();
 			}
 		}

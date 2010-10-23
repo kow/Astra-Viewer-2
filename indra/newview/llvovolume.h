@@ -2,33 +2,26 @@
  * @file llvovolume.h
  * @brief LLVOVolume class header file
  *
- * $LicenseInfo:firstyear=2001&license=viewergpl$
- * 
- * Copyright (c) 2001-2010, Linden Research, Inc.
- * 
+ * $LicenseInfo:firstyear=2001&license=viewerlgpl$
  * Second Life Viewer Source Code
- * The source code in this file ("Source Code") is provided by Linden Lab
- * to you under the terms of the GNU General Public License, version 2.0
- * ("GPL"), unless you have obtained a separate licensing agreement
- * ("Other License"), formally executed by you and Linden Lab.  Terms of
- * the GPL can be found in doc/GPL-license.txt in this distribution, or
- * online at http://secondlife.com/developers/opensource/gplv2
+ * Copyright (C) 2010, Linden Research, Inc.
  * 
- * There are special exceptions to the terms and conditions of the GPL as
- * it is applied to this Source Code. View the full text of the exception
- * in the file doc/FLOSS-exception.txt in this software distribution, or
- * online at
- * http://secondlife.com/developers/opensource/flossexception
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License only.
  * 
- * By copying, modifying or distributing this software, you acknowledge
- * that you have read and understood your obligations described above,
- * and agree to abide by those obligations.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  * 
- * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
- * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
- * COMPLETENESS OR PERFORMANCE.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
- * 
  */
 
 #ifndef LL_LLVOVOLUME_H
@@ -47,12 +40,26 @@ class LLDrawPool;
 class LLSelectNode;
 class LLObjectMediaDataClient;
 class LLObjectMediaNavigateClient;
+class LLVOAvatar;
+class LLMeshSkinInfo;
 
 typedef std::vector<viewer_media_t> media_list_t;
 
 enum LLVolumeInterfaceType
 {
 	INTERFACE_FLEXIBLE = 1,
+};
+
+
+class LLRiggedVolume : public LLVolume
+{
+public:
+	LLRiggedVolume(const LLVolumeParams& params)
+		: LLVolume(params, 0.f)
+	{
+	}
+
+	void update(const LLMeshSkinInfo* skin, LLVOAvatar* avatar, const LLVolume* src_volume);
 };
 
 // Base class for implementations of the volume - Primitive, Flexible Object, etc.
@@ -67,7 +74,7 @@ public:
 	virtual void onSetVolume(const LLVolumeParams &volume_params, const S32 detail) = 0;
 	virtual void onSetScale(const LLVector3 &scale, BOOL damped) = 0;
 	virtual void onParameterChanged(U16 param_type, LLNetworkData *data, BOOL in_use, bool local_origin) = 0;
-	virtual void onShift(const LLVector3 &shift_vector) = 0;
+	virtual void onShift(const LLVector4a &shift_vector) = 0;
 	virtual bool isVolumeUnique() const = 0; // Do we need a unique LLVolume instance?
 	virtual bool isVolumeGlobal() const = 0; // Are we in global space?
 	virtual bool isActive() const = 0; // Is this object currently active?
@@ -121,8 +128,10 @@ public:
 	const LLMatrix4&	getRelativeXform() const				{ return mRelativeXform; }
 	const LLMatrix3&	getRelativeXformInvTrans() const		{ return mRelativeXformInvTrans; }
 	/*virtual*/	const LLMatrix4	getRenderMatrix() const;
-				U32 	getRenderCost(std::set<LLUUID> &textures) const;
-
+				typedef std::map<LLUUID, S32> texture_cost_t;
+				U32 	getRenderCost(texture_cost_t &textures) const;
+	/*virtual*/	F32		getStreamingCost();
+	/*virtual*/ U32		getTriangleCount();
 	/*virtual*/ BOOL lineSegmentIntersect(const LLVector3& start, const LLVector3& end, 
 										  S32 face = -1,                        // which face to check, -1 = ALL_SIDES
 										  BOOL pick_transparent = FALSE,
@@ -146,7 +155,7 @@ public:
 
 				void	markForUpdate(BOOL priority)			{ LLViewerObject::markForUpdate(priority); mVolumeChanged = TRUE; }
 
-	/*virtual*/ void	onShift(const LLVector3 &shift_vector); // Called when the drawable shifts
+	/*virtual*/ void	onShift(const LLVector4a &shift_vector); // Called when the drawable shifts
 
 	/*virtual*/ void	parameterChanged(U16 param_type, bool local_origin);
 	/*virtual*/ void	parameterChanged(U16 param_type, LLNetworkData* data, BOOL in_use, bool local_origin);
@@ -185,6 +194,11 @@ public:
 				void	updateSculptTexture();
 				void    setIndexInTex(S32 index) { mIndexInTex = index ;}
 				void	sculpt();
+	 static     void    rebuildMeshAssetCallback(LLVFS *vfs,
+														  const LLUUID& asset_uuid,
+														  LLAssetType::EType type,
+														  void* user_data, S32 status, LLExtStat ext_status);
+					
 				void	updateRelativeXform();
 	/*virtual*/ BOOL	updateGeometry(LLDrawable *drawable);
 	/*virtual*/ void	updateFaceSize(S32 idx);
@@ -197,7 +211,7 @@ public:
 				void	regenFaces();
 				BOOL	genBBoxes(BOOL force_global);
 				void	preRebuild();
-	virtual		void	updateSpatialExtents(LLVector3& min, LLVector3& max);
+	virtual		void	updateSpatialExtents(LLVector4a& min, LLVector4a& max);
 	virtual		F32		getBinRadius();
 	
 	virtual U32 getPartitionType() const;
@@ -231,6 +245,7 @@ public:
 	U32 getVolumeInterfaceID() const;
 	virtual BOOL isFlexible() const;
 	virtual BOOL isSculpted() const;
+	virtual BOOL isMesh() const;
 	virtual BOOL hasLightTexture() const;
 
 	BOOL isVolumeGlobal() const;
@@ -255,6 +270,7 @@ public:
     
 	void mediaNavigated(LLViewerMediaImpl *impl, LLPluginClassMedia* plugin, std::string new_location);
 	void mediaEvent(LLViewerMediaImpl *impl, LLPluginClassMedia* plugin, LLViewerMediaObserver::EMediaEvent event);
+			
 
 	// Sync the given media data with the impl and the given te
 	void syncMediaData(S32 te, const LLSD &media_data, bool merge, bool ignore_agent);
@@ -270,9 +286,11 @@ public:
 	
 	LLVector3 getApproximateFaceNormal(U8 face_id);
 	
+	void notifyMeshLoaded();
+	
 	// Returns 'true' iff the media data for this object is in flight
 	bool isMediaDataBeingFetched() const;
-	
+
 	// Returns the "last fetched" media version, or -1 if not fetched yet
 	S32 getLastFetchedMediaVersion() const { return mLastFetchedMediaVersion; }
 
@@ -280,6 +298,21 @@ public:
 	void removeMDCImpl() { --mMDCImplCount; }
 	S32 getMDCImplCount() { return mMDCImplCount; }
 	
+
+	//rigged volume update (for raycasting)
+	void updateRiggedVolume();
+	LLRiggedVolume* getRiggedVolume();
+
+	//returns true if volume should be treated as a rigged volume
+	// - Build tools are open
+	// - object is an attachment
+	// - object is attached to self
+	// - object is rendered as rigged
+	bool treatAsRigged();
+
+	//clear out rigged volume and revert back to non-rigged state for picking/LOD/distance updates
+	void clearRiggedVolume();
+
 protected:
 	S32	computeLODDetail(F32	distance, F32 radius);
 	BOOL calcLOD();
@@ -313,6 +346,9 @@ private:
 	S32			mLastFetchedMediaVersion; // as fetched from the server, starts as -1
 	S32 mIndexInTex;
 	S32 mMDCImplCount;
+
+	LLPointer<LLRiggedVolume> mRiggedVolume;
+
 	// statics
 public:
 	static F32 sLODSlopDistanceFactor;// Changing this to zero, effectively disables the LOD transition slop 
@@ -321,8 +357,6 @@ public:
 		
 	static LLPointer<LLObjectMediaDataClient> sObjectMediaClient;
 	static LLPointer<LLObjectMediaNavigateClient> sObjectMediaNavigateClient;
-
-	static const U32 ARC_TEXTURE_COST = 5;
 
 protected:
 	static S32 sNumLODChanges;

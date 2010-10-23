@@ -42,6 +42,10 @@
 
 #include <stack>
 
+#include <stack>
+
+#include <stack>
+
 class LLViewerTexture;
 class LLEdge;
 class LLFace;
@@ -54,6 +58,9 @@ class LLCubeMap;
 class LLCullResult;
 class LLVOAvatar;
 class LLGLSLShader;
+class LLCurlRequest;
+
+class LLMeshResponder;
 
 typedef enum e_avatar_skinning_method
 {
@@ -107,8 +114,10 @@ public:
 	void resizeScreenTexture();
 	void releaseGLBuffers();
 	void createGLBuffers();
-	void allocateScreenBuffer(U32 resX, U32 resY);
 
+	void allocateScreenBuffer(U32 resX, U32 resY);
+	void allocatePhysicsBuffer();
+	
 	void resetVertexBuffers(LLDrawable* drawable);
 	void setUseVBO(BOOL use_vbo);
 	void generateImpostor(LLVOAvatar* avatar);
@@ -210,6 +219,7 @@ public:
 
 	//calculate pixel area of given box from vantage point of given camera
 	static F32 calcPixelArea(LLVector3 center, LLVector3 size, LLCamera& camera);
+	static F32 calcPixelArea(const LLVector4a& center, const LLVector4a& size, LLCamera &camera);
 
 	void stateSort(LLCamera& camera, LLCullResult& result);
 	void stateSort(LLSpatialGroup* group, LLCamera& camera);
@@ -222,6 +232,14 @@ public:
 	void renderGroups(LLRenderPass* pass, U32 type, U32 mask, BOOL texture);
 
 	void grabReferences(LLCullResult& result);
+	void clearReferences();
+
+	//check references will assert that there are no references in sCullResult to the provided data
+	void checkReferences(LLFace* face);
+	void checkReferences(LLDrawable* drawable);
+	void checkReferences(LLDrawInfo* draw_info);
+	void checkReferences(LLSpatialGroup* group);
+
 
 	void renderGeom(LLCamera& camera, BOOL forceVBOUpdate = FALSE);
 	void renderGeomDeferred(LLCamera& camera);
@@ -244,6 +262,7 @@ public:
 	void generateGI(LLCamera& camera, LLVector3& lightDir, std::vector<LLVector3>& vpc);
 	void renderHighlights();
 	void renderDebug();
+	void renderPhysicsDisplay();
 
 	void renderForSelect(std::set<LLViewerObject*>& objects, BOOL render_transparent, const LLRect& screen_rect);
 	void rebuildPools(); // Rebuild pools
@@ -303,6 +322,7 @@ public:
 	static BOOL toggleRenderTypeControlNegated(void* data);
 	static BOOL toggleRenderDebugControl(void* data);
 	static BOOL toggleRenderDebugFeatureControl(void* data);
+	static void setRenderDebugFeatureControl(U32 bit, bool value);
 
 	static void setRenderParticleBeacons(BOOL val);
 	static void toggleRenderParticleBeacons(void* data);
@@ -424,6 +444,8 @@ public:
 		RENDER_DEBUG_AVATAR_VOLUME      = 0x0100000,
 		RENDER_DEBUG_BUILD_QUEUE		= 0x0200000,
 		RENDER_DEBUG_AGENT_TARGET       = 0x0400000,
+		RENDER_DEBUG_PHYSICS_SHAPES     = 0x0800000,
+		RENDER_DEBUG_NORMALS	        = 0x1000000,
 	};
 
 public:
@@ -446,6 +468,10 @@ public:
 	S32						 mNumVisibleNodes;
 	S32						 mVerticesRelit;
 
+	S32						 mDebugTextureUploadCost;
+	S32						 mDebugSculptUploadCost;
+	S32						 mDebugMeshUploadCost;
+
 	S32						 mLightingChanges;
 	S32						 mGeometryChanges;
 
@@ -461,6 +487,8 @@ public:
 	static BOOL				sAutoMaskAlphaNonDeferred;
 	static BOOL				sDisableShaders; // if TRUE, rendering will be done without shaders
 	static BOOL				sRenderBump;
+	static BOOL				sBakeSunlight;
+	static BOOL				sNoAlpha;
 	static BOOL				sUseTriStrips;
 	static BOOL				sUseFarClip;
 	static BOOL				sShadowRender;
@@ -495,6 +523,7 @@ public:
 	LLRenderTarget			mGIMapPost[2];
 	LLRenderTarget			mLuminanceMap;
 	LLRenderTarget			mHighlight;
+	LLRenderTarget			mPhysicsDisplay;
 
 	//sun shadow map
 	LLRenderTarget			mShadow[6];

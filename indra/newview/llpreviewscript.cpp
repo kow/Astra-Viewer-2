@@ -1222,7 +1222,7 @@ void LLPreviewLSL::uploadAssetViaCaps(const std::string& url,
 	}
 	else
 	{
-		body["target"] = "lsl2";
+	body["target"] = "lsl2";
 	}
 	LLHTTPClient::post(url, body, new LLUpdateAgentInventoryResponder(body, filename, LLAssetType::AT_LSL_TEXT));
 }

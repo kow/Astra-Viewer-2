@@ -1075,29 +1075,32 @@ void LLViewerRegion::cacheFullUpdate(LLViewerObject* objectp, LLDataPackerBinary
 // AND the CRC matches. JC
 LLDataPacker *LLViewerRegion::getDP(U32 local_id, U32 crc)
 {
-	llassert(mCacheLoaded);
+	//llassert(mCacheLoaded);  This assert failes often, changing to early-out -- davep, 2010/10/18
 
-	LLVOCacheEntry* entry = get_if_there(mCacheMap, local_id, (LLVOCacheEntry*)NULL);
-
-	if (entry)
+	if (mCacheLoaded)
 	{
-		// we've seen this object before
-		if (entry->getCRC() == crc)
+		LLVOCacheEntry* entry = get_if_there(mCacheMap, local_id, (LLVOCacheEntry*)NULL);
+
+		if (entry)
 		{
-			// Record a hit
-			entry->recordHit();
-			return entry->getDP(crc);
+			// we've seen this object before
+			if (entry->getCRC() == crc)
+			{
+				// Record a hit
+				entry->recordHit();
+				return entry->getDP(crc);
+			}
+			else
+			{
+				// llinfos << "CRC miss for " << local_id << llendl;
+				mCacheMissCRC.put(local_id);
+			}
 		}
 		else
 		{
-			// llinfos << "CRC miss for " << local_id << llendl;
-			mCacheMissCRC.put(local_id);
+			// llinfos << "Cache miss for " << local_id << llendl;
+			mCacheMissFull.put(local_id);
 		}
-	}
-	else
-	{
-		// llinfos << "Cache miss for " << local_id << llendl;
-		mCacheMissFull.put(local_id);
 	}
 	return NULL;
 }
@@ -1378,12 +1381,17 @@ void LLViewerRegion::setSeedCapability(const std::string& url)
 	capabilityNames.append("FetchLibDescendents");
 	capabilityNames.append("GetDisplayNames");
 	capabilityNames.append("GetTexture");
+	capabilityNames.append("GetMesh");
+	capabilityNames.append("GetObjectCost");
+	capabilityNames.append("GetObjectPhysicsData");
 	capabilityNames.append("GroupProposalBallot");
 	capabilityNames.append("HomeLocation");
 	capabilityNames.append("LandResources");
 	capabilityNames.append("MapLayer");
 	capabilityNames.append("MapLayerGod");
 	capabilityNames.append("NewFileAgentInventory");
+	capabilityNames.append("NewFileAgentInventoryVariablePrice");
+	capabilityNames.append("ObjectAdd");
 	capabilityNames.append("ParcelPropertiesUpdate");
 	capabilityNames.append("ParcelMediaURLFilterList");
 	capabilityNames.append("ParcelNavigateMedia");
@@ -1398,6 +1406,8 @@ void LLViewerRegion::setSeedCapability(const std::string& url)
 	capabilityNames.append("SendUserReport");
 	capabilityNames.append("SendUserReportWithScreenshot");
 	capabilityNames.append("ServerReleaseNotes");
+	capabilityNames.append("SimConsole");
+	capabilityNames.append("SimulatorFeatures");
 	capabilityNames.append("SetDisplayName");
 	capabilityNames.append("StartGroupProposal");
 	capabilityNames.append("TextureStats");
@@ -1411,6 +1421,7 @@ void LLViewerRegion::setSeedCapability(const std::string& url)
 	capabilityNames.append("UpdateNotecardTaskInventory");
 	capabilityNames.append("UpdateScriptTask");
 	capabilityNames.append("UploadBakedTexture");
+	capabilityNames.append("UploadObjectAsset");
 	capabilityNames.append("ViewerStartAuction");
 	capabilityNames.append("ViewerStats");
 	capabilityNames.append("WebFetchInventoryDescendents");

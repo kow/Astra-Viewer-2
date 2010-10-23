@@ -32,6 +32,7 @@
 #include "llinventoryfunctions.h"
 #include "llinventorymodel.h"
 #include "llinventoryobserver.h"
+#include "llmenubutton.h"
 #include "llsidetray.h"
 #include "llviewermenu.h"
 #include "llwearableitemslist.h"
@@ -188,6 +189,10 @@ BOOL LLPanelWearing::postBuild()
 {
 	mCOFItemsList = getChild<LLWearableItemsList>("cof_items_list");
 	mCOFItemsList->setRightMouseDownCallback(boost::bind(&LLPanelWearing::onWearableItemsListRightClick, this, _1, _2, _3));
+
+	LLMenuButton* menu_gear_btn = getChild<LLMenuButton>("options_gear_btn");
+
+	menu_gear_btn->setMenu(mGearMenu->getMenu());
 
 	return TRUE;
 }

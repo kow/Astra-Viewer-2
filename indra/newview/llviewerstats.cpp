@@ -58,6 +58,7 @@
 #include "llworld.h"
 #include "llfeaturemanager.h"
 #include "llviewernetwork.h"
+#include "llmeshrepository.h" //for LLMeshRepository::sBytesReceived
 
 
 class StatAttributes
