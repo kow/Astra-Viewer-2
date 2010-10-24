@@ -151,7 +151,8 @@ if (LINUX)
       -msse
       -msse2
       -msse3
-      -mfpmath=both
+      -mssse3
+      -mfpmath=sse
       -ffast-math
       -w
       -O3
