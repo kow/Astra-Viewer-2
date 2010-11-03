@@ -1,0 +1,10 @@
+<llsd>
+    <map>
+    <key>skin_name</key>
+        <string>Linden default</string>
+    <key>authors</key>
+        <string>Linden Lab</string>
+    <key>description</key>
+        <string>Viewer 2.0  default.</string>
+    </map>
+</llsd>

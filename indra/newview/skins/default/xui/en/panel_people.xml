@@ -514,7 +514,6 @@ Looking for people to hang out with? Try the [secondlife:///app/worldmap World M
                image_selected="Toolbar_Left_Selected"
                image_unselected="Toolbar_Left_Off"
                layout="topleft"
-               left="3"
                name="recent_viewsort_btn"
                top="1"
                width="31" />

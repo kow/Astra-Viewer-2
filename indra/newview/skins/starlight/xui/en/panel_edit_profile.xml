@@ -255,6 +255,7 @@
          follows="left|top"
          height="15"
          layout="topleft"
+           link="true"
          left="10"
          name="partner_edit_link"
          value="[[URL] Edit]"

@@ -1278,7 +1278,6 @@ if (WINDOWS)
         ${DINPUT_LIBRARY}
         ${DXGUID_LIBRARY}
         kernel32
-        libboost_system
         odbc32
         odbccp32
         ole32
@@ -1755,12 +1754,12 @@ if (LINUX)
 
   add_dependencies(${VIEWER_BINARY_NAME} SLPlugin media_plugin_gstreamer010 media_plugin_webkit)
 
-  if (PACKAGE)
+  if (NOT INSTALL)
     add_custom_target(package ALL DEPENDS ${product}.tar.bz2)
     add_dependencies(package linux-crash-logger-target)
     add_dependencies(package linux-updater-target)
     check_message_template(package)
-  endif (PACKAGE)
+  endif (NOT INSTALL)
 
   add_custom_command(
     OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/.${product}.copy_touched

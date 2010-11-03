@@ -1367,6 +1367,14 @@ Could not find &apos;data&apos; chunk in WAV header:
 
   <notification
    icon="alertmodal.tga"
+   name="SoundFileInvalidChunkSize"
+   type="alertmodal">
+Wrong chunk size in WAV file:
+[FILE]
+  </notification>
+
+  <notification
+   icon="alertmodal.tga"
    name="SoundFileInvalidTooLong"
    type="alertmodal">
 Audio file is too long (10 second maximum):
@@ -5453,7 +5461,7 @@ An object named &lt;nolink&gt;[OBJECTFROMNAME]&lt;/nolink&gt; owned by [NAME_SLU
    icon="notify.tga"
    name="OfferFriendship"
    type="offer">
-[NAME] is offering friendship.
+[NAME_SLURL] is offering friendship.
 
 [MESSAGE]
 
@@ -5482,7 +5490,7 @@ An object named &lt;nolink&gt;[OBJECTFROMNAME]&lt;/nolink&gt; owned by [NAME_SLU
    name="OfferFriendshipNoMessage"
    persist="true"
    type="notify">
-[NAME] is offering friendship.
+[NAME_SLURL] is offering friendship.
 
 (By default, you will be able to see each other&apos;s online status.)
     <form name="form">
@@ -5531,7 +5539,7 @@ Friendship offer declined.
    name="OfferCallingCard"
    persist="true"
    type="notify">
-[NAME] is offering their calling card.
+[FIRST] [LAST] is offering their calling card.
 This will add a bookmark in your inventory so you can quickly IM this Resident.
     <form name="form">
       <button

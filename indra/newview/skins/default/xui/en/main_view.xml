@@ -62,31 +62,48 @@
                           layout="topleft"
                           tab_stop="false"
                           mouse_opaque="false"
-                          
+                          user_resize="false" 
                           name="hud container"
                           width="500">
-              <panel       
+<!-- sidebar starts -->
+              <layout_stack border_size="0"
                             follows="right|top|bottom"
                             height="768"
                             right="500"
-                            top="80" 
+                            top="69" 
                             bottom="388" 
-                            min_width="333"
+                            min_width="370"
                             mouse_opaque="false"
-                            tab_stop="false"
-                            name="side_tray_container"
-                            
-                            visible="false"
-                            width="333"/>
-              <!-- Redundant side tabs KL -->
-              <!--panel follows="right|top|bottom"
-                     height="600"
-                     mouse_opaque="false"
-                     name="side_bar_tabs"
-                     left="0"
-                     tab_stop="false"
-                     top="150" 
-                     width="32"/-->
+                            name="sidebar"
+                            orientation="horizontal"
+                            width="370">
+                <layout_panel follows="all"               
+                              height="340"
+                              right="0"
+                              mouse_opaque="false"
+                              name="sidebar_lp">
+		     <!--   <panel follows="right|top|bottom"
+                                height="340"
+                                mouse_opaque="false"
+                                name="side_bar_tabs"
+                                tab_stop="false"
+                                user_resize="true"
+                                right="0"
+                                top="0"
+                                width="32"/> -->
+                </layout_panel>
+                <layout_panel auto_resize="false"
+                              follows="all"
+                              height="340"
+                              user_resize="true"
+                              mouse_opaque="true"
+                              tab_stop="false"
+                              name="side_tray_container"
+                              visible="false"
+                              width="333"/>
+	         </layout_stack>
+<!--  sidebar ends -->
+
               <panel bottom="500"
                      follows="left|right|bottom"
                      height="25"

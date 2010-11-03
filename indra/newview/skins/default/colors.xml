@@ -32,9 +32,15 @@
 	<color
 	 name="LtGray"
 	 value="0.75 0.75 0.75 1" />
+	 <color
+	 name="LtGray_86"
+	 value="0.70 0.70 0.70 .86" />
 	<color
 	 name="LtGray_50"
 	 value="0.75 0.75 0.75 0.50" />
+	 <color
+	 name="MistyBuff"
+	 value="0.50 0.50 0.50 1" />
 	<color
 	 name="DkGray"
 	 value="0.125 0.125 0.125 1" />
@@ -53,7 +59,7 @@
 	<color
 	 name="Black"
 	 value="0 0 0 1" />
-	<colork
+	<color
 	 name="Black_10"
 	 value="0 0 0 0.1" />
 	<color
@@ -62,6 +68,9 @@
 	<color
 	 name="Black_50"
 	 value="0 0 0 0.5" />
+	 <color
+	 name="Black_60"
+	 value="0 0 0 0.6" />
 	<color
 	name="FrogGreen"
 	value="0.26 0.345 0.263 1" />
@@ -191,7 +200,7 @@
      reference="Unused?" />
     <color
      name="ChatHistoryBgColor"
-     reference="Transparent" />
+     reference="Black_50" />
     <color
      name="ChatHistoryTextColor"
      reference="LtGray" />
@@ -500,7 +509,7 @@
      reference="DkGray_86" />
     <color
      name="MenuDefaultBgColor"
-     reference="DkGray_86" />
+     reference="Black_60" />
     <color
      name="MenuItemDisabledColor"
 	 reference="LtGray_50" />

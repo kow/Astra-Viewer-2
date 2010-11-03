@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <panel
+bg_alpha_color="Black_50"
+ bg_opaque_color="Black_50"
+ background_opaque="true"
  background_visible="true"
  height="90"
  label="instant_message"

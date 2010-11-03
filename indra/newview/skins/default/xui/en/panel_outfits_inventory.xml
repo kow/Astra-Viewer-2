@@ -33,6 +33,8 @@
      top="8"
      width="315">
          <panel
+           bg_alpha_color="Black_50"
+ 	   bg_opaque_color="Black_50"
            class="outfits_list"
            filename="panel_outfits_list.xml"
            height="520"

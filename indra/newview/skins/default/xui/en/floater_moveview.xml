@@ -116,7 +116,7 @@
          width="24" />
         <joystick_slide
          follows="left|bottom"
-         height="19"
+         height="10"
          image_selected="Movement_Left_On"
          image_pressed_selected="Movement_Left_On"
          image_unselected="Movement_Left_Off"
@@ -126,7 +126,7 @@
          quadrant="left"
          scale_image="false"
          tool_tip="Walk left (press Shift + Left Arrow or A)"
-         top_pad="-5"
+         top_pad="10"
          width="19" />
         <!-- Right column -->
         <button
@@ -144,16 +144,17 @@
          width="24" />
         <joystick_slide
          follows="left|bottom"
-         height="19"
+         height="10"
          image_selected="Movement_Right_On"
          image_pressed_selected="Movement_Right_On"
          image_unselected="Movement_Right_Off"
          layout="topleft"
          name="move right btn"
          quadrant="right"
+         right_delta="4"
          scale_image="false"
          tool_tip="Walk right (press Shift + Right Arrow or D)"
-         top_pad="-5"
+         top_pad="10"
          width="19" />
         <!-- Middle column -->
         <joystick_turn
@@ -197,7 +198,7 @@
          scale_image="false"
          tool_tip="Fly up (press E)"
          top="22"
-         width="24" />
+         width="10" />
         <button
          follows="left|bottom"
          height="19"
@@ -205,11 +206,12 @@
          image_pressed_selected="Movement_Down_On"
          image_unselected="Movement_Down_Off"
          layout="topleft"
+         right_delta="0"
          name="move down btn"
          scale_image="false"
          tool_tip="Fly down (press C)"
          top_pad="10"
-         width="24" />
+         width="10" />
     </panel>
 <!-- Width and height of this panel should be synchronized with panel_stand_stop_flying.xml -->
     <panel

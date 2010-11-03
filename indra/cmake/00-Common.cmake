@@ -52,7 +52,11 @@ if (WINDOWS)
       /DDOM_DYNAMIC
       /DUNICODE
       /D_UNICODE 
+      /GA
       /GS
+      /Oi
+      /Ob2
+      /Os
       /TP
       /W2
       /c

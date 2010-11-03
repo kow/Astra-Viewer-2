@@ -3419,8 +3419,8 @@ void LLPhysicsDecomp::run()
 	static const LLCDStageData* stages = NULL;
 	static S32 num_stages = 0;
 	
-//	if (!stages && LLConvexDecomposition::getInstance() != NULL)
-    if (!stages)
+	if (!stages && LLConvexDecomposition::getInstance() != NULL) //HAACK!! Just so i can get a runner KL 
+   // if (!stages)
 	{
 		num_stages = decomp->getStages(&stages);
 	}

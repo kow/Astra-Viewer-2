@@ -85,20 +85,22 @@
 	     tool_tip="Teleport to my home location"
 	     top_delta="0"
 	     width="32" />
+          <!-- About Land Button here -->         
 	    <button
 	     follows="left|top"
 	     height="23"
 	     layout="topleft"
 	     left_pad="7"
 	     name="About_Land"
-		 label="About Land" 
+	     label="About Land" 
 	     tool_tip="About Land"
 	     top_delta="0"
 	     width="70">
-			<button.init_callback
-             function="Button.SetFloaterToggle"
-             parameter="about_land" />
+		 <button.init_callback
+               function="Button.SetFloaterToggle"
+               parameter="about_land" />
 		 </button>
+          <!-- end of About Land Button -->
 	    <location_input
 	     follows="left|right|top"
 	     halign="right"
@@ -110,35 +112,11 @@
 	     mouse_opaque="false"
 	     name="location_combo"
 	     top_delta="0"
-	     width="195">
+	     width="170">
+	    </location_input>
+
          <combo_list
          mouse_wheel_opaque="true"/>
-	     <!-- *TODO: Delete.  Let the location_input use the correct art sizes.
-	        <location_input.add_landmark_button
-	         height="18"
-	         name="location_combo_add"
-	         width="20" />
-	        <location_input.info_button
-	         height="18"
-	         name="location_combo_info"
-	         width="20" />
-	      -->
-	    </location_input>
-	<!--     <button -->
-	<!--      follows="right|top" -->
-	<!--      height="20" -->
-	<!--      image_disabled="TextField_Search_Off" -->
-	<!--      image_disabled_selected="TextField_Search_Off" -->
-	<!--      image_hover_selected="TextField_Search_Off" -->
-	<!--      image_hover_unselected="TextField_Search_Off" -->
-	<!--      image_selected="TextField_Search_Off" -->
-	<!--      image_unselected="TextField_Search_Off" -->
-	<!--      layout="topleft" -->
-	<!--      left_pad="5" -->
-	<!--      mouse_opaque="false" -->
-	<!--      name="search_bg" -->
-	<!--      top_delta="0" -->
-	<!--      width="168" /> -->
         <search_combo_box
 	     follows="right|top"
 	     halign="right"
@@ -168,10 +146,9 @@
      height="15"
      layout="topleft"
      left="0"
-     top="30"
      name="favorite"
      image_drag_indication="Accordion_ArrowOpened_Off"
-    
+     top="30"
      tool_tip="Drag Landmarks here for quick access to your favorite places in Second Life!"
                width="590">
         <label

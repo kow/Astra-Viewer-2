@@ -56,12 +56,12 @@
 
 const S32 LOG_RECALL_SIZE = 2048;
 
-const static std::string IM_TIME("time");
-const static std::string IM_TEXT("message");
-const static std::string IM_FROM("from");
-const static std::string IM_FROM_ID("from_id");
-const static std::string IM_SEPARATOR(": ");
+const std::string IM_TIME("time");
+const std::string IM_TEXT("message");
+const std::string IM_FROM("from");
+const std::string IM_FROM_ID("from_id");
 
+const static std::string IM_SEPARATOR(": ");
 const static std::string NEW_LINE("\n");
 const static std::string NEW_LINE_SPACE_PREFIX("\n ");
 const static std::string TWO_SPACES("  ");
@@ -87,7 +87,7 @@ const static boost::regex TIMESTAMP_AND_STUFF("^(\\[\\d{4}/\\d{1,2}/\\d{1,2}\\s+
  *  Regular expression suitable to match names like
  *  "You", "Second Life", "Igor ProductEngine", "Object", "Mega House"
  */
-const static boost::regex NAME_AND_TEXT("(You:|Second Life:|[^\\s:]+\\s*[:]{1}|\\S+\\s+[^\\s:]+[:]{1})?(\\s*)(.*)");
+const static boost::regex NAME_AND_TEXT("([^:]+[:]{1})?(\\s*)(.*)");
 
 //is used to parse complex object names like "Xstreet SL Terminal v2.2.5 st"
 const static std::string NAME_TEXT_DIVIDER(": ");
