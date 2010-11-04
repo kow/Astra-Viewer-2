@@ -3,19 +3,12 @@
 	partially on screen to hold tab buttons. -->
 <side_tray
   name="sidebar"
-  background_visible="false"
+  background_visible="true"
   mouse_opaque="true"
   width="333"
   collapsed="true"
 >
-<icon
-   scale_image="true"
-   follows="top|left|right|bottom"
-   height="600"
-   top="10"
-   bottom="0"
-   image_name="TaskPanel_BG.png"
-   width="333" />
+
   <!-- Individual tabs must show background to have seemless
 	appearance up to tray panel header word like "Home".
 	Embedded panels are inset by a pixel and so their
