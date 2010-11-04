@@ -57,7 +57,7 @@
      translate="false"
      value="Parcel_R_Dark" />
     <button
-     follows="top|left"
+     follows="top|right"
      height="24"
      image_hover_unselected="BackButton_Over"
      image_pressed="BackButton_Press"
