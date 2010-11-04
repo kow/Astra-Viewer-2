@@ -10,20 +10,21 @@
  name="panel_me"
  top="0"
  width="333">
-   <!--<text
-    type="string"
-    follows="top|left|right"
-    font="SansSerifHugeBold"
-    height="20"
-    layout="topleft"
-    left="15"
-    name="user_name"
-    text_color="white"
-    top="0"
-    mouse_opaque="true"
-    width="280">
-          (Loading...)
-   </text> -->
+    <text_editor
+     h_pad="0"
+     v_pad="0"
+     allow_scroll="false"
+     bg_visible="false"
+     read_only = "true"
+     follows="top|left|right"
+     height="13"
+     layout="topleft"
+     left="9"
+     name="agent_id"
+     text_color="Black"
+     value="00000000-0000-0000-0000-000000000000"
+     top_pad="0"
+     width="275" />
     <tab_container
      follows="all"
      height="555"
@@ -34,7 +35,7 @@
      tab_min_width="95"
      tab_height="30"
      tab_position="top"
-     top_pad="10"
+     top_pad="0"
      width="317">
       <panel
          class="panel_my_profile"

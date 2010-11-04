@@ -47,26 +47,25 @@
       <layout_panel
          name="profile_stack"
          follows="all"
-         layout="topleft"
-         top="0"
-         left="0"
+         layout="topleft" 
          height="400"
          width="317">
+        <!-- Do NOT muck about with this KL -->
         <scroll_container
          color="Black_50"
          follows="all"
          layout="topleft"
-         left="0"
+         height="390" 
+         min_height="300" 
          name="profile_scroll"
          opaque="true"
-         height="527"
          width="317"
          top="0">
           <panel
                 layout="topleft"
-          follows="left|top|right"
-                height="505"
-		min_height="505"
+                follows="left|top|right"
+                height="605"
+	            	min_height="605"
                 name="profile_scroll_panel"
                 top="0"
                 left="0"

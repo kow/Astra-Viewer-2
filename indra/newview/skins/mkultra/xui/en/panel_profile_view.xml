@@ -2,7 +2,7 @@
 <panel
  background_visible="true"
  follows="all"
- height="570"
+ height="610"
  layout="topleft"
  min_height="350"
  name="panel_target_profile"

@@ -147,6 +147,18 @@
                  function="Upload.CalculateCosts"
                  parameter="Upload Image" />
             </menu_item_call>
+	     <menu_item_call
+           label="Model..."
+           layout="topleft"
+           name="Upload Model">
+            <menu_item_call.on_click
+             function="File.UploadModel"
+             parameter="" />
+            <menu_item_call.on_enable
+             function="File.EnableUploadModel" />
+            <menu_item_call.on_visible
+            function="File.MeshEnabled"/>
+            </menu_item_call>
             <menu_item_call
              label="Sound (L$[COST])..."
              layout="topleft"
