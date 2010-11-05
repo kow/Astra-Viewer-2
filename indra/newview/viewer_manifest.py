@@ -944,7 +944,7 @@ class Linux_i686Manifest(LinuxManifest):
             self.path("libopenjpeg.so.1.3.0", "libopenjpeg.so.1.3")
             self.path("libalut.so")
             self.path("libopenal.so", "libopenal.so.1")
-            self.path("libopenal.so", "libvivoxoal.so.1") # vivox's sdk expects this soname
+            self.path("libopenal.so", "libvivoxoal.so.1") # vivox's sdk expects this soname - should work if FMOD used too... *should*
             self.path("libtcmalloc_minimal.so", "libtcmalloc_minimal.so") #formerly called google perf tools
             self.path("libtcmalloc_minimal.so.0", "libtcmalloc_minimal.so.0") #formerly called google perf tools
             try:
