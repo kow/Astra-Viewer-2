@@ -51,6 +51,12 @@ function homedir_install()
     warn "to install the Kirstens Viewer S21 in your home directory. If you"
     warn "would like to install the Kirstens Viewer S21 system-wide, please run"
     warn "this script as the root user, or with the 'sudo' command."
+    warn " "
+    warn "Clear cache before swap usage between a viewer and another one"
+    warn "for bug, crash or hint fill a message on forum bug channel"
+    warn " "
+    warn "This viewer contain software for mesh elaboration, check system"
+    warn "requirements before use it"
     echo
 
     prompt "Proceed with the installation? [Y/N]: "
