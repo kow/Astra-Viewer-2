@@ -73,7 +73,7 @@ const F32 AVATAR_ZOOM_MIN_X_FACTOR = 0.55f;
 const F32 AVATAR_ZOOM_MIN_Y_FACTOR = 0.7f;
 const F32 AVATAR_ZOOM_MIN_Z_FACTOR = 1.15f;
 
-const F32 MAX_CAMERA_DISTANCE_FROM_AGENT = 1024.f; // S21
+const F32 MAX_CAMERA_DISTANCE_FROM_AGENT = 512.f; // S21
 
 const F32 MAX_CAMERA_SMOOTH_DISTANCE = 50.0f;
 
@@ -296,8 +296,11 @@ void LLAgentCamera::resetView(BOOL reset_camera, BOOL change_camera)
 			LLSelectMgr::getInstance()->deselectAll();
 		}
 
-		// Hide all popup menus
-		gMenuHolder->hideMenus();
+		if (gMenuHolder != NULL)
+		{
+			// Hide all popup menus
+			gMenuHolder->hideMenus();
+		}
 	}
 
 	if (change_camera && !gSavedSettings.getBOOL("FreezeTime"))

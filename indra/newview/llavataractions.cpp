@@ -654,12 +654,8 @@ namespace action_give_inventory
 	{
 		llassert(avatar_names.size() == avatar_uuids.size());
 
-		LLInventoryPanel* active_panel = LLInventoryPanel::getActiveInventoryPanel(FALSE);
-		if (!active_panel)
-		{
-			active_panel = get_outfit_editor_inventory_panel();
-			if (!active_panel) return;
-		}
+		LLInventoryPanel* active_panel = get_active_inventory_panel();
+		if (!active_panel) return;
 
 		const uuid_set_t inventory_selected_uuids = active_panel->getRootFolder()->getSelectionList();
 		if (inventory_selected_uuids.empty())

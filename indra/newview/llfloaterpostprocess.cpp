@@ -74,10 +74,6 @@ BOOL LLFloaterPostProcess::postBuild()
     childSetCommitCallback("wmiOffsetS", &LLFloaterPostProcess::onFloatControlMoved, (char*)"offset_s");
     childSetCommitCallback("wmiOffsetT", &LLFloaterPostProcess::onFloatControlMoved, (char*)"offset_t");
 
-	///  Toon Shader Callbacks
-    childSetCommitCallback("wmiToonShaderToggle", &LLFloaterPostProcess::onBoolToggle, (char*)"enable_toon_shader");
-    childSetCommitCallback("wmiSilhouetteThreshold", &LLFloaterPostProcess::onFloatControlMoved, (char*)"silhouette_threshold");
-
 	/// Bloom Callbacks
 	childSetCommitCallback("wmiBloomToggle", &LLFloaterPostProcess::onBoolToggle, (char*)"enable_bloom");
 	childSetCommitCallback("wmiBloomExtract", &LLFloaterPostProcess::onFloatControlMoved, (char*)"extract_low");
@@ -234,10 +230,6 @@ void LLFloaterPostProcess::syncMenu()
     getChild<LLUICtrl>("wmiAnaglyphVisionToggle")->setValue(gPostProcess->tweaks.useAnaglyphVisionShader());
 	getChild<LLUICtrl>("wmiOffsetS")->setValue(gPostProcess->tweaks.OffsetS());
     getChild<LLUICtrl>("wmiOffsetT")->setValue(gPostProcess->tweaks.OffsetT());
-
-	///Sync Toon Shader Menu
-	getChild<LLUICtrl>("wmiToonShaderToggle")->setValue(gPostProcess->tweaks.useToonShader());
-	getChild<LLUICtrl>("wmiSilhouetteThreshold")->setValue(gPostProcess->tweaks.Silhouette());
 
 	/// Sync Bloom Menu
 	getChild<LLUICtrl>("wmiBloomToggle")->setValue(LLSD(gPostProcess->tweaks.useBloomShader()));

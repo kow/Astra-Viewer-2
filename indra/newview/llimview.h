@@ -97,7 +97,10 @@ public:
 		//*TODO make private
 		/** ad-hoc sessions involve sophisticated chat history file naming schemes */
 		void buildHistoryFileName();
+
 		void onAvatarNameCache(const LLUUID& avatar_id, const LLAvatarName& av_name);
+
+		void onAdHocNameCache(const LLAvatarName& av_name);
 
 		//*TODO make private
 		static std::string generateHash(const std::set<LLUUID>& sorted_uuids);

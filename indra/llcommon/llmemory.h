@@ -29,7 +29,6 @@
 #include <stdlib.h>
 
 // A not necessarily efficient, but general, aligned malloc http://stackoverflow.com/questions/196329/osx-lacks-memalign
-#if defined(LL_DARWIN) //If necessary only for macosx better don't fit pullution inside other platforms
 inline void* ll_aligned_malloc( size_t size, int align )
 {
 	void* mem = malloc( size + (align - 1) + sizeof(void*) );
@@ -39,8 +38,6 @@ inline void* ll_aligned_malloc( size_t size, int align )
 	((void**)aligned)[-1] = mem;
 	return aligned;
 }
-#endif
-
 
 inline void ll_aligned_free( void* ptr )
 {

@@ -155,7 +155,7 @@
    height="23"
    layout="topleft"
    left="80"
-   
+   max_length="4096"
    name="cache_location"
    top_pad="5"
    width="205" />
@@ -274,7 +274,6 @@
     radio_style="false"
     width="400"
     top_pad="5"/>
-
   <check_box
     top_delta="4"
     enabled="true"
@@ -282,13 +281,12 @@
     height="14"
     initial_value="false"
     control_name="MediaEnablePopups"
-    label="Enable Media Browser Pop-ups"
+    label="Enable media browser pop-ups"
     left_delta="0"
     mouse_opaque="true"
     name="media_popup_enabled"
     width="400"           
     top_pad="5"/>
-
   <check_box
     top_delta="4"
     enabled="true"

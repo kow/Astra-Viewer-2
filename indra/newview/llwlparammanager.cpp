@@ -40,7 +40,7 @@
 #include "lllineeditor.h"
 #include "llsdserialize.h"
 
-// For notecard loading
+// For notecard loading S21
 #include "llvfile.h"
 #include "llnotecard.h"
 #include "llmemorystream.h"

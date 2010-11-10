@@ -2,33 +2,26 @@
  * @file llapp.cpp
  * @brief Implementation of the LLApp class.
  *
- * $LicenseInfo:firstyear=2003&license=viewergpl$
- * 
- * Copyright (c) 2003-2010, Linden Research, Inc.
- * 
+ * $LicenseInfo:firstyear=2003&license=viewerlgpl$
  * Second Life Viewer Source Code
- * The source code in this file ("Source Code") is provided by Linden Lab
- * to you under the terms of the GNU General Public License, version 2.0
- * ("GPL"), unless you have obtained a separate licensing agreement
- * ("Other License"), formally executed by you and Linden Lab.  Terms of
- * the GPL can be found in doc/GPL-license.txt in this distribution, or
- * online at http://secondlife.com/developers/opensource/gplv2
+ * Copyright (C) 2010, Linden Research, Inc.
  * 
- * There are special exceptions to the terms and conditions of the GPL as
- * it is applied to this Source Code. View the full text of the exception
- * in the file doc/FLOSS-exception.txt in this software distribution, or
- * online at
- * http://secondlife.com/developers/opensource/flossexception
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License only.
  * 
- * By copying, modifying or distributing this software, you acknowledge
- * that you have read and understood your obligations described above,
- * and agree to abide by those obligations.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  * 
- * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
- * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
- * COMPLETENESS OR PERFORMANCE.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
- * 
  */
 
 #include <cstdlib>
@@ -96,6 +89,10 @@ S32 LL_HEARTBEAT_SIGNAL = (SIGRTMAX >= 0) ? (SIGRTMAX-0) : SIGUSR2;
 
 // the static application instance
 LLApp* LLApp::sApplication = NULL;
+
+// Allows the generation of core files for post mortem under gdb
+// and disables crashlogger
+BOOL LLApp::sDisableCrashlogger = FALSE; 
 
 // Local flag for whether or not to do logging in signal handlers.
 //static
@@ -468,9 +465,28 @@ bool LLApp::isQuitting()
 	return (APP_STATUS_QUITTING == sStatus);
 }
 
+// static
 bool LLApp::isExiting()
 {
 	return isQuitting() || isError();
+}
+
+void LLApp::disableCrashlogger()
+{
+	// Disable Breakpad exception handler.
+	if (mExceptionHandler != 0)
+	{
+		delete mExceptionHandler;
+		mExceptionHandler = 0;
+	}
+
+	sDisableCrashlogger = TRUE;
+}
+
+// static
+bool LLApp::isCrashloggerDisabled()
+{
+	return (sDisableCrashlogger == TRUE); 
 }
 
 #if !LL_WINDOWS
@@ -806,6 +822,15 @@ void default_unix_signal_handler(int signum, siginfo_t *info, void *)
 			{
 				llwarns << "Signal handler - Flagging error status and waiting for shutdown" << llendl;
 			}
+									
+			if (LLApp::isCrashloggerDisabled())	// Don't gracefully handle any signal, crash and core for a gdb post mortem
+			{
+				clear_signals();
+				llwarns << "Fatal signal received, not handling the crash here, passing back to operating system" << llendl;
+				raise(signum);
+				return;
+			}		
+			
 			// Flag status to ERROR, so thread_error does its work.
 			LLApp::setError();
 			// Block in the signal handler until somebody says that we're done.

@@ -197,17 +197,20 @@ private:
 	uuid_set_t mAvalineCallers;
 };
 
-LLParticipantList::LLParticipantList(LLSpeakerMgr* data_source, LLAvatarList* avatar_list,  bool use_context_menu/* = true*/,
-		bool exclude_agent /*= true*/, bool can_toggle_icons /*= true*/):
+LLParticipantList::LLParticipantList(LLSpeakerMgr* data_source, 
+									 LLAvatarList* avatar_list,
+									 bool use_context_menu/* = true*/,
+									 bool exclude_agent /*= true*/, 
+									 bool can_toggle_icons /*= true*/) :
 	mSpeakerMgr(data_source),
 	mAvatarList(avatar_list),
-	mSortOrder(E_SORT_BY_NAME)
-,	mParticipantListMenu(NULL)
-,	mExcludeAgent(exclude_agent)
-,	mValidateSpeakerCallback(NULL)
+	mParticipantListMenu(NULL),
+	mExcludeAgent(exclude_agent),
+	mValidateSpeakerCallback(NULL)
 {
+
 	mAvalineUpdater = new LLAvalineUpdater(boost::bind(&LLParticipantList::onAvalineCallerFound, this, _1),
-		boost::bind(&LLParticipantList::onAvalineCallerRemoved, this, _1));
+										   boost::bind(&LLParticipantList::onAvalineCallerRemoved, this, _1));
 
 	mSpeakerAddListener = new SpeakerAddListener(*this);
 	mSpeakerRemoveListener = new SpeakerRemoveListener(*this);
@@ -443,16 +446,19 @@ void LLParticipantList::onAvalineCallerRemoved(const LLUUID& participant_id)
 
 void LLParticipantList::setSortOrder(EParticipantSortOrder order)
 {
-	if ( mSortOrder != order )
+	const U32 speaker_sort_order = gSavedSettings.getU32("SpeakerParticipantDefaultOrder");
+
+	if ( speaker_sort_order != order )
 	{
-		mSortOrder = order;
+		gSavedSettings.setU32("SpeakerParticipantDefaultOrder", (U32)order);
 		sort();
 	}
 }
 
-LLParticipantList::EParticipantSortOrder LLParticipantList::getSortOrder()
+const LLParticipantList::EParticipantSortOrder LLParticipantList::getSortOrder() const
 {
-	return mSortOrder;
+	const U32 speaker_sort_order = gSavedSettings.getU32("SpeakerParticipantDefaultOrder");
+	return EParticipantSortOrder(speaker_sort_order);
 }
 
 void LLParticipantList::setValidateSpeakerCallback(validate_speaker_callback_t cb)
@@ -551,28 +557,29 @@ void LLParticipantList::sort()
 	if ( !mAvatarList )
 		return;
 
-	switch ( mSortOrder ) {
-	case E_SORT_BY_NAME :
-		// if mExcludeAgent == true , then no need to keep agent on top of the list
-		if(mExcludeAgent)
-		{
-			mAvatarList->sortByName();
-		}
-		else
-		{
-			mAvatarList->setComparator(&AGENT_ON_TOP_NAME_COMPARATOR);
+	switch ( getSortOrder() ) 
+	{
+		case E_SORT_BY_NAME :
+			// if mExcludeAgent == true , then no need to keep agent on top of the list
+			if(mExcludeAgent)
+			{
+				mAvatarList->sortByName();
+			}
+			else
+			{
+				mAvatarList->setComparator(&AGENT_ON_TOP_NAME_COMPARATOR);
+				mAvatarList->sort();
+			}
+			break;
+		case E_SORT_BY_RECENT_SPEAKERS:
+			if (mSortByRecentSpeakers.isNull())
+				mSortByRecentSpeakers = new LLAvatarItemRecentSpeakerComparator(*this);
+			mAvatarList->setComparator(mSortByRecentSpeakers.get());
 			mAvatarList->sort();
-		}
-		break;
-	case E_SORT_BY_RECENT_SPEAKERS:
-		if (mSortByRecentSpeakers.isNull())
-			mSortByRecentSpeakers = new LLAvatarItemRecentSpeakerComparator(*this);
-		mAvatarList->setComparator(mSortByRecentSpeakers.get());
-		mAvatarList->sort();
-		break;
-	default :
-		llwarns << "Unrecognized sort order for " << mAvatarList->getName() << llendl;
-		return;
+			break;
+		default :
+			llwarns << "Unrecognized sort order for " << mAvatarList->getName() << llendl;
+			return;
 	}
 }
 
@@ -645,7 +652,7 @@ bool LLParticipantList::SpeakerClearListener::handleEvent(LLPointer<LLOldEvents:
 //
 bool LLParticipantList::SpeakerModeratorUpdateListener::handleEvent(LLPointer<LLOldEvents::LLEvent> event, const LLSD& userdata)
 {
-		return mParent.onModeratorUpdateEvent(event, userdata);
+	return mParent.onModeratorUpdateEvent(event, userdata);
 }
 
 bool LLParticipantList::SpeakerMuteListener::handleEvent(LLPointer<LLOldEvents::LLEvent> event, const LLSD& userdata)
@@ -981,11 +988,11 @@ bool LLParticipantList::LLParticipantListMenu::checkContextMenuItem(const LLSD& 
 	}
 	else if(item == "is_sorted_by_name")
 	{
-		return E_SORT_BY_NAME == mParent.mSortOrder;
+		return E_SORT_BY_NAME == mParent.getSortOrder();
 	}
 	else if(item == "is_sorted_by_recent_speakers")
 	{
-		return E_SORT_BY_RECENT_SPEAKERS == mParent.mSortOrder;
+		return E_SORT_BY_RECENT_SPEAKERS == mParent.getSortOrder();
 	}
 
 	return false;

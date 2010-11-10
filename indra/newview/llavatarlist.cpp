@@ -151,6 +151,8 @@ LLAvatarList::LLAvatarList(const Params& p)
 		mExtraDataUpdateTimer->setTimerExpirySec(0); // zero to force initial update
 		mExtraDataUpdateTimer->start();
 	}
+	
+	LLAvatarNameCache::addUseDisplayNamesCallback(boost::bind(&LLAvatarList::handleDisplayNamesOptionChanged, this));
 }
 
 

@@ -1,33 +1,26 @@
 /** 
  * @file llimagedimensionsinfo.cpp
  *
- * $LicenseInfo:firstyear=2002&license=viewergpl$
- * 
- * Copyright (c) 2002-2010, Linden Research, Inc.
- * 
+ * $LicenseInfo:firstyear=2002&license=viewerlgpl$
  * Second Life Viewer Source Code
- * The source code in this file ("Source Code") is provided by Linden Lab
- * to you under the terms of the GNU General Public License, version 2.0
- * ("GPL"), unless you have obtained a separate licensing agreement
- * ("Other License"), formally executed by you and Linden Lab.  Terms of
- * the GPL can be found in doc/GPL-license.txt in this distribution, or
- * online at http://secondlife.com/developers/opensource/gplv2
+ * Copyright (C) 2010, Linden Research, Inc.
  * 
- * There are special exceptions to the terms and conditions of the GPL as
- * it is applied to this Source Code. View the full text of the exception
- * in the file doc/FLOSS-exception.txt in this software distribution, or
- * online at
- * http://secondlife.com/developers/opensource/flossexception
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License only.
  * 
- * By copying, modifying or distributing this software, you acknowledge
- * that you have read and understood your obligations described above,
- * and agree to abide by those obligations.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  * 
- * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
- * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
- * COMPLETENESS OR PERFORMANCE.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
- * 
  */
 
 #include "linden_common.h"
@@ -36,6 +29,9 @@
 #include "llimagejpeg.h"
 
 #include "llimagedimensionsinfo.h"
+
+// Value is true if one of Libjpeg's functions has encountered an error while working.
+static bool sJpegErrorEncountered = false;
 
 bool LLImageDimensionsInfo::load(const std::string& src_filename,U32 codec)
 {
@@ -108,9 +104,17 @@ bool LLImageDimensionsInfo::getImageDimensionsPng()
 	return true;
 }
 
+// Called instead of exit() if Libjpeg encounters an error.
+void on_jpeg_error(j_common_ptr cinfo)
+{
+	(void) cinfo;
+	sJpegErrorEncountered = true;
+	llwarns << "Libjpeg has encountered an error!" << llendl;
+}
 
 bool LLImageDimensionsInfo::getImageDimensionsJpeg()
 {
+	sJpegErrorEncountered = false;
 	clean();
 	FILE *fp = fopen (mSrcFilename.c_str(), "rb");
 	if (fp == NULL) 
@@ -122,6 +126,9 @@ bool LLImageDimensionsInfo::getImageDimensionsJpeg()
 	jpeg_error_mgr jerr;
 	jpeg_decompress_struct cinfo;
 	cinfo.err = jpeg_std_error(&jerr);
+	// Call our function instead of exit() if Libjpeg encounters an error.
+	// This is done to avoid crash in this case (STORM-472).
+	cinfo.err->error_exit = on_jpeg_error;
 
 	jpeg_create_decompress	(&cinfo);
 	jpeg_stdio_src		(&cinfo, fp);
@@ -135,6 +142,6 @@ bool LLImageDimensionsInfo::getImageDimensionsJpeg()
 	jpeg_destroy_decompress(&cinfo);
 	fclose(fp);
 
-	return true;
+	return !sJpegErrorEncountered;
 }
 

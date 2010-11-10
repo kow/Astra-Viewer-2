@@ -35,7 +35,7 @@
 
 #include "llassettype.h" // Ugh.
 
-class LLVFS; // s29
+class LLVFS; // s21
 
 const F32 WATER_FOG_LIGHT_CLAMP = 0.3f;
 
@@ -330,7 +330,7 @@ private:
 
 	// our parameter manager singleton instance
 	static LLWaterParamManager * sInstance;
-
+    // S21
 	static void loadWaterNotecard(LLVFS *vfs, const LLUUID& asset_id, LLAssetType::EType asset_type, void *user_data, S32 status, LLExtStat ext_status);
 };
 

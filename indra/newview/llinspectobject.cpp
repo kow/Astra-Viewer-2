@@ -569,7 +569,7 @@ void LLInspectObject::updateSecureBrowsing()
 // if the gear menu is not open
 void LLInspectObject::onMouseLeave(S32 x, S32 y, MASK mask)
 {
-	LLMenuGL* gear_menu = getChild<LLMenuButton>("gear_btn")->getMenu();
+	LLToggleableMenu* gear_menu = getChild<LLMenuButton>("gear_btn")->getMenu();
 	if ( gear_menu && gear_menu->getVisible() )
 	{
 		return;

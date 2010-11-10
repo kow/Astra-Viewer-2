@@ -12,7 +12,6 @@
  title="KirstensLive."
  width="802">
     <web_browser
-     trusted_content="true" 
      border_visible="false"
      caret_color="1 1 1 1"
      follows="top|left|bottom|right"

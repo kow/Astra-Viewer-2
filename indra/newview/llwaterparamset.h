@@ -44,7 +44,7 @@ class LLWaterParamSet
 
 public:
 	std::string mName;
-	LLUUID mInventoryID;
+	LLUUID mInventoryID; // S21
 	
 private:
 

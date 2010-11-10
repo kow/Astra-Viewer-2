@@ -135,17 +135,17 @@ public:
 	/// load an individual preset into the sky
 	void loadPreset(const std::string & name, bool propogate=true);
 
-	/// load an individual preset into the sky from an LLSD stream
+	/// load an individual preset into the sky from an LLSD stream S21
 	/// Returns whether the stream was actually reasonable XML to load from.
 	bool loadPresetXML(const std::string& name, std::istream& preset_stream, bool propogate=false, bool check_if_real=false);
 	
-	/// Load an individual preset from a notecard.
+	/// Load an individual preset from a notecard. S21
 	void loadPresetNotecard(const std::string& name, const LLUUID& asset_id, const LLUUID& inv_id);
 	
 	/// save the parameter presets to file
 	void savePreset(const std::string & name);
 	
-	/// save the parameter presets to file
+	/// save the parameter presets to file S21
 	bool savePresetToNotecard(const std::string & name);
 
 	/// Set shader uniforms dirty, so they'll update automatically.
