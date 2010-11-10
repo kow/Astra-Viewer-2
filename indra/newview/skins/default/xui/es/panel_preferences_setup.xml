@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <panel label="Configurar" name="Input panel">
+	<button bottom_delta="-40" label="Otros dispositivos" name="joystick_setup_button"/>
 	<text name="Mouselook:">
 		Vista subjetiva:
 	</text>

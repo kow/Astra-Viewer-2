@@ -921,6 +921,12 @@ Generalmente, esto es un fallo pasajero. Por favor, personaliza y guarda el íte
 		No se ha podido comprar terreno para el grupo:
 no tienes el permiso de comprar terreno para el grupo que tienes activado actualmente.
 	</notification>
+	<notification label="Añadir como amigo" name="AddFriend">
+		Los amigos pueden darse permiso para localizarse en el mapa y para saber si el otro está conectado.
+
+¿Ofrecer a [NAME] que sea tu amigo?
+		<usetemplate name="okcancelbuttons" notext="Cancelar" yestext="OK"/>
+	</notification>
 	<notification label="Añadir como amigo" name="AddFriendWithMessage">
 		Los amigos pueden darse permiso para localizarse en el mapa y para saber si el otro está conectado.
 
@@ -2140,6 +2146,9 @@ Esto puede influir en tu contraseña.
 	</notification>
 	<notification name="CannotRemoveProtectedCategories">
 		No puedes quitar categorías que están protegidas.
+	</notification>
+	<notification name="OfferedCard">
+		Has ofrecido una tarjeta de visita a [NAME]
 	</notification>
 	<notification name="UnableToBuyWhileDownloading">
 		No se puede comprar un objeto mientras se descargan los datos.

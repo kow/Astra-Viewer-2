@@ -65,6 +65,10 @@
 		<action description="Enviar aviso" longdescription="Los miembros con un rol que tenga esta capacidad pueden enviar avisos a través de la sección Grupo &gt; Avisos." name="notices send" value="42"/>
 		<action description="Recibir avisos nuevos y ver los anteriores" longdescription="Los miembros con un rol que tenga esta capacidad pueden recibir Avisos y ver los ya enviados en la sección Grupo &gt; Avisos." name="notices receive" value="43"/>
 	</action_set>
+	<action_set description="Estas habilidades incluyen poderes para permitir a los miembros crear propuestas, votarlas, y ver el historial de votaciones." name="Proposals">
+		<action description="Hacer una propuesta" longdescription="Quien tenga un rol con esta capacidad puede crear propuestas para que sean votadas en Información del grupo &gt; pestaña Propuestas." name="proposal start" value="44"/>
+		<action description="Votar en propuestas" longdescription="Quien tenga un rol con esta capacidad puede votar las propuestas en Información del grupo &gt; pestaña Propuestas." name="proposal vote" value="45"/>
+	</action_set>
 	<action_set description="Estas capacidades incluyen poderes para permitir o no el aceso a las sesiones de chat del grupo y al chat de voz del mismo." name="Chat">
 		<action description="Abrir chat de grupo" longdescription="Quien tenga un rol con esta capacidad puede abrir sesiones de chat del grupo, tanto de texto como de voz." name="join group chat" value="16"/>
 		<action description="Abrir chat de voz del grupo" longdescription="Quien tenga un rol con esta capacidad puede abrir sesiones de chat de voz del grupo. NOTA: para acceder al chat de voz debe tenerse la capacidad &apos;Abrir chat de grupo&apos;." name="join voice chat" value="27"/>

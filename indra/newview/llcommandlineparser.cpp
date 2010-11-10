@@ -169,7 +169,6 @@ public:
         {
            mNotifyCallback(*value);
         }
-
     }
 
 protected:

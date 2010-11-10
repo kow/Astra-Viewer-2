@@ -2178,7 +2178,7 @@ Prova a selezionare una parte di terreno più piccola.
 	<notification name="SystemMessage">
 		[MESSAGE]
 	</notification>
-	<notification name="PaymentRecived">
+	<notification name="PaymentReceived">
 		[MESSAGE]
 	</notification>
 	<notification name="EventNotification">

@@ -2172,7 +2172,7 @@ Veuillez sélectionner un terrain plus petit.
 	<notification name="SystemMessage">
 		[MESSAGE]
 	</notification>
-	<notification name="PaymentRecived">
+	<notification name="PaymentReceived">
 		[MESSAGE]
 	</notification>
 	<notification name="EventNotification">

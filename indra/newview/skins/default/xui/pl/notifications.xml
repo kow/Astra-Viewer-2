@@ -2148,7 +2148,7 @@ Spróbuj wybrać mniejszy obszar.
 	<notification name="SystemMessage">
 		[MESSAGE]
 	</notification>
-	<notification name="PaymentRecived">
+	<notification name="PaymentReceived">
 		[MESSAGE]
 	</notification>
 	<notification name="EventNotification">

@@ -314,7 +314,7 @@ BOOL LLVFile::setMaxSize(S32 size)
 
 	if (!mVFS->checkAvailable(size))
 	{
-		//LLFastTimer t(FTM_VFILE_WAIT);
+		LLFastTimer t(FTM_VFILE_WAIT);
 		S32 count = 0;
 		while (sVFSThread->getPending() > 1000)
 		{

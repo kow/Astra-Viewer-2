@@ -1076,7 +1076,7 @@ Prøv at vælge mindre stykker land.
 	<notification name="SystemMessage">
 		[MESSAGE]
 	</notification>
-	<notification name="PaymentRecived">
+	<notification name="PaymentReceived">
 		[MESSAGE]
 	</notification>
 	<notification name="EventNotification">

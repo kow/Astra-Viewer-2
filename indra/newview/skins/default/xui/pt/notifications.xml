@@ -2160,7 +2160,7 @@ Selecione o residente da lista e clique em &apos;MI&apos; na parte de baixo do p
 	<notification name="SystemMessage">
 		[MESSAGE]
 	</notification>
-	<notification name="PaymentRecived">
+	<notification name="PaymentReceived">
 		[MESSAGE]
 	</notification>
 	<notification name="EventNotification">
