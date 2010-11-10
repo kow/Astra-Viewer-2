@@ -549,9 +549,9 @@ class WindowsManifest(ViewerManifest):
         # http://www.scratchpaper.com/
         # Check two paths, one for Program Files, and one for Program Files (x86).
         # Yay 64bit windows.
-        NSIS_path = os.path.expandvars('${ProgramFiles}\\NSIS\\Unicode\\makensis.exe')
+        NSIS_path = os.path.expandvars('${ProgramFiles}\\NSIS\\makensis.exe')
         if not os.path.exists(NSIS_path):
-            NSIS_path = os.path.expandvars('${ProgramFiles(x86)}\\NSIS\\Unicode\\makensis.exe')
+            NSIS_path = os.path.expandvars('${ProgramFiles(x86)}\\NSIS\\makensis.exe')
         self.run_command('"' + proper_windows_path(NSIS_path) + '" ' + self.dst_path_of(tempfile))
         # self.remove(self.dst_path_of(tempfile))
         # If we're on a build machine, sign the code using our Authenticode certificate. JC
@@ -657,6 +657,7 @@ class DarwinManifest(ViewerManifest):
                                     "libexpat.0.5.0.dylib",
                                     "libexception_handler.dylib",
                                     "libGLOD.dylib",
+                                    "libcollada14dom.dylib"
                                     ):
                         self.path(os.path.join(libdir, libfile), libfile)
 
@@ -684,6 +685,7 @@ class DarwinManifest(ViewerManifest):
                                     "libexpat.0.5.0.dylib",
                                     "libexception_handler.dylib",
                                     "libGLOD.dylib",
+				                    "libcollada14dom.dylib"
                                     ):
                         target_lib = os.path.join('../../..', libfile)
                         self.run_command("ln -sf %(target)r %(link)r" % 
@@ -938,7 +940,6 @@ class Linux_i686Manifest(LinuxManifest):
             self.path("libexpat.so.1")
             self.path("libglod.so")
             self.path("libssl.so.0.9.7")
-            self.path("libuuid.so.1")
             self.path("libSDL-1.2.so.0")
             self.path("libELFIO.so")
             self.path("libopenjpeg.so.1.3.0", "libopenjpeg.so.1.3")
