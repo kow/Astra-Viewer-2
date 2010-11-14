@@ -3487,7 +3487,6 @@ BOOL LLVOAvatar::updateCharacter(LLAgent &agent)
 		// correct for the fact that the pelvis is not necessarily the center 
 		// of the agent's physical representation
 		root_pos.mdV[VZ] -= (0.5f * mBodySize.mV[VZ]) - mPelvisToFoot;
-		
 
 		LLVector3 newPosition = gAgent.getPosAgentFromGlobal(root_pos);
 
@@ -3814,7 +3813,16 @@ void LLVOAvatar::setPelvisOffset( bool hasOffset, const LLVector3& offsetAmount 
 		mPelvisOffset = offsetAmount;
 	}
 }
-
+//------------------------------------------------------------------------
+// postPelvisSetRecalc
+//------------------------------------------------------------------------
+void LLVOAvatar::postPelvisSetRecalc( void )
+{
+	computeBodySize(); 
+	mRoot.updateWorldMatrixChildren();
+	dirtyMesh();
+	updateHeadOffset();
+}
 //------------------------------------------------------------------------
 // updateVisibility()
 //------------------------------------------------------------------------
@@ -4985,6 +4993,7 @@ void LLVOAvatar::resetJointPositionsToDefault( void )
 	}
 	//make sure we don't apply the joint offset
 	mHasPelvisOffset = false;
+	postPelvisSetRecalc();
 }
 
 
