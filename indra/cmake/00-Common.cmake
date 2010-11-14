@@ -154,12 +154,17 @@ if (LINUX)
       -mmmx
       -msse
       -msse2
-      -msse3
-      -mssse3
       -mfpmath=sse
       -ffast-math
+      -mcld
+      -mmovbe
+      -mcx16
+      -mcrc32
+      -mpush-args
+      -mtls-direct-seg-refs
+      -minline-all-stringops
       -w
-      -O3
+      -O2
         )
 	#magic, don't touch
 
@@ -197,7 +202,7 @@ if (LINUX)
   endif (VIEWER)
 
   set(CMAKE_CXX_FLAGS_DEBUG "-fno-inline ${CMAKE_CXX_FLAGS_DEBUG}")
-  set(CMAKE_CXX_FLAGS_RELEASE "-O3 ${CMAKE_CXX_FLAGS_RELEASE}")
+  set(CMAKE_CXX_FLAGS_RELEASE "-O2 ${CMAKE_CXX_FLAGS_RELEASE}")
 endif (LINUX)
 
 
