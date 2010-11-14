@@ -149,8 +149,8 @@ if (LINUX)
       -fsigned-char
       -g
       -pthread
-      -mtune=prescott
-      -march=prescott
+      -mtune=pentium4
+      -march=pentium4
       -mmmx
       -msse
       -msse2
@@ -163,10 +163,11 @@ if (LINUX)
       -mpush-args
       -mtls-direct-seg-refs
       -minline-all-stringops
+      -msseregparm
       -w
       -O2
         )
-	#magic, don't touch
+	#improvements for bytecode compatibility and performance (loss of binary size optimization, but lot performances more)
 
   if (SERVER)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-depth-60")
