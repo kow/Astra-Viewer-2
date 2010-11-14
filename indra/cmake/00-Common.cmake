@@ -157,9 +157,7 @@ if (LINUX)
       -mfpmath=sse
       -ffast-math
       -mcld
-      -mmovbe
       -mcx16
-      -mcrc32
       -mpush-args
       -mtls-direct-seg-refs
       -minline-all-stringops
