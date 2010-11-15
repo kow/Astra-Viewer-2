@@ -138,8 +138,9 @@ fi
 	
 
 echo
-echo '***********************************************************'
-echo 'This is a BETA release of the Kirstens Viewer linux client.'
-echo 'Thank you for testing!'
+echo '*************************************************************'
+echo 'This is a public release of the Kirstens Viewer linux client.'
 echo 'Please see README-linux.txt before reporting problems.'
+echo 'To get support or assistance use the forum on'
+echo 'Kirstens Viewer website or KirstensLive!'
 echo
