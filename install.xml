@@ -1222,9 +1222,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>9469c3732a33a154fa0a2807b9f36ccc</string>
+            <string>84550fde481e22b9d33b4e023b9825c4</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ndofdev-linux-0.2-20080828.tar.bz2</uri>
+            <uri>http://sourceforge.net/projects/sythos/files/ndofdev-linux-0.3-20101022.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
