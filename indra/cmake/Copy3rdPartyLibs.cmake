@@ -224,7 +224,7 @@ elseif(LINUX)
         libaprutil-1.so.0
         libatk-1.0.so
         libbreakpad_client.so.0
-        libcrypto.so.0.9.7
+        libcrypto.so.0.9.8
         libdb-4.2.so
         libexpat.so
         libexpat.so.1
@@ -241,7 +241,7 @@ elseif(LINUX)
         libtcmalloc_minimal.so
 	libtcmalloc_minimal.so.0
         libuuid.so.1
-        libssl.so.0.9.7
+        libssl.so.0.9.8
        )
 
     if (FMOD_SDK_DIR)
