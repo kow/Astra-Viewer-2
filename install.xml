@@ -1291,9 +1291,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>f219ef07b02e2abb9282345c3a8f2b39</string>
+            <string>c9e07635571bcee92ba91a7322883e18</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/openSSL-0.9.7c-linux-20080812.tar.bz2</uri>
+            <uri>http://sourceforge.net/projects/sythos/files/openSSL-0.9.8o-linux-20101022.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
@@ -1371,9 +1371,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>02af0dad64803e0d821bc09e6038682c</string>
+            <string>33d00d451db9c6c513c7df227d1f6e7a</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/openjpeg-1.3-linux-20081124b.tar.bz2</uri>
+            <uri>http://sourceforge.net/projects/sythos/files/openjpeg-2.0.3-linux-20101022.tar.bz2/download</uri>
           </map>
           <key>linux64</key>
           <map>
