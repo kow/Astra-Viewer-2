@@ -28,6 +28,9 @@
 
 #include <stdlib.h>
 
+// better include the C99 header to use correctly uintptr_t
+#include <stdint.h>
+
 // A not necessarily efficient, but general, aligned malloc http://stackoverflow.com/questions/196329/osx-lacks-memalign
 inline void* ll_aligned_malloc( size_t size, int align )
 {
