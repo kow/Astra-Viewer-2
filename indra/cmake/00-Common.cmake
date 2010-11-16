@@ -161,7 +161,6 @@ if (LINUX)
       -mpush-args
       -mtls-direct-seg-refs
       -minline-all-stringops
-      -msseregparm
       -w
       -O2
         )
