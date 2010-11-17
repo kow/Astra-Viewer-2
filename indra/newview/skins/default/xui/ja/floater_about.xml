@@ -43,7 +43,7 @@ Qt Webkit バージョン： [QT_WEBKIT_VERSION]
 		</panel>
 		<panel label="クレジット" name="credits_panel">
 			<text_editor name="credits_editor">
-		 Kirstenlee Cinquetti's Viewer :)  S20 - Based on Secondlife Development Code.
+		 Kirstenlee Cinquetti's Viewer :)  S21 - Based on Secondlife Development Code.
 	         Never take life seriously. Nobody gets out alive anyway. . --Anon			
 			</text_editor>
 		</panel>
