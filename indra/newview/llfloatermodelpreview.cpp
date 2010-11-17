@@ -1766,6 +1766,17 @@ void LLModelLoader::run()
 	}
 }
 
+daeElement* LLModelLoader::getChildFromElement( daeElement* pElement, std::string const & name )
+{
+        daeElement* pChildOfElement = pElement->getChild( name.c_str() );
+        if ( pChildOfElement )
+        {
+                return pChildOfElement;
+        }
+        llwarns<< "Could not find a child [" << name << "] for the element: \"" << pElement->getAttribute("id") << "\"" << llendl;
+        return NULL;
+}
+
 void LLModelLoader::processElement(daeElement* element)
 {
 	LLMatrix4 saved_transform = mTransform;
