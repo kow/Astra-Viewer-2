@@ -4087,7 +4087,6 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 											pAvatarVO->setPelvisOffset( true, jointPos );
 											//Trigger to rebuild viewer AV
 											pelvisGotSet = true;
-											//pAvatarVO->setPosition( pAvatarVO->getCharacterPosition() + jointPos );											
 										}										
 									}
 									else
