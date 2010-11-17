@@ -1408,6 +1408,7 @@ void LLViewerRegion::setSeedCapability(const std::string& url)
 	capabilityNames.append("SendUserReportWithScreenshot");
 	capabilityNames.append("ServerReleaseNotes");
 	capabilityNames.append("SimConsole");
+	capabilityNames.append("SimConsoleAsync");
 	capabilityNames.append("SimulatorFeatures");
 	capabilityNames.append("SetDisplayName");
 	capabilityNames.append("StartGroupProposal");
