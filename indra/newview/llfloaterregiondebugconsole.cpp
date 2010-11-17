@@ -44,13 +44,22 @@ public:
     /*virtual*/
     void error(U32 status, const std::string& reason)
     {
+			if (mOutput)
+			{
+				mOutput->appendText(
+					UNABLE_TO_SEND_COMMAND + PROMPT,
+					false);
+			}
     }
 
     /*virtual*/
     void result(const LLSD& content)
     {
-		std::string text = content.asString() + "\n\n> ";
-		mOutput->appendText(text, false);
+			if (mOutput)
+			{
+				mOutput->appendText(
+					content.asString() + PROMPT, false);
+			}
     };
 
     LLTextEditor * mOutput;
