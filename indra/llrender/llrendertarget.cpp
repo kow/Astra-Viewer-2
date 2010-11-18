@@ -688,7 +688,7 @@ void LLMultisampleBuffer::addColorAttachment(U32 color_fmt)
 		case GL_FRAMEBUFFER_COMPLETE_EXT:
 			break;
 		default:
-			llwarns << "MultisampleBuffer Failure" << llendl; // S21
+			llwarns << "MultisampleBuffer Failure" <<  std::hex << status << llendl; // S21
 			break;
 		}
 
