@@ -34,7 +34,9 @@
 
 #include <stdint.h>
 
-#endif defined(LL_LINUX)
+#endif 
+
+#if defined(LL_LINUX)
 // A not necessarily efficient, but general, aligned malloc http://stackoverflow.com/questions/196329/osx-lacks-memalign
 inline void* ll_aligned_malloc( size_t size, int align )
 {
