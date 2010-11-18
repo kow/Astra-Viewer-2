@@ -127,3 +127,5 @@ private:
 // LLSingleton moved to llsingleton.h
 
 #endif
+
+#endif //close all
