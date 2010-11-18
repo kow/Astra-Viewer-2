@@ -47,6 +47,7 @@ inline void* ll_aligned_malloc( size_t size, int align )
 	((void**)aligned)[-1] = mem;
 	return aligned;
 }
+#endif
 
 inline void ll_aligned_free( void* ptr )
 {
@@ -125,7 +126,5 @@ private:
 // LLSafeHandle moved to llsafehandle.h
 
 // LLSingleton moved to llsingleton.h
-
-#endif
 
 #endif //close all
