@@ -1,0 +1,10 @@
+<llsd>
+    <map>
+    <key>skin_name</key>
+        <string>Kirstens S20 default</string>
+    <key>authors</key>
+        <string>KirstenLee Cinquetti</string>
+    <key>description</key>
+        <string>Viewer 2.0 with a twist from KL.</string>
+    </map>
+</llsd>

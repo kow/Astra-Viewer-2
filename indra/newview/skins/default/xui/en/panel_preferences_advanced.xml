@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel
+ border="true"
+ follows="all"
+ height="408"
+ label="Advanced"
+ layout="topleft"
+ left="102"
+ name="advanced"
+ top="1"
+ width="517">
+	<panel.string
+     name="aspect_ratio_text">
+        [NUM]:[DEN]
+    </panel.string>
+  <text
+   type="string"
+   length="1"
+   follows="left|top"
+   height="12"
+   layout="topleft"
+   left="33"
+   name="UI Size:"
+   top_pad="25"
+   width="100">
+    UI size:
+  </text>
+  <slider
+   control_name="UIScaleFactor"
+   decimal_digits="2"
+   follows="left|top"
+   height="17"
+   increment="0.025"
+   initial_value="1"
+   layout="topleft"
+   left_pad="0"
+   max_val="1.4"
+   min_val="0.75"
+   name="ui_scale_slider"
+   top_pad="-14"
+   width="250" />
+    <check_box
+     control_name="ShowScriptErrors"
+     follows="left|top"
+     height="20"
+     label="Show script errors in:"
+     layout="topleft"
+     left="30"
+     top_pad="10" 
+     name="show_script_errors"
+     width="256" />
+    <radio_group
+     enabled_control="ShowScriptErrors"
+     control_name="ShowScriptErrorsLocation"
+     follows="top|left"
+     draw_border="false"
+     height="16"
+     layout="topleft"
+     left_delta="50"
+     name="show_location"
+     top_pad="5"
+     width="364">
+        <radio_item
+         height="16"
+         label="Nearby chat"
+         layout="topleft"
+         left="3"
+         name="0"
+         top="0"
+         width="315" />
+        <radio_item
+         height="16"
+         label="Separate window"
+         layout="topleft"
+         left_delta="175"
+         name="1"
+         top_delta="0"
+         width="315" />
+    </radio_group>
+
+    <check_box
+     control_name="AllowMultipleViewers"
+     follows="top|left"
+     height="15"
+     label="Allow Multiple Viewers"
+     layout="topleft"
+     left="30"
+     name="allow_multiple_viewer_check"
+     top_pad="20"
+     width="237"/>
+    <check_box
+     control_name="ForceShowGrid"
+     follows="top|left"
+     height="15"
+     label="Show Grid Selection at login"
+     layout="topleft"
+     left="30"
+     name="show_grid_selection_check"
+     top_pad="5"
+     width="237"/>
+    <check_box
+     control_name="UseDebugMenus"
+     follows="top|left"
+     height="15"
+     label="Show Advanced Menu"
+     layout="topleft"
+     left="30"
+     name="show_advanced_menu_check"
+     top_pad="5"
+     width="237"/>
+    <check_box
+     control_name="QAMode"
+     follows="top|left"
+     height="15"
+     label="Show Developer Menu"
+     layout="topleft"
+     left="30"
+     name="show_develop_menu_check"
+     top_pad="5"
+     width="237"/>
+    <check_box
+     control_name="MiniMapRotate"
+     height="16"
+     initial_value="true"
+     label="Rotating Minimap"
+     layout="topleft"
+     left="30"
+     name="MiniMapRotate"
+     top_pad="10"
+     width="125" />
+    <spinner
+     control_name="MiniMapPrimMaxRadius"
+     decimal_digits="1"
+     follows="left|top"
+     height="16"
+     increment="0.5"
+     initial_value="10"
+     label="Max Prim Size on Minimap"
+     label_width="175"
+     layout="topleft"
+     left="30"
+     tool_tip="Controls the maximum Size of Prims shown on the Minimap , Prims bigger than this Value will be cut at this Value (meters)"
+     max_val="256"
+     min_val="0"
+     name="MaxPrimSize"
+     top_pad="5"
+     width="235" />
+</panel>
