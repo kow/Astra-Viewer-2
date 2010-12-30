@@ -2912,7 +2912,7 @@ U32 LLVOVolume::getRenderCost(texture_cost_t &textures) const
 	static const U32 ARC_FLEXI_COST = 8;
 	static const U32 ARC_PARTICLE_COST = 16;
 	static const U32 ARC_BUMP_COST = 4;
-	static const U32 ARC_CUT_COST = 1;
+	//static const U32 ARC_CUT_COST = 1; //unused?
 	static const U32 ARC_TEXTURE_COST = 5;
 
 	// per-face costs

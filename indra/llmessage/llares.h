@@ -45,10 +45,12 @@
 # pragma warning(pop)
 #endif
 
-#ifdef LL_STANDALONE
-# include <ares.h>
-#else
+#ifndef LL_LINUX
 # include <ares/ares.h>
+#endif
+
+#ifdef LL_LINUX
+# include <ares.h>
 #endif
 
 #include "llpointer.h"
