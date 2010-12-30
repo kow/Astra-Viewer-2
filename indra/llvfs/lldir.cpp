@@ -253,7 +253,7 @@ std::string LLDir::buildSLOSCacheDir() const
 	}
 	else
 	{
-		res = getOSCacheDir() + mDirDelimiter + "Kirstens S20"; // S20
+		res = getOSCacheDir() + mDirDelimiter + "Kirstens S21"; // S21
 	}
 	return res;
 }

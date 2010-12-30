@@ -222,7 +222,7 @@ BOOL LLVorbisDecodeState::initDecode()
 	size_guess *= 2;
 	size_guess += 2048;
 
-	// S20
+	// S21
 
 	if(size_guess >= 157286400)
 	{
@@ -416,7 +416,7 @@ BOOL LLVorbisDecodeState::finishDecode()
 	{
 		llwarns << "Bogus vorbis decode state for aborting! Possible client exploit." << llendl;
 		delete mInFilep;
-		mInFilep = NULL; // S20
+		mInFilep = NULL; // S21
 		return TRUE; // We've finished
 	}
 

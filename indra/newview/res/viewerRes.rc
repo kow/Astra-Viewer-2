@@ -54,7 +54,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_LL_ICON             ICON                    "kirstens-S20_icon.ico"
+IDI_LL_ICON             ICON                    "kirstens-S21_icon.ico"
 IDI_LCD_LL_ICON         ICON                    "icon1.ico"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -129,8 +129,8 @@ TOOLSIT                 CURSOR                  "toolsit.cur"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,5,0,45
- PRODUCTVERSION 2,5,0,45
+ FILEVERSION 2,5,0,3
+ PRODUCTVERSION 2,5,0,3
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,13 +146,13 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName", "Kirstens Viewers"
-            VALUE "FileDescription", "Kirstens S20"
-            VALUE "FileVersion", "2.5.0.45"
+            VALUE "FileDescription", "Kirstens S21"
+            VALUE "FileVersion", "2.5.0.3"
             VALUE "InternalName", "Second Life"
             VALUE "LegalCopyright", "Copyright © 2008-2010, Kirstenlee Cinquetti"
             VALUE "OriginalFilename", "SecondLife.exe"
-            VALUE "ProductName", "Kirstens S20"
-            VALUE "ProductVersion", "2.5.0.45"
+            VALUE "ProductName", "Kirstens S21"
+            VALUE "ProductVersion", "2.5.0.3"
         END
     END
     BLOCK "VarFileInfo"

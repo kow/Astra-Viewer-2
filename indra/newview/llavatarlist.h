@@ -57,7 +57,7 @@ public:
 						show_permissions_granted;
 		Params();
 	};
-	typedef boost::signals2::signal<std::string(const LLUUID&)> extra_data_signal_t; // S20
+	typedef boost::signals2::signal<std::string(const LLUUID&)> extra_data_signal_t; // S21
 
 	LLAvatarList(const Params&);
 	virtual	~LLAvatarList();
@@ -80,7 +80,7 @@ public:
 	void toggleIcons();
 	void setSpeakingIndicatorsVisible(bool visible);
 	void showPermissions(bool visible);
-	void setShowExtraInformation(bool visible); // S20
+	void setShowExtraInformation(bool visible); // S21
 	void sortByName();
 	void setShowIcons(std::string param_name);
 	bool getIconsVisible() const { return mShowIcons; }
@@ -94,8 +94,8 @@ public:
 
 	boost::signals2::connection setItemDoubleClickCallback(const mouse_signal_t::slot_type& cb);
 	
-	boost::signals2::connection setExtraDataCallback(const extra_data_signal_t::slot_type& cb); // S20
-	void setExtraDataUpdatePeriod(F32 period); // S20
+	boost::signals2::connection setExtraDataCallback(const extra_data_signal_t::slot_type& cb); // S21
+	void setExtraDataUpdatePeriod(F32 period); // S21
 
 	virtual S32 notifyParent(const LLSD& info);
 
@@ -111,7 +111,7 @@ protected:
 		uuid_vec_t& vadded,
 		uuid_vec_t& vremoved);
 	void updateLastInteractionTimes();
-	void updateExtraData(); // S20
+	void updateExtraData(); // S21
 	void rebuildNames();
 	void onItemDoubleClicked(LLUICtrl* ctrl, S32 x, S32 y, MASK mask);
 	void updateAvatarNames();
@@ -120,7 +120,7 @@ private:
 
 	bool mIgnoreOnlineStatus;
 	bool mShowLastInteractionTime;
-	bool mShowExtraInformation; // S20
+	bool mShowExtraInformation; // S21
 	bool mDirty;
 	bool mNeedUpdateNames;
 	bool mShowIcons;
@@ -128,9 +128,9 @@ private:
 	bool mShowProfileBtn;
 	bool mShowSpeakingIndicator;
 	bool mShowPermissions;
-	F32 mExtraDataUpdatePeriod; // S20
+	F32 mExtraDataUpdatePeriod; // S21
 
-	LLTimer*				mExtraDataUpdateTimer; // S20
+	LLTimer*				mExtraDataUpdateTimer; // S21
 	std::string				mIconParamName;
 	std::string				mNameFilter;
 	uuid_vec_t				mIDs;
@@ -140,7 +140,7 @@ private:
 
 	commit_signal_t mRefreshCompleteSignal;
 	mouse_signal_t mItemDoubleClickSignal;
-	extra_data_signal_t mExtraDataSignal; // S20
+	extra_data_signal_t mExtraDataSignal; // S21
 };
 
 /** Abstract comparator for avatar items */

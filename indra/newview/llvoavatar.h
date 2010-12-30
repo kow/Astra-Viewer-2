@@ -227,7 +227,7 @@ public:
 	static void		invalidateNameTags();
 	void			addNameTagLine(const std::string& line, const LLColor4& color, S32 style, const LLFontGL* font);
 	void 			idleUpdateRenderCost();
-	void 			idleUpdateTractorBeam(); // S20
+	void 			idleUpdateTractorBeam(); // S21
 	void 			idleUpdateBelowWater();
 
 	//--------------------------------------------------------------------
@@ -757,7 +757,7 @@ public:
 	void	   		clearChat();
 	void	   		startTyping() { mTyping = TRUE; mTypingTimer.reset(); }
 	void			stopTyping() { mTyping = FALSE; }
-	bool			isTyping() { return mTyping; } // S20
+	bool			isTyping() { return mTyping; } // S21
 private:
 	BOOL			mVisibleChat;
 

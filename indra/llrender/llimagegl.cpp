@@ -124,7 +124,7 @@ void LLImageGL::checkTexSize(bool forced) const
 			}
 			else
 			{
-				llwarns << "Invalid texture bound!" << llendl; // S20
+				llwarns << "Invalid texture bound!" << llendl; // S21
 			}
 		}
 		stop_glerror() ;
@@ -155,7 +155,7 @@ void LLImageGL::checkTexSize(bool forced) const
 
 		if (error)
 		{
-			llwarns << "LLImageGL::checkTexSize failed." << llendl; // S20
+			llwarns << "LLImageGL::checkTexSize failed." << llendl; // S21
 		}
 	}
 }

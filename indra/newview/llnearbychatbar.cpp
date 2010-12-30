@@ -464,7 +464,7 @@ BOOL LLNearbyChatBar::handleKeyHere( KEY key, MASK mask )
 		handled = TRUE;
 	} else if( KEY_RETURN == key && mask == MASK_SHIFT)
 	{
-		// whisper S20
+		// whisper S21
 		sendChat(CHAT_TYPE_WHISPER);
 		handled = TRUE;
 	}

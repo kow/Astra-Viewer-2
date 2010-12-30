@@ -99,7 +99,7 @@ class LLSideTrayTab: public LLPanel
 {
 	friend class LLUICtrlFactory;
 	friend class LLSideTray;
-    friend class LLPanelSidebarctrlControls; // S20
+    friend class LLPanelSidebarctrlControls; // S21
 public:
 	
 	struct Params 

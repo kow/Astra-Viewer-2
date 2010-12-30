@@ -1,6 +1,6 @@
 # -*- cmake -*-
 #
-# Definitions of variables used throughout the Kirstens S20 build
+# Definitions of variables used throughout the Kirstens S21 build
 # process.
 #
 # Platform variables:
@@ -122,8 +122,8 @@ endif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 set(GRID agni CACHE STRING "Target Grid")
 
 set(VIEWER ON CACHE BOOL "Build Kirstens viewer.")
-set(VIEWER_CHANNEL "Kirstens S20" CACHE STRING "Viewer Channel Name")
-set(VIEWER_LOGIN_CHANNEL ${VIEWER_CHANNEL} CACHE STRING "Kirstens S20")
+set(VIEWER_CHANNEL "Kirstens S21" CACHE STRING "Viewer Channel Name")
+set(VIEWER_LOGIN_CHANNEL ${VIEWER_CHANNEL} CACHE STRING "Kirstens S21")
 
 set(STANDALONE OFF CACHE BOOL "Do not use Linden-supplied prebuilt libraries.")
 

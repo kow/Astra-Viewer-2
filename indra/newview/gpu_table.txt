@@ -210,6 +210,7 @@ NVIDIA GTX 260					.*NVIDIA.*GeForce GTX 26.*			3		1
 NVIDIA GTX 270					.*NVIDIA.*GeForce GTX 27.*			3		1
 NVIDIA GTX 280					.*NVIDIA.*GeForce GTX 28.*			3		1
 NVIDIA GTX 290					.*NVIDIA.*GeForce GTX 29.*			3		1
+NVIDIA GTX 420					.*NVIDIA.*GeForce GTX 42.*			3		1
 NVIDIA GTX 460					.*NVIDIA.*GeForce GTX 46.*			3		1
 NVIDIA GTX 470					.*NVIDIA.*GeForce GTX 47.*			3		1
 NVIDIA GTX 480					.*NVIDIA.*GeForce GTX 48.*			3		1

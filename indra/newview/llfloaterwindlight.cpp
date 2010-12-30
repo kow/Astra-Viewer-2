@@ -195,7 +195,7 @@ void LLFloaterWindLight::initCallbacks(void) {
 	getChild<LLUICtrl>("WLNewPreset")->setCommitCallback(boost::bind(&LLFloaterWindLight::onNewPreset, this));
 	getChild<LLUICtrl>("WLSavePreset")->setCommitCallback(boost::bind(&LLFloaterWindLight::onSavePreset, this));
 	getChild<LLUICtrl>("WLDeletePreset")->setCommitCallback(boost::bind(&LLFloaterWindLight::onDeletePreset, this));
-	getChild<LLUICtrl>("WLSaveNotecard")->setCommitCallback(boost::bind(&LLFloaterWindLight::onSaveNotecard, this)); // S20
+	getChild<LLUICtrl>("WLSaveNotecard")->setCommitCallback(boost::bind(&LLFloaterWindLight::onSaveNotecard, this)); // S21
 
 	comboBox->setCommitCallback(boost::bind(&LLFloaterWindLight::onChangePresetName, this, _1));
 

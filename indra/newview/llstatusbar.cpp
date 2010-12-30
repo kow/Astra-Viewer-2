@@ -323,7 +323,7 @@ void LLStatusBar::creditBalance(S32 credit)
 
 void LLStatusBar::setBalance(S32 balance)
 {
-	 if(gSavedSettings.getBOOL("HideL$Balance") == TRUE) //S20 Basically hide a users balance ( for screencasts where balance wants to be hidden ) blocks transactions.
+	 if(gSavedSettings.getBOOL("HideL$Balance") == TRUE) // S21 Basically hide a users balance ( for screencasts where balance wants to be hidden ) blocks transactions.
 	{
 		std::string money_str ="###";
 		LLTextBox* balance_box = getChild<LLTextBox>("balance");

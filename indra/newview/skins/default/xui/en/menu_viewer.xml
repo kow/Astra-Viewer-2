@@ -5,7 +5,7 @@
  name="Main Menu">
     <menu
      create_jump_keys="true"
-     label="S20"
+     label="S21"
      name="Me"
      tear_off="true">
         <menu_item_call

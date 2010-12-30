@@ -617,7 +617,7 @@ std::string LLPanel::getString(const std::string& name) const
 	std::string err_str("Failed to find string " + name + " in panel " + getName()); //*TODO: Translate
 	if(LLUI::sSettingGroups["config"]->getBOOL("QAMode"))
 	{
-		llwarns << err_str << llendl; // S20
+		llwarns << err_str << llendl; // S21
 	}
 	else
 	{

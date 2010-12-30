@@ -68,7 +68,7 @@ public:
 		if (rv)
 		{
 			setOnline(true);
-			showExtraInformation(false); // S20
+			showExtraInformation(false); // S21
 			setShowProfileBtn(false);
 			setShowInfoBtn(false);
 			mAvatarIcon->setValue("Avaline_Icon");

@@ -57,7 +57,7 @@
 #include "llstring.h"
 
 #include "llviewercontrol.h" // DisplayNames
-#include "llviewerobjectlist.h" // S20 MS for zoom in visible
+#include "llviewerobjectlist.h" // S21 MS for zoom in visible
 
 #include "llsidetray.h"//for blocked objects panel
 
@@ -144,7 +144,7 @@ public:
 
 			LLFloaterReg::showInstance("inspect_object", params);
 		}
-		// S20 MS
+		// S21 MS
 		else if (level == "zoom")
 		{
 			LLAvatarActions::zoomIn(getAvatarId());
@@ -165,7 +165,7 @@ public:
 		{
 			LLAvatarActions::showProfile(getAvatarId());
 		}
-		// S20 MS
+		// S21 MS
 		else if (level == "zoom")
 		{
 			LLAvatarActions::zoomIn(getAvatarId());
@@ -452,7 +452,7 @@ protected:
 		LLMenuGL* menu = (LLMenuGL*)mPopupMenuHandleObject.get();
 		if(menu)
 		{
-			// S20 MS
+			// S21 MS
 			if (!gObjectList.findObject(mAvatarID))
 			{
 				menu->setItemVisible("Zoom In", false);
@@ -484,7 +484,7 @@ protected:
 				menu->setItemVisible("Send IM", false);
 			}
 			
-			// S20 MS
+			// S21 MS
 			if (!gObjectList.findObject(mAvatarID))
 			{
 				menu->setItemVisible("Zoom In", false);

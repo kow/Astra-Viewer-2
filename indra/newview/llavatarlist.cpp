@@ -164,7 +164,7 @@ void LLAvatarList::handleDisplayNamesOptionChanged()
 
 LLAvatarList::~LLAvatarList()
 {
-	delete mExtraDataUpdateTimer; // S20
+	delete mExtraDataUpdateTimer; // S21
 }
 
 void LLAvatarList::setShowIcons(std::string param_name)
@@ -173,7 +173,7 @@ void LLAvatarList::setShowIcons(std::string param_name)
 	mShowIcons = gSavedSettings.getBOOL(mIconParamName);
 }
 
-void LLAvatarList::setShowExtraInformation(bool show) // S20
+void LLAvatarList::setShowExtraInformation(bool show) // S21
 {
 	mShowExtraInformation = show;
 }
@@ -411,12 +411,12 @@ boost::signals2::connection LLAvatarList::setItemDoubleClickCallback(const mouse
 	return mItemDoubleClickSignal.connect(cb);
 }
 
-boost::signals2::connection LLAvatarList::setExtraDataCallback(const extra_data_signal_t::slot_type& cb) // S20
+boost::signals2::connection LLAvatarList::setExtraDataCallback(const extra_data_signal_t::slot_type& cb) // S21
 {
 	return mExtraDataSignal.connect(cb);
 }
 
-void LLAvatarList::setExtraDataUpdatePeriod(F32 period) // S20
+void LLAvatarList::setExtraDataUpdatePeriod(F32 period) // S21
 {
 	mExtraDataUpdatePeriod = period;
 	if(period > 0)
@@ -448,7 +448,7 @@ void LLAvatarList::addNewItem(const LLUUID& id, const std::string& name, BOOL is
 	// This sets the name as a side effect
 	item->setAvatarId(id, mSessionID, mIgnoreOnlineStatus);
 	item->setOnline(mIgnoreOnlineStatus ? true : is_online);
-	item->showExtraInformation(mShowExtraInformation); // S20
+	item->showExtraInformation(mShowExtraInformation); // S21
 
 	item->setAvatarIconVisible(mShowIcons);
 	item->setShowInfoBtn(mShowInfoBtn);
@@ -519,7 +519,7 @@ void LLAvatarList::updateLastInteractionTimes()
 	}
 }
 
-void LLAvatarList::updateExtraData() // S20
+void LLAvatarList::updateExtraData() // S21
 {
 	if(mShowLastInteractionTime)
 	{
@@ -599,7 +599,7 @@ BOOL LLAvalineListItem::postBuild()
 	if (rv)
 	{
 		setOnline(true);
-		showExtraInformation(false); // S20
+		showExtraInformation(false); // S21
 		setShowProfileBtn(false);
 		setShowInfoBtn(false);
 		mAvatarIcon->setValue("Avaline_Icon");

@@ -34,10 +34,10 @@
 #include "llwldaycycle.h"
 #include "llviewercamera.h"
 
-#include "llassettype.h" // S20
+#include "llassettype.h" // S21
 
 class LLGLSLShader;
-class LLVFS; // S20
+class LLVFS; // S21
  
 // color control
 struct WLColorControl {
@@ -264,7 +264,7 @@ private:
 	// our parameter manager singleton instance
 	static LLWLParamManager * sInstance;
 
-	static void loadWindlightNotecard(LLVFS *vfs, const LLUUID& asset_id, LLAssetType::EType asset_type, void *user_data, S32 status, LLExtStat ext_status); // S20
+	static void loadWindlightNotecard(LLVFS *vfs, const LLUUID& asset_id, LLAssetType::EType asset_type, void *user_data, S32 status, LLExtStat ext_status); // S21
 };
 
 inline F32 LLWLParamManager::getDomeOffset(void) const

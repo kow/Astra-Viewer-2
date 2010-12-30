@@ -5311,7 +5311,7 @@ class LLWorldCheckAlwaysRun : public view_listener_t
 		return new_value;
 	}
 };
-// S20
+// S21
 class LLWorldSitOnGround : public view_listener_t
 {
 	bool handleEvent(const LLSD& userdata)
@@ -5327,7 +5327,7 @@ class LLWorldSitOnGround : public view_listener_t
 		return true;
 	}
 };
-//S20
+// S21
 class LLWorldCheckSitOnGround : public view_listener_t
 {
 	bool handleEvent(const LLSD& userdata)
@@ -5667,7 +5667,7 @@ class LLFloaterVisible : public view_listener_t
 	}
 };
 
-// S20 MS Floater.enableToggleConversations
+// S21 MS Floater.enableToggleConversations
 class LLFloaterEnableToggleConversations  : public view_listener_t
 {
 	bool handleEvent(const LLSD& userdata)
@@ -7709,7 +7709,7 @@ class LLWorldPostProcess : public view_listener_t
 	}
 };
 
-/// S20 Sky Menu callbacks
+/// S21 Sky Menu callbacks
 class LLWorldSkySettings : public view_listener_t
 {	
 	bool handleEvent(const LLSD& userdata)
@@ -7946,10 +7946,10 @@ void initialize_menus()
 	view_listener_t::addMenu(new LLWorldPlaceProfile(), "World.PlaceProfile");
 	view_listener_t::addMenu(new LLWorldSetHomeLocation(), "World.SetHomeLocation");
 	view_listener_t::addMenu(new LLWorldTeleportHome(), "World.TeleportHome");
-    //S20
+    // S21
 	view_listener_t::addMenu(new LLWorldSitOnGround(), "World.SitOnGround");
 	view_listener_t::addMenu(new LLWorldCheckSitOnGround(), "World.CheckSitOnGround");
-    // S20
+    // S21
 	view_listener_t::addMenu(new LLWorldSetAway(), "World.SetAway");
 	view_listener_t::addMenu(new LLWorldSetBusy(), "World.SetBusy");
 
@@ -7964,7 +7964,7 @@ void initialize_menus()
 	view_listener_t::addMenu(new LLWorldWaterSettings(), "World.WaterSettings");
 	view_listener_t::addMenu(new LLWorldPostProcess(), "World.PostProcess");
 	view_listener_t::addMenu(new LLWorldDayCycle(), "World.DayCycle");
-    view_listener_t::addMenu(new LLWorldSkySettings(), "World.SkySettings"); // KL S20
+    view_listener_t::addMenu(new LLWorldSkySettings(), "World.SkySettings"); // KL S21
 
 	view_listener_t::addMenu(new LLWorldToggleMovementControls(), "World.Toggle.MovementControls");
 	view_listener_t::addMenu(new LLWorldToggleCameraControls(), "World.Toggle.CameraControls");
@@ -8272,7 +8272,7 @@ void initialize_menus()
 	enable.add("VisibleBuild", boost::bind(&enable_object_build));
 
 	view_listener_t::addMenu(new LLFloaterVisible(), "FloaterVisible");
-	// S20 MS
+	// S21 MS
 	view_listener_t::addMenu(new LLFloaterEnableToggleConversations(), "Floater.enableToggleConversations");
 	
 	view_listener_t::addMenu(new LLShowSidetrayPanel(), "ShowSidetrayPanel");

@@ -82,7 +82,7 @@
 #include "llfontgl.h"
 #include "llrect.h"
 #include "llstring.h"
-#include "llsdserialize.h" //S20
+#include "llsdserialize.h" // S21
 
 // project includes
 
@@ -107,8 +107,8 @@
 
 #include "lllogininstance.h"        // to check if logged in yet
 
-const F32 MAX_USER_FAR_CLIP = 1024.f; // S20
-const F32 MIN_USER_FAR_CLIP = 32.f;  // S20
+const F32 MAX_USER_FAR_CLIP = 1024.f; // S21
+const F32 MIN_USER_FAR_CLIP = 32.f;  // S21
 
 //control value for middle mouse as talk2push button
 const static std::string MIDDLE_MOUSE_CV = "MiddleMouse";
@@ -809,7 +809,7 @@ void LLFloaterPreference::onClickSkin(LLUICtrl* ctrl, const LLSD& userdata)
 	ctrl->setValue(userdata.asString());
 }
 
-void LLFloaterPreference::onSelectSkin() //S20
+void LLFloaterPreference::onSelectSkin() // S21
 {
 	std::string skin_selection = getChild<LLComboBox>("skin_selection")->getValue().asString();
 	llinfos << "skin selected " << skin_selection << llendl;
@@ -817,7 +817,7 @@ void LLFloaterPreference::onSelectSkin() //S20
 	LLFloaterPreference::refreshSkin(this);
 }
 
-void LLFloaterPreference::refreshSkin(void* data) // S20
+void LLFloaterPreference::refreshSkin(void* data) // S21
 {
 	LLPanel*self = (LLPanel*)data;
 	std::string delim(gDirUtilp->getDirDelimiter()); 

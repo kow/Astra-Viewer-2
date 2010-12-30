@@ -36,7 +36,7 @@
 const char* fallbackEngineInfoLLImageJ2CImpl()
 {
 	static std::string version_string =
-		std::string("S20J Runtime: ")
+		std::string("S21J Runtime: ")
 		+ opj_version();
 	return version_string.c_str();
 }

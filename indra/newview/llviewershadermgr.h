@@ -343,7 +343,7 @@ extern LLGLSLShader			gWLCloudProgram;
 // Post Process Shaders
 extern LLGLSLShader			gPostColorFilterProgram;
 extern LLGLSLShader			gPostNightVisionProgram;
-extern LLGLSLShader			gPostAnaglyphVisionProgram; // S20
+extern LLGLSLShader			gPostAnaglyphVisionProgram; // S21
 
 // Deferred rendering shaders
 extern LLGLSLShader			gDeferredImpostorProgram;

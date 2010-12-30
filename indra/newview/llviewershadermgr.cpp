@@ -877,7 +877,7 @@ BOOL LLViewerShaderMgr::loadShadersEffects()
 	
 
 	// KL enabling loading of postprocess shaders 
-	// S20
+	// S21
 	
 	//load Color Filter Shader
 	if (success)

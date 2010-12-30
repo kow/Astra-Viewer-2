@@ -73,7 +73,7 @@ BOOL LLFloaterDayCycle::postBuild()
 			LLWLParamManager::instance()->mParamList.begin();
 		for(; mIt != LLWLParamManager::instance()->mParamList.end(); mIt++) 
 		{
-		    	if(mIt->second.mInventoryID.isNull()) // S20
+		    	if(mIt->second.mInventoryID.isNull()) // S21
 				keyCombo->add(std::string(mIt->first));
 		}
 

@@ -1219,7 +1219,7 @@ BOOL LLKeyframeMotion::deserialize(LLDataPacker& dp)
 	}
 	else if (mJointMotionList->mBasePriority < LLJoint::USE_MOTION_PRIORITY)
 	{
-		llwarns << "bad animation base_priority " << llendl; // S20
+		llwarns << "bad animation base_priority " << llendl; // S21
 		return FALSE;
 	}
 
@@ -1356,7 +1356,7 @@ BOOL LLKeyframeMotion::deserialize(LLDataPacker& dp)
 
 		if (joint_name == "mScreen" || joint_name == "mRoot")
 		{
-			llwarns << "attempted to animate special joint" << llendl; // S20
+			llwarns << "attempted to animate special joint" << llendl; // S21
 			return FALSE;
 		}
 				
@@ -1370,7 +1370,7 @@ BOOL LLKeyframeMotion::deserialize(LLDataPacker& dp)
 		}
 		else
 		{
-			llwarns << "joint not found! possible client exploit. watch for repeated animation UUID's" << llendl; // S20
+			llwarns << "joint not found! possible client exploit. watch for repeated animation UUID's" << llendl; // S21
 			//return FALSE;
 		}
 
@@ -1599,7 +1599,7 @@ BOOL LLKeyframeMotion::deserialize(LLDataPacker& dp)
 
 	if (num_constraints > MAX_CONSTRAINTS || num_constraints < 0)
 	{
-		llwarns << "Too many constraints... ignoring" << llendl; // S20
+		llwarns << "Too many constraints... ignoring" << llendl; // S21
 	}
 	else
 	{

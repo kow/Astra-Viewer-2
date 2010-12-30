@@ -75,7 +75,7 @@ extern "C" {
 #endif
 #endif
 
-const std::string LLAppViewerWin32::sWindowClass = "Kirstens S20";  // S20
+const std::string LLAppViewerWin32::sWindowClass = "Kirstens S21";  // S21
 
 // Create app mutex creates a unique global windows object. 
 // If the object can be created it returns true, otherwise

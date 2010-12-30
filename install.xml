@@ -144,16 +144,16 @@
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-	    <string>ca8f0134fa5ab6f34a6eeb8d0896c9b0</string>
+            <string>cdb2f5c4a5a1f9ecd75bc1dbdd4db8e9</string>
             <key>url</key>
-	    <uri>https://s3.amazonaws.com/automated-builds-secondlife-com/hg/repo/brad_curl-autobuild/rev/216961/arch/Darwin/installer/curl-7.21.1-darwin-20101214.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-darwin-20100606.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>9c9b629b62bf874d550c430ad678dc04</string>
+            <string>91694429e391efeea1de974df26032a2</string>
             <key>url</key>
-            <uri>https://s3.amazonaws.com/automated-builds-secondlife-com/hg/repo/brad_curl-autobuild/rev/216961/arch/Linux/installer/curl-7.21.1-linux-20101215.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-linux-20100527.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
@@ -165,9 +165,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>48691883065a82d53691d73aae81d4c1</string>
+            <string>4b84738eec2e21b0c096d53b79ee2681</string>
             <key>url</key>
-            <uri>https://s3.amazonaws.com/automated-builds-secondlife-com/hg/repo/brad_curl-autobuild/rev/216961/arch/CYGWIN/installer/curl-7.21.1-windows-20101214.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-windows-20100611a.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -1120,9 +1120,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>34d9e4c93678a422cf80521bf0cd7628</string>
+            <string>66c46841825ab4969ec875b5c8f9b24c</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/llqtwebkit-4.6-darwin-20100914.tar.bz2</uri>
+            <uri>http://viewer-source-downloads.s3.amazonaws.com/install_pkgs/llqtwebkit-darwin-qt4.7.1-20101221.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
@@ -1134,9 +1134,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>4b8412833c00f8cdaba26808f0ddb404</string>
+            <string>b678c4d18ea8e4fab42b20f8d0b2629a</string>
             <key>url</key>
-            <uri>http://viewer-source-downloads.s3.amazonaws.com/install_pkgs/llqtwebkit-windows-qt4.6-20100916.tar.bz2</uri>
+            <uri>http://viewer-source-downloads.s3.amazonaws.com/install_pkgs/llqtwebkit-windows-qt4.7.1-20101221.tar.bz2</uri>
           </map>
         </map>
       </map>

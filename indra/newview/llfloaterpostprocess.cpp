@@ -51,7 +51,7 @@ LLFloaterPostProcess::~LLFloaterPostProcess()
 }
 BOOL LLFloaterPostProcess::postBuild()
 {
-	/// Color Filter Callbacks // S20
+	/// Color Filter Callbacks // S21
 	childSetCommitCallback("wmiColorFilterToggle", &LLFloaterPostProcess::onBoolToggle, (char*)"enable_color_filter");
 	//childSetCommitCallback("ColorFilterGamma", &LLFloaterPostProcess::onFloatControlMoved, &(gPostProcess->tweaks.gamma()));
 	childSetCommitCallback("wmiColorFilterBrightness", &LLFloaterPostProcess::onFloatControlMoved, (char*)"brightness");

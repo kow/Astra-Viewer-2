@@ -136,7 +136,7 @@ void LLVertexBuffer::setupClientArrays(U32 data_mask)
 						}
 						else
 						{
-						llwarns << "Bad client state! " << array[i] << " disabled." << llendl; // S20
+						llwarns << "Bad client state! " << array[i] << " disabled." << llendl; // S21
 						}
 					}
 				}
@@ -156,7 +156,7 @@ void LLVertexBuffer::setupClientArrays(U32 data_mask)
 					}
 					else
 					{
-					llwarns << "Bad client state! " << array[i] << " enabled." << llendl; // S20
+					llwarns << "Bad client state! " << array[i] << " enabled." << llendl; // S21
 					}
 				}
 			}
@@ -247,7 +247,7 @@ void LLVertexBuffer::validateRange(U32 start, U32 end, U32 count, U32 indices_of
 	if (indices_offset >= (U32) mRequestedNumIndices ||
 	    indices_offset + count > (U32) mRequestedNumIndices)
 	{
-		llwarns << "Bad index buffer draw range: [" << indices_offset << ", " << indices_offset+count << "]" << llendl; // S20
+		llwarns << "Bad index buffer draw range: [" << indices_offset << ", " << indices_offset+count << "]" << llendl; // S21
 	}
 
 	if (gDebugGL && !useVBOs())
@@ -271,17 +271,17 @@ void LLVertexBuffer::drawRange(U32 mode, U32 start, U32 end, U32 count, U32 indi
 
 	if (mGLIndices != sGLRenderIndices)
 	{
-		llwarns << "Wrong index buffer bound." << llendl; // S20
+		llwarns << "Wrong index buffer bound." << llendl; // S21
 	}
 
 	if (mGLBuffer != sGLRenderBuffer)
 	{
-		llwarns << "Wrong vertex buffer bound." << llendl; // S20
+		llwarns << "Wrong vertex buffer bound." << llendl; // S21
 	}
 
 	if (mode >= LLRender::NUM_MODES)
 	{
-		llwarns << "Invalid draw mode: " << mode << llendl; // S20
+		llwarns << "Invalid draw mode: " << mode << llendl; // S21
 		return;
 	}
 
@@ -1283,7 +1283,7 @@ void LLVertexBuffer::setupVertexBuffer(U32 data_mask) const
 
 	if ((data_mask & mTypeMask) != data_mask)
 	{
-	    // S20
+	    // S21
 		llwarns << "LLVertexBuffer::setupVertexBuffer missing required components for supplied data mask." << llendl;
 	}
 
