@@ -111,7 +111,7 @@ if [ -n "$LL_TCMALLOC" ]; then
 fi
 
 export SL_ENV='LD_LIBRARY_PATH="`pwd`"/lib:"${LD_LIBRARY_PATH}"'
-export SL_CMD='$LL_WRAPPER bin/do-not-directly-run-kirstens-s20-bin'
+export SL_CMD='$LL_WRAPPER bin/do-not-directly-run-kirstens-s21-bin'
 export SL_OPT="`cat etc/gridargs.dat` $@"
 
 # Run the program

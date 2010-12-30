@@ -5,15 +5,15 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>Kirstens S20</string>
+	<string>Kirstens S21</string>
 	<key>CFBundleIconFile</key>
-	<string>Kirstens-S20.icns</string>
+	<string>Kirstens-S21.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.secondlife.kirstens.viewer</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Kirstens S20</string>
+	<string>Kirstens S21</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>

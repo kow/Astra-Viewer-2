@@ -231,6 +231,7 @@ set(viewer_SOURCE_FILES
     llfloaterurlentry.cpp
     llfloatervoiceeffect.cpp
     llfloaterwater.cpp
+    llfloaterwebcontent.cpp
     llfloaterwhitelistentry.cpp
     llfloaterwindlight.cpp
     llfloaterwindowsize.cpp
@@ -777,6 +778,7 @@ set(viewer_HEADER_FILES
     llfloaterurlentry.h
     llfloatervoiceeffect.h
     llfloaterwater.h
+    llfloaterwebcontent.h
     llfloaterwhitelistentry.h
     llfloaterwindlight.h
     llfloaterwindowsize.h
@@ -1166,7 +1168,7 @@ if (DARWIN)
     macview.r
     gpu_table.txt
     Info-Kirstens-S21.plist
-    SecondLife.nib/
+    Kirstens-S21.nib/
     # CMake doesn't seem to support Xcode language variants well just yet
     English.lproj/InfoPlist.strings
     English.lproj/language.txt

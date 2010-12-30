@@ -1233,45 +1233,45 @@ void LLModelLoader::run()
 										if ( isNodeAJoint( pNode ) )
 										{
 											processJointNode( pNode, jointTransforms );
-										}	
+										}
 									}
-								}				
+								}
 							}
-							else 
+							else
 							//Has Skeleton
-							{   
+							{
 								//Get the root node of the skeleton
 								daeElement* pSkeletonRootNode = pSkeleton->getValue().getElement();
 								if ( pSkeletonRootNode )
-								{       
-									//Once we have the root node - start acccessing it's joint components       
+								{
+									//Once we have the root node - start acccessing it's joint components
 									const int jointCnt = mJointMap.size();
 									std::map<std::string, std::string> :: const_iterator jointIt = mJointMap.begin();
-									
+
 									//Loop over all the possible joints within the .dae - using the allowed joint list in the ctor.
 									for ( int i=0; i<jointCnt; ++i, ++jointIt )
 									{
 										//Build a joint for the resolver to work with
-										char str[64]={0};           
-										sprintf(str,"./%s",(*jointIt).second.c_str() );                   
+										char str[64]={0};
+										sprintf(str,"./%s",(*jointIt).second.c_str() );
 										//llwarns<<"Joint "<< str <<llendl;
-										
+
 										//Setup the resolver
                                         daeSIDResolver resolver( pSkeletonRootNode, str );
-                                        
+
                                         //Look for the joint
                                         domNode* pJoint = daeSafeCast<domNode>( resolver.getElement() );
                                         if ( pJoint )
-                                        {                                            
+                                        {
 											//Pull out the translate id and store it in the jointTranslations map
-											daeSIDResolver jointResolver( pJoint, "./translate" );                               
+											daeSIDResolver jointResolver( pJoint, "./translate" );
 											domTranslate* pTranslate = daeSafeCast<domTranslate>( jointResolver.getElement() );
-                                            
+
 											LLMatrix4 workingTransform;
-                                            
+
 											//Translation via SID
 											if ( pTranslate )
-											{               
+											{
 												extractTranslation( pTranslate, workingTransform );
 											}
 											else
@@ -2423,51 +2423,51 @@ void LLModelPreview::generateNormals()
 		{
 			(*iter)->generateNormals(angle_cutoff);
 		}
-		
+
 		mVertexBuffer[5].clear();
 	}
-	
+
 	for (LLModelLoader::model_list::iterator iter = mModel[which_lod].begin(); iter != mModel[which_lod].end(); ++iter)
 	{
 		(*iter)->generateNormals(angle_cutoff);
 	}
-	
+
 	mVertexBuffer[which_lod].clear();
 	refresh();
-	
+
 }
 
 void LLModelPreview::consolidate()
 {
 	std::map<LLImportMaterial, std::vector<LLModelInstance> > composite;
-	
+
 	LLMatrix4 identity;
-	
+
 	//bake out each node in current scene to composite
 	for (LLModelLoader::scene::iterator iter = mScene[mPreviewLOD].begin(); iter != mScene[mPreviewLOD].end(); ++iter)
 	{ //for each transform in current scene
 		LLMatrix4 mat = iter->first;
 		glh::matrix4f inv_trans = glh::matrix4f((F32*) mat.mMatrix).inverse().transpose();
 		LLMatrix4 norm_mat(inv_trans.m);
-		
+
 		for (LLModelLoader::model_instance_list::iterator model_iter = iter->second.begin(); model_iter != iter->second.end(); ++model_iter)
 		{ //for each instance with that transform
 			LLModelInstance& source_instance = *model_iter;
 			LLModel* source = source_instance.mModel;
-			
+
 			if (!validate_model(source))
 			{
 				llerrs << "Invalid model found!" << llendl;
 			}
-			
+
 			for (S32 i = 0; i < source->getNumVolumeFaces(); ++i)
 			{ //for each face in instance
 				const LLVolumeFace& src_face = source->getVolumeFace(i);
 				LLImportMaterial& source_material = source_instance.mMaterial[i];
-				
+
 				//get model in composite that is composite for this material
 				LLModel* model = NULL;
-				
+
 				if (composite.find(source_material) != composite.end())
 				{
 					model = composite[source_material].rbegin()->mModel;
@@ -2476,7 +2476,7 @@ void LLModelPreview::consolidate()
 						model = NULL;
 					}
 				}
-				
+
 				if (model == NULL)
 				{  //no model found, make new model
 					std::vector<LLImportMaterial> materials;
@@ -2870,8 +2870,8 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 			stop_gloderror();
 		}
 	}
-	
-	
+
+
 	S32 start = LLModel::LOD_HIGH;
 	S32 end = 0;
 
@@ -2879,6 +2879,13 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 	{
 		start = end = which_lod;
 	}
+	else
+	{
+		//SH-632 -- incremenet triangle count to avoid removing any triangles from
+		//highest LoD when auto-generating LoD
+		triangle_count++;
+	}
+
 
 	mMaxTriangleLimit = base_triangle_count;
 
@@ -3679,49 +3686,49 @@ BOOL LLModelPreview::render()
 		mFMP->childSetValue("upload_skin", false);
 		upload_skin = false;
 	}
-	
+
 	if (!upload_skin && upload_joints)
 	{ //can't upload joints if not uploading skin weights
 		mFMP->childSetValue("upload_joints", false);
 		upload_joints = false;
 	}
-	
+
 	mFMP->childSetEnabled("upload_joints", upload_skin);
-	
+
 	F32 explode = mFMP->childGetValue("physics_explode").asReal();
-	
+
 	glClear(GL_DEPTH_BUFFER_BIT);
-	
+
 	LLRect preview_rect = mFMP->getChildView("preview_panel")->getRect();
 	F32 aspect = (F32) preview_rect.getWidth()/preview_rect.getHeight();
 
 	LLViewerCamera::getInstance()->setAspect(aspect);
-	
+
 	LLViewerCamera::getInstance()->setView(LLViewerCamera::getInstance()->getDefaultFOV() / mCameraZoom);
-	
+
 	LLVector3 offset = mCameraOffset;
 	LLVector3 target_pos = mPreviewTarget+offset;
-	
+
 	F32 z_near = 0.001f;
 	F32 z_far = mCameraDistance+mPreviewScale.magVec()+mCameraOffset.magVec();
-	
+
 	if (skin_weight)
 	{
 		target_pos = gAgentAvatarp->getPositionAgent();
 		z_near = 0.01f;
 		z_far = 1024.f;
 		mCameraDistance = 16.f;
-		
+
 		//render avatar previews every frame
 		refresh();
 	}
-	
+
 	glLoadIdentity();
 	gPipeline.enableLightsPreview();
 
-	LLQuaternion camera_rot = LLQuaternion(mCameraPitch, LLVector3::y_axis) * 
+	LLQuaternion camera_rot = LLQuaternion(mCameraPitch, LLVector3::y_axis) *
 	LLQuaternion(mCameraYaw, LLVector3::z_axis);
-	
+
 	LLQuaternion av_rot = camera_rot;
 	LLViewerCamera::getInstance()->setOriginAndLookAt(
 													  target_pos + ((LLVector3(mCameraDistance, 0.f, 0.f) + offset) * av_rot),		// camera

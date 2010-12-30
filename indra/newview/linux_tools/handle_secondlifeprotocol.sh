@@ -13,5 +13,5 @@ fi
 RUN_PATH=`dirname "$0" || echo .`
 cd "${RUN_PATH}/.."
 
-exec ./Runme-kirstens-s20 -url \'"${URL}"\'
+exec ./Runme-kirstens-s21 -url \'"${URL}"\'
 

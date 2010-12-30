@@ -500,7 +500,7 @@ LLIMFloater* LLIMFloater::show(const LLUUID& session_id)
 }
 
 //static
-bool LLIMFloater::resetAllowedRectPadding(const LLSD& newvalue)
+bool LLIMFloater::resetAllowedRectPadding()
 {
 	// S21
 	// Has a slightly different way of doing the side bar
