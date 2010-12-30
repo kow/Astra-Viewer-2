@@ -3,33 +3,26 @@
  * @brief Example plugin for LLMedia API plugin system
  *
  * @cond
- * $LicenseInfo:firstyear=2008&license=viewergpl$
- * 
- * Copyright (c) 2008-2010, Linden Research, Inc.
- * 
+ * $LicenseInfo:firstyear=2008&license=viewerlgpl$
  * Second Life Viewer Source Code
- * The source code in this file ("Source Code") is provided by Linden Lab
- * to you under the terms of the GNU General Public License, version 2.0
- * ("GPL"), unless you have obtained a separate licensing agreement
- * ("Other License"), formally executed by you and Linden Lab.  Terms of
- * the GPL can be found in doc/GPL-license.txt in this distribution, or
- * online at http://secondlife.com/developers/opensource/gplv2
- * 
- * There are special exceptions to the terms and conditions of the GPL as
- * it is applied to this Source Code. View the full text of the exception
- * in the file doc/FLOSS-exception.txt in this software distribution, or
- * online at
- * http://secondlife.com/developers/opensource/flossexception
- * 
- * By copying, modifying or distributing this software, you acknowledge
- * that you have read and understood your obligations described above,
- * and agree to abide by those obligations.
- * 
- * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
- * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
- * COMPLETENESS OR PERFORMANCE.
+ * Copyright (C) 2010, Linden Research, Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License only.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
- * 
  * @endcond
  */
 
@@ -100,244 +93,168 @@ MediaPluginExample::~MediaPluginExample()
 //
 void MediaPluginExample::receiveMessage( const char* message_string )
 {
-	LLPluginMessage message_in;
+//  std::cerr << "MediaPluginWebKit::receiveMessage: received message: \"" << message_string << "\"" << std::endl;
+    LLPluginMessage message_in;
 
-	if ( message_in.parse( message_string ) >= 0 )
-	{
-		std::string message_class = message_in.getClass();
-		std::string message_name = message_in.getName();
+    if(message_in.parse(message_string) >= 0)
+    {
+        std::string message_class = message_in.getClass();
+        std::string message_name = message_in.getName();
+        if(message_class == LLPLUGIN_MESSAGE_CLASS_BASE)
+        {
+            if(message_name == "init")
+            {
+                LLPluginMessage message("base", "init_response");
+                LLSD versions = LLSD::emptyMap();
+                versions[LLPLUGIN_MESSAGE_CLASS_BASE] = LLPLUGIN_MESSAGE_CLASS_BASE_VERSION;
+                versions[LLPLUGIN_MESSAGE_CLASS_MEDIA] = LLPLUGIN_MESSAGE_CLASS_MEDIA_VERSION;
+                versions[LLPLUGIN_MESSAGE_CLASS_MEDIA_BROWSER] = LLPLUGIN_MESSAGE_CLASS_MEDIA_BROWSER_VERSION;
+                message.setValueLLSD("versions", versions);
 
-		if ( message_class == LLPLUGIN_MESSAGE_CLASS_BASE )
-		{
-			if ( message_name == "init" )
-			{
-				LLPluginMessage message( "base", "init_response" );
-				LLSD versions = LLSD::emptyMap();
-				versions[ LLPLUGIN_MESSAGE_CLASS_BASE ] = LLPLUGIN_MESSAGE_CLASS_BASE_VERSION;
-				versions[ LLPLUGIN_MESSAGE_CLASS_MEDIA ] = LLPLUGIN_MESSAGE_CLASS_MEDIA_VERSION;
-				versions[ LLPLUGIN_MESSAGE_CLASS_MEDIA_BROWSER ] = LLPLUGIN_MESSAGE_CLASS_MEDIA_BROWSER_VERSION;
-				message.setValueLLSD( "versions", versions );
+                std::string plugin_version = "Example plugin 1.0..0";
+                message.setValue("plugin_version", plugin_version);
+                sendMessage(message);
+            }
+            else if(message_name == "idle")
+            {
+                // no response is necessary here.
+                F64 time = message_in.getValueReal("time");
 
-				std::string plugin_version = "Example media plugin, Example Version 1.0.0.0";
-				message.setValue( "plugin_version", plugin_version );
-				sendMessage( message );
-			}
-			else
-			if ( message_name == "idle" )
-			{
-				// no response is necessary here.
-				F64 time = message_in.getValueReal( "time" );
+                // Convert time to milliseconds for update()
+                update((int)(time * 1000.0f));
+            }
+            else if(message_name == "cleanup")
+            {
+            }
+            else if(message_name == "shm_added")
+            {
+                SharedSegmentInfo info;
+                info.mAddress = message_in.getValuePointer("address");
+                info.mSize = (size_t)message_in.getValueS32("size");
+                std::string name = message_in.getValue("name");
 
-				// Convert time to milliseconds for update()
-				update( time );
-			}
-			else
-			if ( message_name == "cleanup" )
-			{
-				// clean up here
-			}
-			else
-			if ( message_name == "shm_added" )
-			{
-				SharedSegmentInfo info;
-				info.mAddress = message_in.getValuePointer( "address" );
-				info.mSize = ( size_t )message_in.getValueS32( "size" );
-				std::string name = message_in.getValue( "name" );
+                mSharedSegments.insert(SharedSegmentMap::value_type(name, info));
 
-				mSharedSegments.insert( SharedSegmentMap::value_type( name, info ) );
+            }
+            else if(message_name == "shm_remove")
+            {
+                std::string name = message_in.getValue("name");
 
-			}
-			else
-			if ( message_name == "shm_remove" )
-			{
-				std::string name = message_in.getValue( "name" );
+                SharedSegmentMap::iterator iter = mSharedSegments.find(name);
+                if(iter != mSharedSegments.end())
+                {
+                    if(mPixels == iter->second.mAddress)
+                    {
+                        // This is the currently active pixel buffer.  Make sure we stop drawing to it.
+                        mPixels = NULL;
+                        mTextureSegmentName.clear();
+                    }
+                    mSharedSegments.erase(iter);
+                }
+                else
+                {
+//                  std::cerr << "MediaPluginWebKit::receiveMessage: unknown shared memory region!" << std::endl;
+                }
 
-				SharedSegmentMap::iterator iter = mSharedSegments.find( name );
-				if( iter != mSharedSegments.end() )
-				{
-					if ( mPixels == iter->second.mAddress )
-					{
-						// This is the currently active pixel buffer.
-						// Make sure we stop drawing to it.
-						mPixels = NULL;
-						mTextureSegmentName.clear();
-					};
-					mSharedSegments.erase( iter );
-				}
-				else
-				{
-					//std::cerr << "MediaPluginExample::receiveMessage: unknown shared memory region!" << std::endl;
-				};
+                // Send the response so it can be cleaned up.
+                LLPluginMessage message("base", "shm_remove_response");
+                message.setValue("name", name);
+                sendMessage(message);
+            }
+            else
+            {
+//              std::cerr << "MediaPluginWebKit::receiveMessage: unknown base message: " << message_name << std::endl;
+            }
+        }
+        else if(message_class == LLPLUGIN_MESSAGE_CLASS_MEDIA)
+        {
+            if(message_name == "init")
+            {
+                // Plugin gets to decide the texture parameters to use.
+                mDepth = 4;
+                LLPluginMessage message(LLPLUGIN_MESSAGE_CLASS_MEDIA, "texture_params");
+                message.setValueS32("default_width", 1024);
+                message.setValueS32("default_height", 1024);
+                message.setValueS32("depth", mDepth);
+                message.setValueU32("internalformat", GL_RGBA);
+                message.setValueU32("format", GL_RGBA);
+                message.setValueU32("type", GL_UNSIGNED_BYTE);
+                message.setValueBoolean("coords_opengl", true);
+                sendMessage(message);
+            }
+            else if(message_name == "size_change")
+            {
+                std::string name = message_in.getValue("name");
+                S32 width = message_in.getValueS32("width");
+                S32 height = message_in.getValueS32("height");
+                S32 texture_width = message_in.getValueS32("texture_width");
+                S32 texture_height = message_in.getValueS32("texture_height");
 
-				// Send the response so it can be cleaned up.
-				LLPluginMessage message( "base", "shm_remove_response" );
-				message.setValue( "name", name );
-				sendMessage( message );
-			}
-			else
-			{
-				//std::cerr << "MediaPluginExample::receiveMessage: unknown base message: " << message_name << std::endl;
-			};
-		}
-		else
-		if ( message_class == LLPLUGIN_MESSAGE_CLASS_MEDIA )
-		{
-			if ( message_name == "init" )
-			{
-				// Plugin gets to decide the texture parameters to use.
-				LLPluginMessage message( LLPLUGIN_MESSAGE_CLASS_MEDIA, "texture_params" );
-				message.setValueS32( "default_width", mWidth );
-				message.setValueS32( "default_height", mHeight );
-				message.setValueS32( "depth", mDepth );
-				message.setValueU32( "internalformat", GL_RGBA );
-				message.setValueU32( "format", GL_RGBA );
-				message.setValueU32( "type", GL_UNSIGNED_BYTE );
-				message.setValueBoolean( "coords_opengl", false );
-				sendMessage( message );
-			}
-			else if ( message_name == "size_change" )
-			{
-				std::string name = message_in.getValue( "name" );
-				S32 width = message_in.getValueS32( "width" );
-				S32 height = message_in.getValueS32( "height" );
-				S32 texture_width = message_in.getValueS32( "texture_width" );
-				S32 texture_height = message_in.getValueS32( "texture_height" );
+                if(!name.empty())
+                {
+                    // Find the shared memory region with this name
+                    SharedSegmentMap::iterator iter = mSharedSegments.find(name);
+                    if(iter != mSharedSegments.end())
+                    {
+                        mPixels = (unsigned char*)iter->second.mAddress;
+                        mWidth = width;
+                        mHeight = height;
 
-				if ( ! name.empty() )
-				{
-					// Find the shared memory region with this name
-					SharedSegmentMap::iterator iter = mSharedSegments.find( name );
-					if ( iter != mSharedSegments.end() )
-					{
-						mPixels = ( unsigned char* )iter->second.mAddress;
-						mWidth = width;
-						mHeight = height;
+                        mTextureWidth = texture_width;
+                        mTextureHeight = texture_height;
+                    };
+                };
 
-						mTextureWidth = texture_width;
-						mTextureHeight = texture_height;
+                LLPluginMessage message(LLPLUGIN_MESSAGE_CLASS_MEDIA, "size_change_response");
+                message.setValue("name", name);
+                message.setValueS32("width", width);
+                message.setValueS32("height", height);
+                message.setValueS32("texture_width", texture_width);
+                message.setValueS32("texture_height", texture_height);
+                sendMessage(message);
 
-						init();
-					};
-				};
+            }
+            else if(message_name == "load_uri")
+            {
+            }
+            else if(message_name == "mouse_event")
+            {
+                std::string event = message_in.getValue("event");
+                if(event == "down")
+                {
 
-				LLPluginMessage message( LLPLUGIN_MESSAGE_CLASS_MEDIA, "size_change_response" );
-				message.setValue( "name", name );
-				message.setValueS32( "width", width );
-				message.setValueS32( "height", height );
-				message.setValueS32( "texture_width", texture_width );
-				message.setValueS32( "texture_height", texture_height );
-				sendMessage( message );
-			}
-			else
-			if ( message_name == "load_uri" )
-			{
-				std::string uri = message_in.getValue( "uri" );
-				if ( ! uri.empty() )
-				{
-				};
-			}
-			else
-			if ( message_name == "mouse_event" )
-			{
-				std::string event = message_in.getValue( "event" );
-				S32 button = message_in.getValueS32( "button" );
-
-				// left mouse button
-				if ( button == 0 )
-				{
-					int mouse_x = message_in.getValueS32( "x" );
-					int mouse_y = message_in.getValueS32( "y" );
-					std::string modifiers = message_in.getValue( "modifiers" );
-
-					if ( event == "move" )
-					{
-						if ( mMouseButtonDown )
-							write_pixel( mouse_x, mouse_y, rand() % 0x80 + 0x80, rand() % 0x80 + 0x80, rand() % 0x80 + 0x80 );
-					}
-					else
-					if ( event == "down" )
-					{
-						mMouseButtonDown = true;
-					}
-					else
-					if ( event == "up" )
-					{
-						mMouseButtonDown = false;
-					}
-					else
-					if ( event == "double_click" )
-					{
-					};
-				};
-			}
-			else
-			if ( message_name == "key_event" )
-			{
-				std::string event = message_in.getValue( "event" );
-				S32 key = message_in.getValueS32( "key" );
-				std::string modifiers = message_in.getValue( "modifiers" );
-
-				if ( event == "down" )
-				{
-					if ( key == ' ')
-					{
-						mLastUpdateTime = 0;
-						update( 0.0f );
-					};
-				};
-			}
-			else
-			{
-				//std::cerr << "MediaPluginExample::receiveMessage: unknown media message: " << message_string << std::endl;
-			};
-		}
-		else
-		if ( message_class == LLPLUGIN_MESSAGE_CLASS_MEDIA_BROWSER )
-		{
-			if ( message_name == "browse_reload" )
-			{
-				mLastUpdateTime = 0;
-				mFirstTime = true;
-				mStopAction = false;
-				update( 0.0f );
-			}
-			else
-			if ( message_name == "browse_stop" )
-			{
-				for( int n = 0; n < ENumObjects; ++n )
-					mXInc[ n ] = mYInc[ n ] = 0;
-
-				mStopAction = true;
-				update( 0.0f );
-			}
-			else
-			{
-				//std::cerr << "MediaPluginExample::receiveMessage: unknown media_browser message: " << message_string << std::endl;
-			};
-		}
-		else
-		{
-			//std::cerr << "MediaPluginExample::receiveMessage: unknown message class: " << message_class << std::endl;
-		};
-	};
+                }
+                else if(event == "up")
+                {
+                }
+                else if(event == "double_click")
+                {
+                }
+            }
+        }
+        else
+        {
+//          std::cerr << "MediaPluginWebKit::receiveMessage: unknown message class: " << message_class << std::endl;
+        };
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 void MediaPluginExample::write_pixel( int x, int y, unsigned char r, unsigned char g, unsigned char b )
 {
-	// make sure we don't write outside the buffer
-	if ( ( x < 0 ) || ( x >= mWidth ) || ( y < 0 ) || ( y >= mHeight ) )
-		return;
-		
-	if ( mBackgroundPixels != NULL )
-	{
-		unsigned char *pixel = mBackgroundPixels;
-		pixel += y * mWidth * mDepth;
-		pixel += ( x * mDepth );
-		pixel[ 0 ] = b;
-		pixel[ 1 ] = g;
-		pixel[ 2 ] = r;
+    // make sure we don't write outside the buffer
+    if ( ( x < 0 ) || ( x >= mWidth ) || ( y < 0 ) || ( y >= mHeight ) )
+        return;
+
+    if ( mBackgroundPixels != NULL )
+    {
+        unsigned char *pixel = mBackgroundPixels;
+        pixel += y * mWidth * mDepth;
+        pixel += ( x * mDepth );
+        pixel[ 0 ] = b;
+        pixel[ 1 ] = g;
+        pixel[ 2 ] = r;
 
 		setDirty( x, y, x + 1, y + 1 );
 	};

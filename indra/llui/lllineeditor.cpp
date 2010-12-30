@@ -88,6 +88,7 @@ LLLineEditor::Params::Params()
 	revert_on_esc("revert_on_esc", true),
 	commit_on_focus_lost("commit_on_focus_lost", true),
 	ignore_tab("ignore_tab", true),
+	is_password("is_password", false),
 	cursor_color("cursor_color"),
 	text_color("text_color"),
 	text_readonly_color("text_readonly_color"),
@@ -129,7 +130,7 @@ LLLineEditor::LLLineEditor(const LLLineEditor::Params& p)
 	mBorderThickness( 0 ),
 	mIgnoreArrowKeys( FALSE ),
 	mIgnoreTab( p.ignore_tab ),
-	mDrawAsterixes( FALSE ),
+	mDrawAsterixes( p.is_password ),
 	mSelectAllonFocusReceived( p.select_on_focus ),
 	mPassDelete(FALSE),
 	mReadOnly(FALSE),
@@ -388,7 +389,11 @@ void LLLineEditor::setText(const LLStringExplicit &new_text)
 	setCursor(llmin((S32)mText.length(), getCursor()));
 
 	// Set current history line to end of history.
-	if(mLineHistory.end() != mLineHistory.begin())
+	if (mLineHistory.empty())
+	{
+		mCurrentHistoryLine = mLineHistory.end();
+	}
+	else
 	{
 		mCurrentHistoryLine = mLineHistory.end() - 1;
 	}

@@ -1634,6 +1634,9 @@ void LLTextBase::appendTextImpl(const std::string &new_text, const LLStyle::Para
 		while ( LLUrlRegistry::instance().findUrl(text, match,
 		        boost::bind(&LLTextBase::replaceUrl, this, _1, _2, _3)) )
 		{
+			
+			LLTextUtil::processUrlMatch(&match,this);
+
 			start = match.getStart();
 			end = match.getEnd()+1;
 
@@ -1655,10 +1658,6 @@ void LLTextBase::appendTextImpl(const std::string &new_text, const LLStyle::Para
 				std::string subtext=text.substr(0,start);
 				appendAndHighlightText(subtext, part, style_params); 
 			}
-
-			// inserts an avatar icon preceding the Url if appropriate
-			LLTextUtil::processUrlMatch(&match,this);
-
 			// output the styled Url
 			appendAndHighlightTextImpl(match.getLabel(), part, link_params, match.underlineOnHoverOnly());
 			
