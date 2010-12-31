@@ -4,13 +4,13 @@
 	<!-- Named Colors -->
 	<color
 	 name="EmphasisColor"
-	 value="0.38 0.794 0.573 0.75" />
+	 value="0.38 0.494 0.773 0.75" />
 	<color
 	 name="EmphasisColor_13"
-	 value="0.38 0.694 0.573 0.13" />
+	 value="0.38 0.494 0.773 0.13" />
 	<color
 	 name="EmphasisColor_35"
-	 value="0.58 0.794 0.473 0.55" />
+	 value="0.58 0.494 0.773 0.55" />
 	<color
 	 name="White"
 	 value="1 1 1 1" />
