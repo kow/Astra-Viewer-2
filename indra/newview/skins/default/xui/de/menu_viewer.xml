@@ -12,6 +12,12 @@
 		<menu_item_check label="Mein Inventar" name="ShowSidetrayInventory"/>
 		<menu_item_check label="Meine Gesten" name="Gestures"/>
 		<menu_item_check label="Meine Stimme" name="ShowVoice"/>
+		<menu label="Bewegung" name="Movement">
+			<menu_item_call label="Hinsetzen" name="Sit Down Here"/>
+			<menu_item_check label="Fliegen" name="Fly"/>
+			<menu_item_check label="Immer rennen" name="Always Run"/>
+			<menu_item_call label="Animation meines Avatars stoppen" name="Stop Animating My Avatar"/>
+		</menu>
 		<menu label="Mein Status" name="Status">
 			<menu_item_call label="Abwesend" name="Set Away"/>
 			<menu_item_call label="Beschäftigt" name="Set Busy"/>
@@ -47,6 +53,7 @@
 			<menu_item_check label="Landeigentümer" name="Land Owners"/>
 			<menu_item_check label="Koordinaten" name="Coordinates"/>
 			<menu_item_check label="Parzelleneigenschaften" name="Parcel Properties"/>
+			<menu_item_check label="Menü „Erweitert“" name="Show Advanced Menu"/>
 		</menu>
 		<menu_item_call label="Teleport nach Hause" name="Teleport Home"/>
 		<menu_item_call label="Hier als Zuhause wählen" name="Set Home to Here"/>
@@ -325,8 +332,6 @@
 		<menu label="XUI" name="XUI">
 			<menu_item_call label="Farbeinstellungen neu laden" name="Reload Color Settings"/>
 			<menu_item_call label="Schriftarttest anzeigen" name="Show Font Test"/>
-			<menu_item_call label="Von XML laden" name="Load from XML"/>
-			<menu_item_call label="Als XML speichern" name="Save to XML"/>
 			<menu_item_check label="XUI-Namen anzeigen" name="Show XUI Names"/>
 			<menu_item_call label="Test-IMs senden" name="Send Test IMs"/>
 			<menu_item_call label="Namen-Cache leeren" name="Flush Names Caches"/>
@@ -366,9 +371,9 @@
 		<menu_item_call label="Bilder komprimieren" name="Compress Images"/>
 		<menu_item_check label="Ausgabe Fehlerbeseitigung ausgeben" name="Output Debug Minidump"/>
 		<menu_item_check label="Bei nächster Ausführung Fenster öffnen" name="Console Window"/>
-		<menu_item_check label="Admin-Menü anzeigen" name="View Admin Options"/>
 		<menu_item_call label="Admin-Status anfordern" name="Request Admin Options"/>
 		<menu_item_call label="Admin-Status verlassen" name="Leave Admin Options"/>
+		<menu_item_check label="Admin-Menü anzeigen" name="View Admin Options"/>
 	</menu>
 	<menu label="Admin" name="Admin">
 		<menu label="Object">

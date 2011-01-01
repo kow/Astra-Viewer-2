@@ -6696,6 +6696,7 @@ void LLPipeline::bindDeferredShader(LLGLSLShader& shader, U32 light_index, LLRen
 	shader.uniform2f("proj_shadow_res", mShadow[4].getWidth(), mShadow[4].getHeight());
 	shader.uniform1f("depth_cutoff", gSavedSettings.getF32("RenderEdgeDepthCutoff"));
 	shader.uniform1f("norm_cutoff", gSavedSettings.getF32("RenderEdgeNormCutoff"));
+	
 
 	if (shader.getUniformLocation("norm_mat") >= 0)
 	{
@@ -7751,7 +7752,7 @@ void LLPipeline::generateWaterReflection(LLCamera& camera_in)
 				}
 
 				gPipeline.pushRenderTypeMask();
-				
+
 				clearRenderTypeMask(LLPipeline::RENDER_TYPE_WATER,
 									LLPipeline::RENDER_TYPE_VOIDWATER,
 									LLPipeline::RENDER_TYPE_GROUND,
@@ -7759,17 +7760,17 @@ void LLPipeline::generateWaterReflection(LLCamera& camera_in)
 									LLPipeline::RENDER_TYPE_CLOUDS,
 									LLPipeline::END_RENDER_TYPES);	
 
-				S32 detail = gSavedSettings.getS32("RenderReflectionDetail");
+					S32 detail = gSavedSettings.getS32("RenderReflectionDetail");
 				if (detail > 0)
 				{ //mask out selected geometry based on reflection detail
 					if (detail < 4)
 					{
 						clearRenderTypeMask(LLPipeline::RENDER_TYPE_PARTICLES, END_RENDER_TYPES);
-						if (detail < 3)
-						{
+					if (detail < 3)
+					{
 							clearRenderTypeMask(LLPipeline::RENDER_TYPE_AVATAR, END_RENDER_TYPES);
-							if (detail < 2)
-							{
+						if (detail < 2)
+						{
 								clearRenderTypeMask(LLPipeline::RENDER_TYPE_VOLUME, END_RENDER_TYPES);
 							}
 						}
@@ -7779,17 +7780,17 @@ void LLPipeline::generateWaterReflection(LLCamera& camera_in)
 					LLGLDisable cull(GL_CULL_FACE);
 					updateCull(camera, ref_result, 1);
 					stateSort(camera, ref_result);
-				}
+				}	
 				
-				if (LLDrawPoolWater::sNeedsDistortionUpdate)
-				{
+			if (LLDrawPoolWater::sNeedsDistortionUpdate)
+			{
 					if (gSavedSettings.getS32("RenderReflectionDetail") > 0)
-					{
-						gPipeline.grabReferences(ref_result);
-						LLGLUserClipPlane clip_plane(plane, mat, projection);
-						renderGeom(camera);
-					}
+				{
+					gPipeline.grabReferences(ref_result);
+					LLGLUserClipPlane clip_plane(plane, mat, projection);
+					renderGeom(camera);
 				}
+			}	
 
 				gPipeline.popRenderTypeMask();
 			}	
@@ -7863,7 +7864,8 @@ void LLPipeline::generateWaterReflection(LLCamera& camera_in)
 		gPipeline.popRenderTypeMask();
 		LLDrawPoolWater::sNeedsReflectionUpdate = FALSE;
 		LLDrawPoolWater::sNeedsDistortionUpdate = FALSE;
-		LLViewerCamera::getInstance()->setUserClipPlane(LLPlane(-pnorm, -pd));
+		LLPlane npnorm(-pnorm, -pd);
+		LLViewerCamera::getInstance()->setUserClipPlane(npnorm);
 		LLPipeline::sUseOcclusion = occlusion;
 		
 		LLGLState::checkStates();
@@ -8063,14 +8065,13 @@ BOOL LLPipeline::getVisiblePointCloud(LLCamera& camera, LLVector3& min, LLVector
 	}
 
 	//get set of planes on bounding box
-	std::vector<LLPlane> bp;
-		
-	bp.push_back(LLPlane(min, LLVector3(-1,0,0)));
-	bp.push_back(LLPlane(min, LLVector3(0,-1,0)));
-	bp.push_back(LLPlane(min, LLVector3(0,0,-1)));
-	bp.push_back(LLPlane(max, LLVector3(1,0,0)));
-	bp.push_back(LLPlane(max, LLVector3(0,1,0)));
-	bp.push_back(LLPlane(max, LLVector3(0,0,1)));
+	LLPlane bp[] = { 
+		LLPlane(min, LLVector3(-1,0,0)),
+		LLPlane(min, LLVector3(0,-1,0)),
+		LLPlane(min, LLVector3(0,0,-1)),
+		LLPlane(max, LLVector3(1,0,0)),
+		LLPlane(max, LLVector3(0,1,0)),
+		LLPlane(max, LLVector3(0,0,1))};
 	
 	//potential points
 	std::vector<LLVector3> pp;
@@ -8094,7 +8095,7 @@ BOOL LLPipeline::getVisiblePointCloud(LLCamera& camera, LLVector3& min, LLVector
 
 	//bounding box line segments
 	U32 bs[] = 
-	{
+			{
 		0,1,
 		1,3,
 		3,2,
@@ -8118,7 +8119,8 @@ BOOL LLPipeline::getVisiblePointCloud(LLCamera& camera, LLVector3& min, LLVector
 			const LLPlane& cp = camera.getAgentPlane(j);
 			const LLVector3& v1 = pp[bs[i*2+0]];
 			const LLVector3& v2 = pp[bs[i*2+1]];
-			const LLVector3 n(cp.mV);
+			LLVector3 n;
+			cp.getVector3(n);
 
 			LLVector3 line = v1-v2;
 
@@ -8134,7 +8136,7 @@ BOOL LLPipeline::getVisiblePointCloud(LLCamera& camera, LLVector3& min, LLVector
 			}
 		}
 	}
-
+			
 	//camera frustum line segments
 	const U32 fs[] =
 	{
@@ -8147,7 +8149,7 @@ BOOL LLPipeline::getVisiblePointCloud(LLCamera& camera, LLVector3& min, LLVector
 		5,6,
 		6,7,
 		7,4,
-
+	
 		0,4,
 		1,5,
 		2,6,
@@ -8156,7 +8158,7 @@ BOOL LLPipeline::getVisiblePointCloud(LLCamera& camera, LLVector3& min, LLVector
 
 	LLVector3 center = (max+min)*0.5f;
 	LLVector3 size = (max-min)*0.5f;
-
+	
 	for (U32 i = 0; i < 12; i++)
 	{
 		for (U32 j = 0; j < 6; ++j)
@@ -8164,7 +8166,8 @@ BOOL LLPipeline::getVisiblePointCloud(LLCamera& camera, LLVector3& min, LLVector
 			const LLVector3& v1 = pp[fs[i*2+0]+8];
 			const LLVector3& v2 = pp[fs[i*2+1]+8];
 			const LLPlane& cp = bp[j];
-			const LLVector3 n(cp.mV);
+			LLVector3 n;
+			cp.getVector3(n);
 
 			LLVector3 line = v1-v2;
 
@@ -8180,16 +8183,16 @@ BOOL LLPipeline::getVisiblePointCloud(LLCamera& camera, LLVector3& min, LLVector
 			}	
 		}
 	}
-	
+
 	LLVector3 ext[] = { min-LLVector3(0.05f,0.05f,0.05f),
 		max+LLVector3(0.05f,0.05f,0.05f) };
 
 	for (U32 i = 0; i < pp.size(); ++i)
 	{
 		bool found = true;
-		
-		const F32* p = pp[i].mV;
 
+		const F32* p = pp[i].mV;
+			
 		for (U32 j = 0; j < 3; ++j)
 		{
 			if (p[j] < ext[0].mV[j] ||
@@ -8199,24 +8202,24 @@ BOOL LLPipeline::getVisiblePointCloud(LLCamera& camera, LLVector3& min, LLVector
 				break;
 			}
 		}
-			
+				
 		for (U32 j = 0; j < 6; ++j)
 		{
 			const LLPlane& cp = camera.getAgentPlane(j);
 			F32 dist = cp.dist(pp[i]);
 			if (dist > 0.05f) //point is above some plane, not contained
-			{
+					{
 				found = false;
 				break;
-			}
-		}
+						}
+					}
 
-		if (found)
-		{
+					if (found)
+					{
 			fp.push_back(pp[i]);
 		}
 	}
-
+	
 	if (fp.empty())
 	{
 		return FALSE;

@@ -303,7 +303,7 @@ const U32 GROUP_MIN_SIZE = 2;
 // For now we need an old default value however,
 // so the viewer can be deployed ahead of login.cgi.
 //
-const S32 DEFAULT_MAX_AGENT_GROUPS = 25;
+const S32 DEFAULT_MAX_AGENT_GROUPS = 40; // KL and why not? since this is what it's going to be....
 
 // radius within which a chat message is fully audible
 const F32 CHAT_WHISPER_RADIUS = 10.f;

@@ -276,7 +276,10 @@ BOOL LLFloaterModelPreview::postBuild()
 		return FALSE;
 	}
 
-	setViewOption("show_textures", true);
+
+
+
+
 
 	childSetAction("lod_browse", onBrowseLOD, this);
 
@@ -393,13 +396,22 @@ LLFloaterModelPreview::~LLFloaterModelPreview()
 
 void LLFloaterModelPreview::onViewOptionChecked(const LLSD& userdata)
 {
-	mViewOption[userdata.asString()] = !mViewOption[userdata.asString()];
-	mModelPreview->refresh();
+	if (mModelPreview)
+	{
+		mModelPreview->mViewOption[userdata.asString()] = !mModelPreview->mViewOption[userdata.asString()];
+		
+		mModelPreview->refresh();
+	}
 }
 
 bool LLFloaterModelPreview::isViewOptionChecked(const LLSD& userdata)
 {
-	return mViewOption[userdata.asString()];
+	if (mModelPreview)
+	{
+		return mModelPreview->mViewOption[userdata.asString()];
+	}
+
+	return false;
 }
 
 bool LLFloaterModelPreview::isViewOptionEnabled(const LLSD& userdata)
@@ -420,11 +432,6 @@ void LLFloaterModelPreview::enableViewOption(const std::string& option)
 void LLFloaterModelPreview::disableViewOption(const std::string& option)
 {
 	setViewOptionEnabled(option, false);
-}
-
-void LLFloaterModelPreview::setViewOption(const std::string& option, bool value)
-{
-	mViewOption[option] = value;
 }
 
 void LLFloaterModelPreview::loadModel(S32 lod)
@@ -1562,11 +1569,23 @@ void LLModelLoader::run()
 
 									//add instance to scene for this model
 
-									LLMatrix4 transform;
+									LLMatrix4 transformation = mTransform;
+									// adjust the transformation to compensate for mesh normalization
+									
+									LLMatrix4 mesh_translation;
+									mesh_translation.setTranslation(mesh_translation_vector);
+									mesh_translation *= transformation;
+									transformation = mesh_translation;
+
+									LLMatrix4 mesh_scale;
+									mesh_scale.initScale(mesh_scale_vector);
+									mesh_scale *= transformation;
+									transformation = mesh_scale;
+
 									std::vector<LLImportMaterial> materials;
 									materials.resize(model->getNumVolumeFaces());
-									mScene[transform].push_back(LLModelInstance(model, transform, materials));
-									stretch_extents(model, transform, mExtents[0], mExtents[1], mFirstTransform);
+									mScene[transformation].push_back(LLModelInstance(model, transformation, materials));
+									stretch_extents(model, transformation, mExtents[0], mExtents[1], mFirstTransform);
 								}
 							}
 						}
@@ -2019,6 +2038,8 @@ LLModelPreview::LLModelPreview(S32 width, S32 height, LLFloater* fmp)
 	mBuildBorderMode = GLOD_BORDER_UNLOCK;
 	mBuildOperator = GLOD_OPERATOR_HALF_EDGE_COLLAPSE;
 
+	mViewOption["show_textures"] = false;
+
 	mFMP = fmp;
 
 	glodInit();
@@ -2055,6 +2076,7 @@ U32 LLModelPreview::calcResourceCost()
 	F32 debug_scale = mFMP->childGetValue("import_scale").asReal();
 
 	F32 streaming_cost = 0.f;
+	F32 physics_cost = 0.f;
 	for (U32 i = 0; i < mUploadData.size(); ++i)
 	{
 		LLModelInstance& instance = mUploadData[i];
@@ -2109,6 +2131,7 @@ U32 LLModelPreview::calcResourceCost()
 	//mFMP->childSetTextArg(info_name[LLModel::LOD_PHYSICS], "[HULLS]", llformat("%d",num_hulls));
 	//mFMP->childSetTextArg(info_name[LLModel::LOD_PHYSICS], "[POINTS]", llformat("%d",num_points));
 	mFMP->childSetTextArg("streaming cost", "[COST]", llformat("%.3f", streaming_cost));
+	mFMP->childSetTextArg("physics cost", "[COST]", llformat("%.3f", physics_cost));	
 	F32 scale = mFMP->childGetValue("import_scale").asReal()*2.f;
 	mFMP->childSetTextArg("import_dimensions", "[X]", llformat("%.3f", mPreviewScale[0]*scale));
 	mFMP->childSetTextArg("import_dimensions", "[Y]", llformat("%.3f", mPreviewScale[1]*scale));
@@ -3265,13 +3288,14 @@ void LLModelPreview::updateStatusMessages()
 			if (!fmp->isViewOptionEnabled("show_physics"))
 			{
 				fmp->enableViewOption("show_physics");
-				fmp->setViewOption("show_physics", true);
+				mViewOption["show_physics"] = true;
 			}
 		}
 		else
 		{
 			fmp->disableViewOption("show_physics");
-			fmp->setViewOption("show_physics", false);
+			mViewOption["show_physics"] = false;
+
 		}
 
 		//bool use_hull = fmp->childGetValue("physics_use_hull").asBoolean();
@@ -3424,7 +3448,7 @@ void LLModelPreview::updateStatusMessages()
 }
 
 void LLModelPreview::setPreviewTarget(F32 distance)
-{ 
+{
 	mCameraDistance = distance;
 	mCameraZoom = 1.f;
 	mCameraPitch = 0.f;
@@ -3445,9 +3469,9 @@ void LLModelPreview::genBuffers(S32 lod, bool include_skin_weights)
 	U32 tri_count = 0;
 	U32 vertex_count = 0;
 	U32 mesh_count = 0;
-	
+
 	LLModelLoader::model_list* model = NULL;
-	
+
 	if (lod < 0 || lod > 4)
 	{
 		model = &mBaseModel;
@@ -3457,16 +3481,16 @@ void LLModelPreview::genBuffers(S32 lod, bool include_skin_weights)
 	{
 		model = &(mModel[lod]);
 	}
-	
+
 	if (!mVertexBuffer[lod].empty())
 	{
 		mVertexBuffer[lod].clear();
 	}
-	
+
 	mVertexBuffer[lod].clear();
-	
+
 	LLModelLoader::model_list::iterator base_iter = mBaseModel.begin();
-	
+
 	for (LLModelLoader::model_list::iterator iter = model->begin(); iter != model->end(); ++iter)
 	{
 		LLModel* mdl = *iter;
@@ -3474,16 +3498,16 @@ void LLModelPreview::genBuffers(S32 lod, bool include_skin_weights)
 		{
 			continue;
 		}
-		
+
 		LLModel* base_mdl = *base_iter;
 		base_iter++;
-		
+
 		for (S32 i = 0; i < mdl->getNumVolumeFaces(); ++i)
 		{
 			const LLVolumeFace &vf = mdl->getVolumeFace(i);
 			U32 num_vertices = vf.mNumVertices;
 			U32 num_indices = vf.mNumIndices;
-			
+
 			if (!num_vertices || ! num_indices)
 			{
 				continue;
@@ -3596,21 +3620,11 @@ BOOL LLModelPreview::render()
 	LLMutexLock lock(this);
 	mNeedsUpdate = FALSE;
 
-	bool edges = false;
-	bool joint_positions = false;
-	bool skin_weight = false;
-	bool textures = false;
-	bool physics = false;
-
-	LLFloaterModelPreview* fmp = LLFloaterModelPreview::sInstance;
-	if (fmp)
-	{
-		edges = fmp->isViewOptionChecked("show_edges");
-		joint_positions = fmp->isViewOptionChecked("show_joint_positions");
-		skin_weight = fmp->isViewOptionChecked("show_skin_weight");
-		textures = fmp->isViewOptionChecked("show_textures");
-		physics = fmp->isViewOptionChecked("show_physics");
-	}
+	bool edges = mViewOption["show_edges"];
+	bool joint_positions = mViewOption["show_joint_positions"];
+	bool skin_weight = mViewOption["show_skin_weight"];
+	bool textures = mViewOption["show_textures"];
+	bool physics = mViewOption["show_physics"];
 
 	S32 width = getWidth();
 	S32 height = getHeight();
@@ -3643,6 +3657,8 @@ BOOL LLModelPreview::render()
 		gGL.popMatrix();
 	}
 
+	LLFloaterModelPreview* fmp = LLFloaterModelPreview::sInstance;
+	
 	bool has_skin_weights = false;
 	bool upload_skin = mFMP->childGetValue("upload_skin").asBoolean();
 	bool upload_joints = mFMP->childGetValue("upload_joints").asBoolean();
@@ -3674,13 +3690,13 @@ BOOL LLModelPreview::render()
 		mFMP->childDisable("upload_skin");
 		if (fmp)
 		{
-			fmp->setViewOption("show_skin_weight", false);
+			mViewOption["show_skin_weight"] = false;
 			fmp->disableViewOption("show_skin_weight");
 			fmp->disableViewOption("show_joint_positions");
 		}
 		skin_weight = false;
 	}
-	
+
 	if (upload_skin && !has_skin_weights)
 	{ //can't upload skin weights if model has no skin weights
 		mFMP->childSetValue("upload_skin", false);
@@ -3734,18 +3750,18 @@ BOOL LLModelPreview::render()
 													  target_pos + ((LLVector3(mCameraDistance, 0.f, 0.f) + offset) * av_rot),		// camera
 													  LLVector3::z_axis,																	// up
 													  target_pos);											// point of interest
-	
-	
+
+
 	LLViewerCamera::getInstance()->setPerspective(FALSE, mOrigin.mX, mOrigin.mY, width, height, FALSE, z_near, z_far);
-	
+
 	stop_glerror();
-	
+
 	gGL.pushMatrix();
 	const F32 BRIGHTNESS = 0.9f;
 	gGL.color3f(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS);
-	
+
 	LLGLEnable normalize(GL_NORMALIZE);
-	
+
 	if (!mBaseModel.empty() && mVertexBuffer[5].empty())
 	{
 		genBuffers(-1, skin_weight);
@@ -3770,31 +3786,31 @@ BOOL LLModelPreview::render()
 		{
 			genBuffers(mPreviewLOD, skin_weight);
 		}
-		
+
 		if (!skin_weight)
 		{
 			for (LLMeshUploadThread::instance_list::iterator iter = mUploadData.begin(); iter != mUploadData.end(); ++iter)
 			{
 				LLModelInstance& instance = *iter;
-				
+
 				LLModel* model = instance.mLOD[mPreviewLOD];
-					
+
 				if (!model)
 				{
 					continue;
 				}
-					
+
 				gGL.pushMatrix();
 				LLMatrix4 mat = instance.mTransform;
 
-				glMultMatrixf((GLfloat*) mat.mMatrix);		
-					
+				glMultMatrixf((GLfloat*) mat.mMatrix);
+
 				for (U32 i = 0; i < mVertexBuffer[mPreviewLOD][model].size(); ++i)
 				{
 					LLVertexBuffer* buffer = mVertexBuffer[mPreviewLOD][model][i];
-							
+
 					buffer->setBuffer(LLVertexBuffer::MAP_VERTEX | LLVertexBuffer::MAP_NORMAL | LLVertexBuffer::MAP_TEXCOORD0);
-					
+
 					if (textures)
 					{
 						glColor4fv(instance.mMaterial[i].mDiffuseColor.mV);
@@ -3811,11 +3827,11 @@ BOOL LLModelPreview::render()
 					{
 						glColor4f(1,1,1,1);
 					}
-					
+
 					buffer->drawRange(LLRender::TRIANGLES, 0, buffer->getNumVerts()-1, buffer->getNumIndices(), 0);
 					gGL.getTexUnit(0)->unbind(LLTexUnit::TT_TEXTURE);
 					glColor3f(0.4f, 0.4f, 0.4f);
-							
+
 					if (edges)
 					{
 						glLineWidth(3.f);
@@ -3837,7 +3853,7 @@ BOOL LLModelPreview::render()
 				for (LLMeshUploadThread::instance_list::iterator iter = mUploadData.begin(); iter != mUploadData.end(); ++iter)
 				{
 					LLModelInstance& instance = *iter;
-					
+
 					LLModel* model = instance.mLOD[LLModel::LOD_PHYSICS];
 
 					if (!model)
@@ -3848,45 +3864,45 @@ BOOL LLModelPreview::render()
 					gGL.pushMatrix();
 					LLMatrix4 mat = instance.mTransform;
 
-					glMultMatrixf((GLfloat*) mat.mMatrix);				
+					glMultMatrixf((GLfloat*) mat.mMatrix);
 
-					
+
 					bool render_mesh = true;
 
 					LLPhysicsDecomp* decomp = gMeshRepo.mDecompThread;
 					if (decomp)
 					{
 						LLMutexLock(decomp->mMutex);
-											
-						std::map<LLPointer<LLModel>, std::vector<LLPointer<LLVertexBuffer> > >::iterator iter = 
+
+						std::map<LLPointer<LLModel>, std::vector<LLPointer<LLVertexBuffer> > >::iterator iter =
 							mPhysicsMesh.find(model);
 						if (iter != mPhysicsMesh.end())
-						{
+						{ //render hull instead of mesh
 							render_mesh = false;
 							for (U32 i = 0; i < iter->second.size(); ++i)
 							{
 								if (explode > 0.f)
 								{
 									gGL.pushMatrix();
-										
+
 									LLVector3 offset = model->mHullCenter[i]-model->mCenterOfHullCenters;
 									offset *= explode;
-										
+
 									gGL.translatef(offset.mV[0], offset.mV[1], offset.mV[2]);
 								}
-									
+
 								static std::vector<LLColor4U> hull_colors;
-									
+
 								if (i+1 >= hull_colors.size())
 								{
 									hull_colors.push_back(LLColor4U(rand()%128+127, rand()%128+127, rand()%128+127, 255));
 								}
-									
+
 								LLVertexBuffer* buff = iter->second[i];
 								if (buff)
 								{
-									buff->setBuffer(LLVertexBuffer::MAP_VERTEX | LLVertexBuffer::MAP_NORMAL);			
-										
+									buff->setBuffer(LLVertexBuffer::MAP_VERTEX | LLVertexBuffer::MAP_NORMAL);
+
 									glColor4ubv(hull_colors[i].mV);
 									buff->drawArrays(LLRender::TRIANGLES, 0, buff->getNumVerts());
 								}
@@ -3898,7 +3914,7 @@ BOOL LLModelPreview::render()
 							}
 						}
 					}
-						
+
 					if (render_mesh)
 					{
 						if (mVertexBuffer[LLModel::LOD_PHYSICS].empty())

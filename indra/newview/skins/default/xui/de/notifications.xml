@@ -2488,8 +2488,8 @@ Versuchen Sie es in einigen Minuten erneut.
 		Ihr Freundschaftsangebot wurde abgelehnt.
 	</notification>
 	<notification name="OfferCallingCard">
-		[NAME] bietet Ihnen ihre/seine Visitenkarte an.
-Ihrem Inventar wird ein Lesezeichen erstellt, damit Sie diesem Einwohner einfach eine IM schicken können.
+		[NAME] bietet Ihnen eine Visitenkarte an.
+In Ihrem Inventar wird ein Lesezeichen erstellt, damit Sie diesem Einwohner schnell IMs senden können.
 		<form name="form">
 			<button name="Accept" text="Akzeptieren"/>
 			<button name="Decline" text="Ablehnen"/>
