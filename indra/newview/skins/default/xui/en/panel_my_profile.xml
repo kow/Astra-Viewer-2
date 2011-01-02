@@ -54,7 +54,7 @@
          user_resize="false"
          width="315">
         <scroll_container
-         color="Black_50"
+         color="Black_75"
          follows="all"
          layout="topleft"
          left="0"
@@ -180,7 +180,7 @@
                translate="false"
                width="181"
                expanded_bg_visible="true"
-               expanded_bg_color="DkGray">
+               expanded_bg_color="Black">
                 Lorem ipsum dolor sit amet, consectetur adlkjpiscing elit moose moose. Aenean viverra orci et justo sagittis aliquet. Nullam malesuada mauris sit amet. adipiscing elit. Aenean rigviverra orci et justo sagittis aliquet. Nullam malesuada mauris sit amet sorbet ipsum. adipiscing elit. Aenean viverra orci et justo sagittis aliquet. Nullam malesuada mauris sit amet ipsum.
               </expandable_text>
             </panel>

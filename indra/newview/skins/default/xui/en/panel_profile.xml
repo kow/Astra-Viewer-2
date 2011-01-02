@@ -52,7 +52,7 @@
          width="317">
         <!-- Do NOT muck about with this KL -->
         <scroll_container
-         color="Black_50"
+         color="Black_75"
          follows="all"
          layout="topleft"
          height="390" 

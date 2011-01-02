@@ -694,7 +694,7 @@
      reference="White" />
     <color
      name="ScrollbarTrackColor"
-     reference="Black" />
+     reference="EmphasisColor_35" />
     <color
      name="SelectedOutfitTextColor"
      reference="EmphasisColor" />
