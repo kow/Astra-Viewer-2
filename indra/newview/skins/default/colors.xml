@@ -4,13 +4,13 @@
 	<!-- Named Colors -->
 	<color
 	 name="EmphasisColor"
-	 value="0.38 0.494 0.773 0.75" />
+	 value="0.746 0.492 1 0.80" />
 	<color
 	 name="EmphasisColor_13"
-	 value="0.38 0.494 0.773 0.13" />
+	 value="0.746 0.492 1 0.13" />
 	<color
 	 name="EmphasisColor_35"
-	 value="0.58 0.494 0.773 0.55" />
+	 value="0.746 0.492 1 0.55" />
 	<color
 	 name="White"
 	 value="1 1 1 1" />
@@ -87,8 +87,8 @@
 	 name="Green"
 	 value="0 1 0 1" />
 	 <color
-	 name="Green_2"
-	 value=".290 .317 .196 1" />
+	 name="Hyper"
+	 value=".29 .17 .39 1" />
 	<color
 	 name="Transparent"
 	 value="0 0 0 0" />
@@ -335,7 +335,7 @@
      reference="Black" />
     <color
      name="FilterTextColor"
-     value="0.38 0.69 0.57 1" />
+     value="0.68 0.59 0.99 1" />
      <color
      name="FloaterButtonImageColor"
      reference="LtGray" />
@@ -356,7 +356,7 @@
      reference="EmphasisColor" />
     <color
      name="FolderViewLoadingMessageTextColor"
-     value="0.3344 0.5456 0.5159 1" />
+     value="White" />
     <color
      name="GridFocusPointColor"
      reference="White_50" />
@@ -374,7 +374,7 @@
      reference="White" />
     <color
      name="GroupNotifyBoxColor"
-     value="0.3344 0.5456 0.5159 1" />
+     value="0.4344 0.2456 0.9159 1" />
     <color
      name="GroupNotifyTextColor"
      reference="White"/>
@@ -416,7 +416,7 @@
      value="1 0 1 1" />
     <color
      name="HighlightParentColor"
-     value="0.67 0.83 0.96 1" />
+     value="0.67 0.63 0.96 1" />
     <color
      name="IMChatColor"
      reference="LtGray" />
@@ -562,7 +562,7 @@
      reference="White" />
     <color
      name="NameTagFriend"
-     value="0.447 0.784 0.663 1" />
+     value="0.99 0.884 0.163 1" />
     <color
      name="NameTagLegacy"
      reference="White" />
@@ -616,7 +616,7 @@
      reference="Red" />
     <color
      name="PanelDefaultBackgroundColor"
-     reference="Green_2" />
+     reference="Hyper" />
     <color
      name="PanelDefaultHighlightLight"
      reference="White_50" />
@@ -760,7 +760,7 @@
      value="0.937 0.89 0.655 .65" />
     <color
      name="ToolTipBorderColor"
-     value="0.812 0.753 0.451 1" />
+     value="0.812 0.753 0.851 1" />
     <color
      name="ToolTipTextColor"
      reference="DkGray2" />

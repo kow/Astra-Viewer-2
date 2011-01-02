@@ -1093,7 +1093,7 @@ bool LLTextureFetchWorker::doWork(S32 param)
 			//1, not openning too many file descriptors at the same time;
 			//2, control the traffic of http so udp gets bandwidth.
 			//
-			static const S32 MAX_NUM_OF_HTTP_REQUESTS_IN_QUEUE = 32 ;
+			static const S32 MAX_NUM_OF_HTTP_REQUESTS_IN_QUEUE = 8 ;
 			if(mFetcher->getNumHTTPRequests() > MAX_NUM_OF_HTTP_REQUESTS_IN_QUEUE)
 			{
 				return false ; //wait.
@@ -1766,6 +1766,7 @@ LLTextureFetch::LLTextureFetch(LLTextureCache* cache, LLImageDecodeThread* image
 	  mImageDecodeThread(imagedecodethread),
 	  mTextureBandwidth(0),
 	  mHTTPTextureBits(0),
+	   mTotalHTTPRequests(0),
 	  mCurlGetRequest(NULL),
 	  mQAMode(qa_mode)
 {
@@ -1917,6 +1918,7 @@ void LLTextureFetch::addToHTTPQueue(const LLUUID& id)
 {
 	LLMutexLock lock(&mNetworkQueueMutex);
 	mHTTPTextureQueue.insert(id);
+	mTotalHTTPRequests++;
 }
 
 void LLTextureFetch::removeFromHTTPQueue(const LLUUID& id, S32 received_size)
@@ -1974,6 +1976,15 @@ S32 LLTextureFetch::getNumHTTPRequests()
 { 
 	mNetworkQueueMutex.lock() ;
 	S32 size = (S32)mHTTPTextureQueue.size(); 
+	mNetworkQueueMutex.unlock() ;
+
+	return size ;
+}
+
+U32 LLTextureFetch::getTotalNumHTTPRequests()
+{
+	mNetworkQueueMutex.lock() ;
+	U32 size = mTotalHTTPRequests ;
 	mNetworkQueueMutex.unlock() ;
 
 	return size ;
