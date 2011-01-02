@@ -71,6 +71,9 @@
 	 <color
 	 name="Black_60"
 	 value="0 0 0 0.6" />
+  <color
+  name="Black_75"
+  value="0 0 0 0.75" />
 	<color
 	name="FrogGreen"
 	value="0.26 0.345 0.263 1" />
@@ -509,7 +512,7 @@
      reference="DkGray_86" />
     <color
      name="MenuDefaultBgColor"
-     reference="Black_60" />
+     reference="Black_75" />
     <color
      name="MenuItemDisabledColor"
 	 reference="LtGray_50" />

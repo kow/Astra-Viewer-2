@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <panel
- background_visible="true"
+ background_visible="false"
  follows="all"
  height="570"
  layout="topleft"
@@ -36,7 +36,7 @@
      use_ellipses="true"
      width="275" />
     <scroll_container
-     color="DkGray2"
+     color="Black_75"
      opaque="true"
      follows="all"
      height="503"
@@ -98,14 +98,14 @@
          v_pad="0"
          value="[loading...]" />
         <text_editor
-         bg_readonly_color="DkGray2"
+         bg_readonly_color="Black"
          follows="all"
          height="100"
          width="280"
          parse_urls="true"	
          hide_scrollbar="false"
          layout="topleft"
-         left="10"
+         left="5"
          top_pad="2"
          max_length="1023"
          name="pick_desc"
