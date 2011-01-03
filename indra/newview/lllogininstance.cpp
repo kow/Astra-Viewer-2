@@ -49,12 +49,19 @@
 #include "llnotifications.h"
 #include "llwindow.h"
 #include "llviewerwindow.h"
+#include "llprogressview.h"
 #if LL_LINUX || LL_SOLARIS
 #include "lltrans.h"
 #endif
 #include "llsecapi.h"
 #include "llstartup.h"
 #include "llmachineid.h"
+#include "llevents.h"
+#include "llnotificationsutil.h"
+#include "llappviewer.h"
+
+#include <boost/scoped_ptr.hpp>
+#include <sstream>
 
 static const char * const TOS_REPLY_PUMP = "lllogininstance_tos_callback";
 static const char * const TOS_LISTENER_NAME = "lllogininstance_tos";

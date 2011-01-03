@@ -387,6 +387,9 @@ Remarque : cela videra le cache.
 	<notification name="ChangeSkin">
 		Le nouveau thème apparaîtra après le redémarrage de [APP_NAME].
 	</notification>
+	<notification name="ChangeLanguage">
+		Le changement de langue sera effectué au redémarrage de [APP_NAME].
+	</notification>
 	<notification name="GoToAuctionPage">
 		Aller à la page web de [SECOND_LIFE] pour voir le détail des enchères ou enchérir ?
 		<url name="url">
@@ -597,6 +600,10 @@ Assurez-vous que le fichier a l&apos;extension correcte.
 	</notification>
 	<notification name="SoundFileInvalidHeader">
 		Impossible de trouver les données dans l&apos;en-tête WAV :
+[FILE]
+	</notification>
+	<notification name="SoundFileInvalidChunkSize">
+		Taille de fragment incorrecte dans le fichier WAV :
 [FILE]
 	</notification>
 	<notification name="SoundFileInvalidTooLong">

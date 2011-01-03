@@ -840,7 +840,6 @@ void LLPipeline::createGLBuffers()
 		allocateScreenBuffer(resX,resY);
 		mScreenWidth = 0;
 		mScreenHeight = 0;
-
 	}
 	
 	if (sRenderDeferred)
@@ -1655,7 +1654,7 @@ void check_references(LLSpatialGroup* group, LLDrawable* drawable)
 	{
 		if (drawable == *i)
 		{
-			llerrs << "LLDrawable deleted while actively reference by LLPipeline." << llendl;
+			llwarns << "LLDrawable deleted while actively reference by LLPipeline." << llendl;
 		}
 	}			
 }
@@ -1666,7 +1665,7 @@ void check_references(LLDrawable* drawable, LLFace* face)
 	{
 		if (drawable->getFace(i) == face)
 		{
-			llerrs << "LLFace deleted while actively referenced by LLPipeline." << llendl;
+			llwarns << "LLFace deleted while actively referenced by LLPipeline." << llendl;
 		}
 	}
 }
@@ -1739,7 +1738,7 @@ void LLPipeline::checkReferences(LLDrawable* drawable)
 		{
 			if (drawable == *iter)
 			{
-				llerrs << "LLDrawable deleted while actively referenced by LLPipeline." << llendl;
+				llwarns << "LLDrawable deleted while actively referenced by LLPipeline." << llendl;
 			}
 		}
 	}
@@ -1798,7 +1797,7 @@ void LLPipeline::checkReferences(LLSpatialGroup* group)
 		{
 			if (group == *iter)
 			{
-				llerrs << "LLSpatialGroup deleted while actively referenced by LLPipeline." << llendl;
+				llwarns << "LLSpatialGroup deleted while actively referenced by LLPipeline." << llendl;
 			}
 		}
 
@@ -1806,7 +1805,7 @@ void LLPipeline::checkReferences(LLSpatialGroup* group)
 		{
 			if (group == *iter)
 			{
-				llerrs << "LLSpatialGroup deleted while actively referenced by LLPipeline." << llendl;
+				llwarns << "LLSpatialGroup deleted while actively referenced by LLPipeline." << llendl;
 			}
 		}
 
@@ -1814,7 +1813,7 @@ void LLPipeline::checkReferences(LLSpatialGroup* group)
 		{
 			if (group == *iter)
 			{
-				llerrs << "LLSpatialGroup deleted while actively referenced by LLPipeline." << llendl;
+				llwarns << "LLSpatialGroup deleted while actively referenced by LLPipeline." << llendl;
 			}
 		}
 	}
@@ -2491,7 +2490,7 @@ void LLPipeline::markRebuild(LLSpatialGroup* group, BOOL priority)
 			//llerrs << "Non-priority updates not yet supported!" << llendl;
 			if (std::find(mGroupQ2.begin(), mGroupQ2.end(), group) != mGroupQ2.end())
 			{
-				llerrs << "WTF?" << llendl;
+				llwarns << "WTF?" << llendl;
 			}
 			mGroupQ2.push_back(group);
 			group->setState(LLSpatialGroup::IN_BUILD_Q2);
@@ -2887,7 +2886,7 @@ void LLPipeline::postSort(LLCamera& camera)
 
 	assertInitialized();
 
-	llpushcallstacks ;
+	//llpushcallstacks ;
 	//rebuild drawable geometry
 	for (LLCullResult::sg_list_t::iterator i = sCull->beginDrawableGroups(); i != sCull->endDrawableGroups(); ++i)
 	{
@@ -2898,11 +2897,11 @@ void LLPipeline::postSort(LLCamera& camera)
 			group->rebuildGeom();
 		}
 	}
-	llpushcallstacks ;
+	//llpushcallstacks ;
 	//rebuild groups
 	sCull->assertDrawMapsEmpty();
 
-	/*LLSpatialGroup::sNoDelete = FALSE;
+	LLSpatialGroup::sNoDelete = FALSE;
 	for (LLCullResult::sg_list_t::iterator i = sCull->beginVisibleGroups(); i != sCull->endVisibleGroups(); ++i)
 	{
 		LLSpatialGroup* group = *i;
@@ -2914,11 +2913,11 @@ void LLPipeline::postSort(LLCamera& camera)
 		
 		group->rebuildGeom();
 	}
-	LLSpatialGroup::sNoDelete = TRUE;*/
+	LLSpatialGroup::sNoDelete = TRUE;
 
 
 	rebuildPriorityGroups();
-	llpushcallstacks ;
+	//llpushcallstacks ;
 
 	const S32 bin_count = 1024*8;
 		
@@ -3469,7 +3468,7 @@ void LLPipeline::renderGeom(LLCamera& camera, BOOL forceVBOUpdate)
 							{
 								ll_fail("GL matrix stack corrupted.");
 							}
-							llerrs << "GL matrix stack corrupted!" << llendl;
+							llwarns << "GL matrix stack corrupted!" << llendl;
 						}
 						std::string msg = llformat("%s pass %d", gPoolNames[cur_type].c_str(), i);
 						LLGLState::checkStates(msg);
@@ -5860,6 +5859,7 @@ void validate_framebuffer_object()
 {                                                           
 	GLenum status;                                            
 	status = glCheckFramebufferStatus(GL_FRAMEBUFFER_EXT); 
+	// S21 KL in the cases of a bad framebuffer I would prefer a black screen over a CTD so make these warnings.
 	switch(status) 
 	{                                          
 		case GL_FRAMEBUFFER_COMPLETE:                       
@@ -5867,18 +5867,18 @@ void validate_framebuffer_object()
 			break;
 		case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
 			// frame buffer not OK: probably means unsupported depth buffer format
-			llerrs << "Framebuffer Incomplete Missing Attachment." << llendl;
+			llwarns << "Framebuffer Incomplete Missing Attachment." << llendl;
 			break;
 		case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
 			// frame buffer not OK: probably means unsupported depth buffer format
-			llerrs << "Framebuffer Incomplete Attachment." << llendl;
+			llwarns << "Framebuffer Incomplete Attachment." << llendl;
 			break; 
 		case GL_FRAMEBUFFER_UNSUPPORTED:                    
 			/* choose different formats */                        
-			llerrs << "Framebuffer unsupported." << llendl;
+			llwarns << "Framebuffer unsupported." << llendl;
 			break;                                                
 		default:                                                
-			llerrs << "Unknown framebuffer status." << llendl;
+			llwarns << "Unknown framebuffer status." << llendl;
 			break;
 	}
 }
@@ -6716,7 +6716,7 @@ static LLFastTimer::DeclareTimer FTM_FULLSCREEN_LIGHTS("Fullscreen Lights");
 static LLFastTimer::DeclareTimer FTM_PROJECTORS("Projectors");
 static LLFastTimer::DeclareTimer FTM_POST("Post");
 
-
+//  S21 Shadows
 void LLPipeline::renderDeferredLighting()
 {
 	if (!sCull)

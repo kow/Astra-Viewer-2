@@ -47,14 +47,14 @@ Leder du efter nogen at være sammen med? Prøv [secondlife:///app/worldmap Worl
 		</panel>
 		<panel label="MINE GRUPPER" name="groups_panel">
 			<panel label="bottom_panel" name="bottom_panel">
-				<button name="groups_viewsort_btn" tool_tip="Valg"/>
+				<menu_button name="groups_viewsort_btn" tool_tip="Valg"/>
 				<button name="plus_btn" tool_tip="Bliv medlem af gruppe/Opret ny gruppe"/>
 				<button name="activate_btn" tool_tip="Activér valgte gruppe"/>
 			</panel>
 		</panel>
 		<panel label="NYLIGE" name="recent_panel">
 			<panel label="bottom_panel" name="bottom_panel">
-				<button name="recent_viewsort_btn" tool_tip="Valg"/>
+				<menu_button name="recent_viewsort_btn" tool_tip="Valg"/>
 				<button name="add_friend_btn" tool_tip="Tilføj valgte beboer til din venneliste"/>
 			</panel>
 		</panel>

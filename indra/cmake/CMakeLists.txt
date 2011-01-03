@@ -32,6 +32,7 @@ set(cmake_SOURCE_FILES
     FindMySQL.cmake
     FindOpenJPEG.cmake
     FindXmlRpcEpi.cmake
+    FindZLIB.cmake
     FMOD.cmake
     FreeType.cmake
     GLOD.cmake

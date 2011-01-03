@@ -39,4 +39,5 @@
 	</text>
 	<line_editor name="web_proxy_editor" tool_tip="Angiv navn eller IP addresse på den proxy du ønsker at anvende"/>
 	<spinner label="Port nummer:" name="web_proxy_port"/>
+	<check_box initial_value="sand" label="Hent og installer automatisk [APP_NAME] opdateringer" name="updater_service_active"/>
 </panel>

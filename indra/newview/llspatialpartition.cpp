@@ -980,7 +980,7 @@ void LLSpatialGroup::clearState(U32 state)
 {
 	if (state > LLSpatialGroup::STATE_MASK)
 	{
-		llerrs << "WTF?" << llendl;
+		llwarns << "WTF?" << llendl;
 	}
 
 	mState &= ~state; 
@@ -990,7 +990,7 @@ void LLSpatialGroup::clearState(U32 state, S32 mode)
 {
 	if (state > LLSpatialGroup::STATE_MASK)
 	{
-		llerrs << "WTF?" << llendl;
+		llwarns << "WTF?" << llendl;
 	}
 
 	LLMemType mt(LLMemType::MTYPE_SPACE_PARTITION);
@@ -1018,7 +1018,7 @@ BOOL LLSpatialGroup::isState(U32 state) const
 { 
 	if (state > LLSpatialGroup::STATE_MASK)
 	{
-		llerrs << "WTF?" << llendl;
+		llwarns << "WTF?" << llendl;
 	}
 
 	return mState & state ? TRUE : FALSE; 

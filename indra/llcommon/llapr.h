@@ -4,31 +4,25 @@
  * @date 2004-11-28
  * @brief Helper functions for using the apache portable runtime library.
  *
- * $LicenseInfo:firstyear=2004&license=viewergpl$
- * 
- * Copyright (c) 2004-2010, Linden Research, Inc.
- * 
+ * $LicenseInfo:firstyear=2004&license=viewerlgpl$
  * Second Life Viewer Source Code
- * The source code in this file ("Source Code") is provided by Linden Lab
- * to you under the terms of the GNU General Public License, version 2.0
- * ("GPL"), unless you have obtained a separate licensing agreement
- * ("Other License"), formally executed by you and Linden Lab.  Terms of
- * the GPL can be found in doc/GPL-license.txt in this distribution, or
- * online at http://secondlifegrid.net/programs/open_source/licensing/gplv2
+ * Copyright (C) 2010, Linden Research, Inc.
  * 
- * There are special exceptions to the terms and conditions of the GPL as
- * it is applied to this Source Code. View the full text of the exception
- * in the file doc/FLOSS-exception.txt in this software distribution, or
- * online at
- * http://secondlifegrid.net/programs/open_source/licensing/flossexception
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License only.
  * 
- * By copying, modifying or distributing this software, you acknowledge
- * that you have read and understood your obligations described above,
- * and agree to abide by those obligations.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  * 
- * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
- * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
- * COMPLETENESS OR PERFORMANCE.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
  */
 
@@ -58,6 +52,8 @@
 
 extern LL_COMMON_API apr_thread_mutex_t* gLogMutexp;
 extern apr_thread_mutex_t* gCallStacksLogMutexp;
+
+struct apr_dso_handle_t;
 
 /** 
  * @brief initialize the common apr constructs -- apr itself, the
@@ -182,7 +178,7 @@ typedef LLAtomic32<U32> LLAtomicU32;
 typedef LLAtomic32<S32> LLAtomicS32;
 
 // File IO convenience functions.
-// Returns NULL if the file fails to openm sets *sizep to file size of not NULL
+// Returns NULL if the file fails to open, sets *sizep to file size if not NULL
 // abbreviated flags
 #define LL_APR_R (APR_READ) // "r"
 #define LL_APR_W (APR_CREATE|APR_TRUNCATE|APR_WRITE) // "w"
@@ -200,7 +196,7 @@ typedef LLAtomic32<S32> LLAtomicS32;
 //      especially do not put some time-costly operations between open() and close().
 //      otherwise it might lock the APRFilePool.
 //there are two different apr_pools the APRFile can use:
-//      1, a temperary pool passed to an APRFile function, which is used within this function and only once.
+//      1, a temporary pool passed to an APRFile function, which is used within this function and only once.
 //      2, a global pool.
 //
 
@@ -255,18 +251,21 @@ public:
 
 	// Returns bytes read/written, 0 if read/write fails:
 	static S32 readEx(const std::string& filename, void *buf, S32 offset, S32 nbytes, LLVolatileAPRPool* pool = NULL);	
-	static S32 writeEx(const std::string& filename, void *buf, S32 offset, S32 nbytes, LLVolatileAPRPool* pool = NULL);	
+	static S32 writeEx(const std::string& filename, void *buf, S32 offset, S32 nbytes, LLVolatileAPRPool* pool = NULL); // offset<0 means append
 //*******************************************************************************************************************************
 };
 
 /**
- * @brief Function which approprately logs error or remains quiet on
+ * @brief Function which appropriately logs error or remains quiet on
  * APR_SUCCESS.
  * @return Returns <code>true</code> if status is an error condition.
  */
 bool LL_COMMON_API ll_apr_warn_status(apr_status_t status);
+/// There's a whole other APR error-message function if you pass a DSO handle.
+bool LL_COMMON_API ll_apr_warn_status(apr_status_t status, apr_dso_handle_t* handle);
 
 void LL_COMMON_API ll_apr_assert_status(apr_status_t status);
+void LL_COMMON_API ll_apr_assert_status(apr_status_t status, apr_dso_handle_t* handle);
 
 extern "C" LL_COMMON_API apr_pool_t* gAPRPoolp; // Global APR memory pool
 

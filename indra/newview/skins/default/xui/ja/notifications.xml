@@ -2223,7 +2223,7 @@ Web ページにリンクすると、他人がこの場所に簡単にアクセ�
 	<notification name="SystemMessage">
 		[MESSAGE]
 	</notification>
-	<notification name="PaymentReceived">
+	<notification name="PaymentRecived">
 		[MESSAGE]
 	</notification>
 	<notification name="EventNotification">

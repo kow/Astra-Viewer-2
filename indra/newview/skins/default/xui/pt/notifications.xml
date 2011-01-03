@@ -385,6 +385,9 @@ Nota: Este procedimento limpa o cache.
 	<notification name="ChangeSkin">
 		Reinicie o [APP_NAME] para ativar a pele nova.
 	</notification>
+	<notification name="ChangeLanguage">
+		Reinicie o [APP_NAME] para exibir o idioma selecionado.
+	</notification>
 	<notification name="GoToAuctionPage">
 		Ir para a página do [SECOND_LIFE] para ver os detalhes do leilão ou fazer um lance?
 		<usetemplate name="okcancelbuttons" notext="Cancelar" yestext="Ir para a página"/>
@@ -592,6 +595,10 @@ Esperada [VALIDS]
 	</notification>
 	<notification name="SoundFileInvalidHeader">
 		Não pode ser encontrado bloco de dados no cabeçalho WAV:
+[FILE]
+	</notification>
+	<notification name="SoundFileInvalidChunkSize">
+		Pedaço de arquivo WAV de tamanho errado:
 [FILE]
 	</notification>
 	<notification name="SoundFileInvalidTooLong">
@@ -2448,8 +2455,8 @@ Cada um pode ver o status do outro (definição padrão).
 		Oferta de amizada aceita.
 	</notification>
 	<notification name="OfferCallingCard">
-		[NAME] estão te oferecendo um cartão de visita.
-Ele colocará um item de inventário, para você possa contatá-lo facilmente.
+		[NOME] está te oferecendo um cartão de visita.
+Ele será um item no seu inventário, para você possa contatá-lo facilmente.
 		<form name="form">
 			<button name="Accept" text="Aceitar"/>
 			<button name="Decline" text="Recusar"/>
