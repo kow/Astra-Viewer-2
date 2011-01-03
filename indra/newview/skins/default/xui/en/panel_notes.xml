@@ -28,7 +28,7 @@
        height="450"
        width="313">
         <scroll_container
-         color="DkGray2"
+         color="Black_75"
          follows="all"
          layout="topleft"
          left="0"
