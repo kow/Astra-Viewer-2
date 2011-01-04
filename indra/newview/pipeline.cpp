@@ -2901,7 +2901,7 @@ void LLPipeline::postSort(LLCamera& camera)
 	//rebuild groups
 	sCull->assertDrawMapsEmpty();
 
-	LLSpatialGroup::sNoDelete = FALSE;
+	/*LLSpatialGroup::sNoDelete = FALSE;
 	for (LLCullResult::sg_list_t::iterator i = sCull->beginVisibleGroups(); i != sCull->endVisibleGroups(); ++i)
 	{
 		LLSpatialGroup* group = *i;
@@ -2913,7 +2913,7 @@ void LLPipeline::postSort(LLCamera& camera)
 		
 		group->rebuildGeom();
 	}
-	LLSpatialGroup::sNoDelete = TRUE;
+	LLSpatialGroup::sNoDelete = TRUE;*/
 
 
 	rebuildPriorityGroups();
