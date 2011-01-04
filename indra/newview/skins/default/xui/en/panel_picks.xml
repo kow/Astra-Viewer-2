@@ -72,12 +72,12 @@ bg_opaque_color="Black_50"
     </accordion_tab>
  </accordion>
    <panel
-bg_opaque_color="Black_50"
+       bg_opaque_color="Black_50"
        background_visible="true"
        background_opaque="true"
          bevel_style="none"
          enabled="false"
-         auto_resize="false"
+        
          follows="bottom|left|right"
          left="1"
          height="27"

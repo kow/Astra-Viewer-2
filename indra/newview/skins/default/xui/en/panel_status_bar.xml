@@ -52,7 +52,7 @@
     background_opaque="true" 
     bg_opaque_image="bevel_background">
     <text
-     auto_resize="true"
+     
      halign="center"
      font="SansSerifSmall"
      follows="all"

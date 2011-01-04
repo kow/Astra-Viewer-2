@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <panel
- background_visible="true"
+ background_visible="false"
  bevel_style="in"
  follows="left|top|right|bottom"
  height="569"
@@ -44,7 +44,7 @@
         Edit Pick
     </text>
    <scroll_container
-     color="DkGray2"
+     color="Black_75"
      follows="all"
      height="502"
      layout="topleft"

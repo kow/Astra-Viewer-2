@@ -9,6 +9,7 @@
  left="0"
  min_height="350"
  name="people_panel"
+ background_visible="false"
  top="0"
  width="333">
     <string
@@ -60,7 +61,7 @@ Looking for people to hang out with? Try the [secondlife:///app/worldmap World M
      layout="topleft"
      left="10"
      label="Filter"
-     max_length="300"
+     max_length_bytes="300"
      name="filter_input"
      text_color="Black"
      text_pad_left="10"
