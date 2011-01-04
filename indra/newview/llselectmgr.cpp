@@ -86,6 +86,8 @@
 #include "llviewerregion.h"
 #include "llviewerstats.h"
 #include "llvoavatarself.h"
+#include "llvograss.h" // S21
+#include "llvotree.h"  // S21
 #include "llvovolume.h"
 #include "pipeline.h"
 
@@ -852,8 +854,11 @@ void LLSelectMgr::highlightObjectOnly(LLViewerObject* objectp)
 	{
 		return;
 	}
-
-	if (objectp->getPCode() != LL_PCODE_VOLUME)
+    // KL - qarl
+	if ((objectp->getPCode() != LL_PCODE_VOLUME) &&
+		(objectp->getPCode() != LL_PCODE_LEGACY_TREE) &&
+		(objectp->getPCode() != LL_PCODE_LEGACY_GRASS))
+		
 	{
 		return;
 	}
@@ -901,7 +906,10 @@ void LLSelectMgr::highlightObjectAndFamily(const std::vector<LLViewerObject*>& o
 		{
 			continue;
 		}
-		if (object->getPCode() != LL_PCODE_VOLUME)
+		// KL - Qarl
+		if ((object->getPCode() != LL_PCODE_VOLUME) &&
+			(object->getPCode() != LL_PCODE_LEGACY_TREE) &&
+			(object->getPCode() != LL_PCODE_LEGACY_GRASS))
 		{
 			continue;
 		}
@@ -920,8 +928,15 @@ void LLSelectMgr::highlightObjectAndFamily(const std::vector<LLViewerObject*>& o
 }
 
 void LLSelectMgr::unhighlightObjectOnly(LLViewerObject* objectp)
-{
-	if (!objectp || (objectp->getPCode() != LL_PCODE_VOLUME))
+{ // KL Qarl
+	if (!objectp)
+	{
+		return;
+	}
+
+	if ((objectp->getPCode() != LL_PCODE_VOLUME) &&
+		(objectp->getPCode() != LL_PCODE_LEGACY_TREE) &&
+		(objectp->getPCode() != LL_PCODE_LEGACY_GRASS))
 	{
 		return;
 	}
@@ -5088,6 +5103,14 @@ void LLSelectMgr::generateSilhouette(LLSelectNode* nodep, const LLVector3& view_
 	if (objectp && objectp->getPCode() == LL_PCODE_VOLUME)
 	{
 		((LLVOVolume*)objectp)->generateSilhouette(nodep, view_point);
+	} // KL - qarl
+	else if (objectp && objectp->getPCode() == LL_PCODE_LEGACY_GRASS)
+	{
+		((LLVOGrass*)objectp)->generateSilhouette(nodep, view_point);
+	}
+	else if (objectp && objectp->getPCode() == LL_PCODE_LEGACY_TREE)
+	{
+		((LLVOTree*)objectp)->generateSilhouette(nodep, view_point);
 	}
 }
 
@@ -5535,8 +5558,8 @@ void LLSelectNode::renderOneSilhouette(const LLColor4 &color)
 		glMultMatrixf((F32*) objectp->getRenderMatrix().mMatrix);
 	}
 
-	LLVolume *volume = objectp->getVolume();
-	if (volume)
+	//LLVolume *volume = objectp->getVolume(); // S21 KL - qarl
+	if (1)
 	{
 		F32 silhouette_thickness;
 		if (isAgentAvatarValid() && is_hud_object)

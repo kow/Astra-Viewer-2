@@ -143,8 +143,12 @@ void LLToolSelectRect::handleRectangleSelection(S32 x, S32 y, MASK mask)
 		{
 			virtual bool apply(LLViewerObject* vobjp)
 			{
-				LLDrawable* drawable = vobjp->mDrawable;
-				if (!drawable || vobjp->getPCode() != LL_PCODE_VOLUME || vobjp->isAttachment())
+				LLDrawable* drawable = vobjp->mDrawable; // KL - Qarl
+				if (!drawable ||
+					((vobjp->getPCode() != LL_PCODE_VOLUME) &&
+					 (vobjp->getPCode() != LL_PCODE_LEGACY_TREE) &&
+					 (vobjp->getPCode() != LL_PCODE_LEGACY_GRASS) )||
+					vobjp->isAttachment())
 				{
 					return true;
 				}
@@ -193,9 +197,11 @@ void LLToolSelectRect::handleRectangleSelection(S32 x, S32 y, MASK mask)
 		{
 			LLDrawable* drawable = *iter;
 			LLViewerObject* vobjp = drawable->getVObj();
-
+            // KL - Qarl
 			if (!drawable || !vobjp ||
-				vobjp->getPCode() != LL_PCODE_VOLUME || 
+				((vobjp->getPCode() != LL_PCODE_VOLUME) &&
+				 (vobjp->getPCode() != LL_PCODE_LEGACY_TREE) &&
+				 (vobjp->getPCode() != LL_PCODE_LEGACY_GRASS) )||
 				vobjp->isAttachment() ||
 				(deselect && !vobjp->isSelected()))
 			{

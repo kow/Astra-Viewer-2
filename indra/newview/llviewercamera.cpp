@@ -772,7 +772,9 @@ BOOL LLViewerCamera::areVertsVisible(LLViewerObject* volumep, BOOL all_verts)
 	LLVolume* volume = volumep->getVolume();
 	if (!volume)
 	{
-		return FALSE;
+		BOOL inside = pointInFrustum(volumep->getRenderPosition());
+		// S21 KL - Qarl
+		return (inside > 0);
 	}
 
 	LLVOVolume* vo_volume = (LLVOVolume*) volumep;
