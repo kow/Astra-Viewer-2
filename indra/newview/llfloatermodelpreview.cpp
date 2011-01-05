@@ -283,6 +283,7 @@ BOOL LLFloaterModelPreview::postBuild()
 
 	childSetAction("lod_browse", onBrowseLOD, this);
 
+	childSetCommitCallback("cancel_btn", onCancel, this);
 	childSetCommitCallback("crease_angle", onGenerateNormalsCommit, this);
 	childSetCommitCallback("generate_normals", onGenerateNormalsCommit, this);
 
@@ -559,7 +560,14 @@ void LLFloaterModelPreview::draw()
 		LLMutexLock lock(mStatusLock);
 		childSetTextArg("status", "[STATUS]", mStatusMessage);
 	}
-
+	else
+	{
+		childSetVisible("Simplify", true);
+		childSetVisible("simplify_cancel", false);
+		childSetVisible("Decompose", true);
+		childSetVisible("decompose_cancel", false);
+	}
+	
 	U32 resource_cost = mModelPreview->mResourceCost*10;
 
 	if (childGetValue("upload_textures").asBoolean())
@@ -735,7 +743,8 @@ void LLFloaterModelPreview::onPhysicsParamCommit(LLUICtrl* ctrl, void* data)
 //static
 void LLFloaterModelPreview::onPhysicsStageExecute(LLUICtrl* ctrl, void* data)
 {
-	LLCDStageData* stage = (LLCDStageData*) data;
+	LLCDStageData* stage_data = (LLCDStageData*) data;
+	std::string stage = stage_data->mName;
 
 	if (sInstance)
 	{
@@ -750,10 +759,21 @@ void LLFloaterModelPreview::onPhysicsStageExecute(LLUICtrl* ctrl, void* data)
 			for (S32 i = 0; i < sInstance->mModelPreview->mModel[LLModel::LOD_PHYSICS].size(); ++i)
 			{
 				LLModel* mdl = sInstance->mModelPreview->mModel[LLModel::LOD_PHYSICS][i];
-				DecompRequest* request = new DecompRequest(stage->mName, mdl);
+				DecompRequest* request = new DecompRequest(stage, mdl);
 				sInstance->mCurRequest.insert(request);
 				gMeshRepo.mDecompThread->submitRequest(request);
 			}
+		}
+
+		if (stage == "Decompose")
+		{
+			sInstance->childSetVisible("Decompose", false);
+			sInstance->childSetVisible("decompose_cancel", true);
+		}
+		else if (stage == "Simplify")
+		{
+			sInstance->childSetVisible("Simplify", false);
+			sInstance->childSetVisible("simplify_cancel", true);
 		}
 	}
 }
@@ -777,6 +797,15 @@ void LLFloaterModelPreview::onPhysicsUseLOD(LLUICtrl* ctrl, void* userdata)
 	sInstance->mModelPreview->setPhysicsFromLOD(which_mode);
 }
 
+//static 
+void LLFloaterModelPreview::onCancel(LLUICtrl* ctrl, void* data)
+{
+	if (sInstance)
+	{
+		sInstance->closeFloater(false);
+	}
+}
+
 //static
 void LLFloaterModelPreview::onPhysicsStageCancel(LLUICtrl* ctrl, void*data)
 {
@@ -795,7 +824,9 @@ void LLFloaterModelPreview::initDecompControls()
 {
 	LLSD key;
 
-	childSetCommitCallback("cancel_btn", onPhysicsStageCancel, NULL);
+	childSetCommitCallback("simplify_cancel", onPhysicsStageCancel, NULL);
+	childSetCommitCallback("decompose_cancel", onPhysicsStageCancel, NULL);
+
 	childSetCommitCallback("physics_lod_combo", onPhysicsUseLOD, NULL);
 	childSetCommitCallback("physics_browse", onPhysicsBrowse, NULL);
 
@@ -1609,6 +1640,35 @@ void LLModelLoader::run()
 	}
 }
 
+//called in the main thread
+void LLModelLoader::loadTextures()
+{
+	BOOL is_paused = isPaused() ;
+	pause() ; //pause the loader 
+
+	for(scene::iterator iter = mScene.begin(); iter != mScene.end(); ++iter)
+	{
+		for(U32 i = 0 ; i < iter->second.size(); i++)
+		{
+			for(U32 j = 0 ; j < iter->second[i].mMaterial.size() ; j++)
+			{
+				if(!iter->second[i].mMaterial[j].mDiffuseMapFilename.empty())
+				{
+					iter->second[i].mMaterial[j].mDiffuseMap = 
+						LLViewerTextureManager::getFetchedTextureFromUrl("file://" + iter->second[i].mMaterial[j].mDiffuseMapFilename, TRUE, LLViewerTexture::BOOST_PREVIEW);
+					iter->second[i].mMaterial[j].mDiffuseMap->setLoadedCallback(LLModelPreview::textureLoadedCallback, 0, TRUE, FALSE, mPreview, NULL, FALSE);
+					iter->second[i].mMaterial[j].mDiffuseMap->forceToSaveRawImage();
+				}
+			}
+		}
+	}
+
+	if(!is_paused)
+	{
+		unpause() ;
+	}
+}
+
 bool LLModelLoader::isNodeAJoint( domNode* pNode )
 {
 	if ( pNode->getName() == NULL)
@@ -1914,14 +1974,8 @@ LLImportMaterial LLModelLoader::profileToMaterial(domProfile_COMMON* material)
 								// we only support init_from now - embedded data will come later
 								domImage::domInit_from* init = image->getInit_from();
 								if (init)
-								{
-									std::string filename = cdom::uriToNativePath(init->getValue().str());
-
-									mat.mDiffuseMap = LLViewerTextureManager::getFetchedTextureFromUrl("file://" + filename, TRUE, LLViewerTexture::BOOST_PREVIEW);
-									mat.mDiffuseMap->setLoadedCallback(LLModelPreview::textureLoadedCallback, 0, TRUE, FALSE, this->mPreview, NULL, FALSE);
-
-									mat.mDiffuseMap->forceToSaveRawImage();
-									mat.mDiffuseMapFilename = filename;
+								{									
+									mat.mDiffuseMapFilename = cdom::uriToNativePath(init->getValue().str());
 									mat.mDiffuseMapLabel = getElementLabel(material);
 								}
 							}
@@ -2036,7 +2090,7 @@ LLModelPreview::LLModelPreview(S32 width, S32 height, LLFloater* fmp)
 	mBuildShareTolerance = 0.f;
 	mBuildQueueMode = GLOD_QUEUE_GREEDY;
 	mBuildBorderMode = GLOD_BORDER_UNLOCK;
-	mBuildOperator = GLOD_OPERATOR_HALF_EDGE_COLLAPSE;
+	mBuildOperator = GLOD_OPERATOR_EDGE_COLLAPSE;
 
 	mViewOption["show_textures"] = false;
 
@@ -2377,6 +2431,7 @@ void LLModelPreview::loadModelCallback(S32 lod)
 		return;
 	}
 
+	mModelLoader->loadTextures() ;
 	mModel[lod] = mModelLoader->mModelList;
 	mScene[lod] = mModelLoader->mScene;
 	mVertexBuffer[lod].clear();
@@ -2511,29 +2566,29 @@ void LLModelPreview::consolidate()
 					model->setNumVolumeFaces(0);
 					composite[source_material].push_back(LLModelInstance(model, identity, materials));
 				}
-				
+
 				model->appendFace(src_face, source->mMaterialList[i], mat, norm_mat);
 			}
 		}
 	}
-	
-	
+
+
 	//condense composite into as few LLModel instances as possible
 	LLModelLoader::model_list new_model;
 	std::vector<LLModelInstance> instance_list;
-	
+
 	LLVolumeParams volume_params;
 	volume_params.setType(LL_PCODE_PROFILE_SQUARE, LL_PCODE_PATH_LINE);
-	
+
 	std::vector<LLImportMaterial> empty_material;
 	LLModelInstance cur_instance(new LLModel(volume_params, 0.f), identity, empty_material);
 	cur_instance.mModel->setNumVolumeFaces(0);
-	
+
 	BOOL first_transform = TRUE;
-	
+
 	LLModelLoader::scene new_scene;
 	LLVector3 min,max;
-	
+
 	for (std::map<LLImportMaterial, std::vector<LLModelInstance> >::iterator iter = composite.begin();
 		 iter != composite.end();
 		 ++iter)
@@ -2588,29 +2643,29 @@ void LLModelPreview::consolidate()
 				}
 
 				new_model.push_back(cur_instance.mModel);
-				
+
 				LLMatrix4 transformation = LLMatrix4();
-				
+
 				// adjust the transformation to compensate for mesh normalization
 				LLVector3 mesh_scale_vector;
 				LLVector3 mesh_translation_vector;
 				cur_instance.mModel->getNormalizedScaleTranslation(mesh_scale_vector, mesh_translation_vector);
-				
+
 				LLMatrix4 mesh_translation;
 				mesh_translation.setTranslation(mesh_translation_vector);
 				mesh_translation *= transformation;
 				transformation = mesh_translation;
-				
+
 				LLMatrix4 mesh_scale;
 				mesh_scale.initScale(mesh_scale_vector);
 				mesh_scale *= transformation;
 				transformation = mesh_scale;
-				
+
 				cur_instance.mTransform = transformation;
-				
+
 				new_scene[transformation].push_back(cur_instance);
 				stretch_extents(cur_instance.mModel, transformation, min, max, first_transform);
-				
+
 				if (!last_model)
 				{
 					cur_instance = LLModelInstance(new LLModel(volume_params, 0.f), identity, empty_material);
@@ -2631,13 +2686,13 @@ void LLModelPreview::consolidate()
 		clearGLODGroup();
 		mVertexBuffer[5].clear();
 	}
-	
+
 	mPreviewTarget = (min+max)*0.5f;
 	mPreviewScale = (max-min)*0.5f;
 	setPreviewTarget(mPreviewScale.magVec()*2.f);
-	
+
 	clearIncompatible(mPreviewLOD);
-	
+
 	mResourceCost = calcResourceCost();
 	refresh();
 }
@@ -2650,11 +2705,11 @@ void LLModelPreview::clearMaterials()
 		{ //for each instance with that transform
 			LLModelInstance& source_instance = *model_iter;
 			LLModel* source = source_instance.mModel;
-			
+
 			for (S32 i = 0; i < source->getNumVolumeFaces(); ++i)
 			{ //for each face in instance
 				LLImportMaterial& source_material = source_instance.mMaterial[i];
-				
+
 				//clear material info
 				source_material.mDiffuseColor = LLColor4(1,1,1,1);
 				source_material.mDiffuseMap = NULL;
@@ -2664,9 +2719,9 @@ void LLModelPreview::clearMaterials()
 			}
 		}
 	}
-	
+
 	mVertexBuffer[mPreviewLOD].clear();
-	
+
 	if (mPreviewLOD == LLModel::LOD_HIGH)
 	{
 		mBaseScene = mScene[mPreviewLOD];
@@ -2723,13 +2778,13 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 			triangle_count += mdl->getVolumeFace(i).mNumIndices/3;
 		}
 	}
-	
+
 	U32 base_triangle_count = triangle_count;
-	
+
 	U32 type_mask = LLVertexBuffer::MAP_VERTEX | LLVertexBuffer::MAP_NORMAL | LLVertexBuffer::MAP_TEXCOORD0;
-	
+
 	U32 lod_mode = 0;
-	
+
 	LLCtrlSelectionInterface* iface = mFMP->childGetSelectionInterface("lod_mode");
 	if (iface)
 	{
@@ -2737,13 +2792,15 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 	}
 
 	F32 lod_error_threshold = mFMP->childGetValue("lod_error_threshold").asReal();
-	
+
 	if (lod_mode == 0)
 	{
 		lod_mode = GLOD_TRIANGLE_BUDGET;
 		if (which_lod != -1)
 		{
-			limit = mFMP->childGetValue("lod_triangle_limit").asInteger();
+			//SH-632 take budget as supplied limit+1 to prevent GLOD from creating a smaller
+			//decimation when the given decimation is possible
+			limit = mFMP->childGetValue("lod_triangle_limit").asInteger(); //+1;
 		}
 	}
 	else
@@ -2761,11 +2818,11 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 
 	if (build_operator == 0)
 	{
-		build_operator = GLOD_OPERATOR_HALF_EDGE_COLLAPSE;
+		build_operator = GLOD_OPERATOR_EDGE_COLLAPSE;
 	}
 	else
 	{
-		build_operator = GLOD_OPERATOR_EDGE_COLLAPSE;
+		build_operator = GLOD_OPERATOR_HALF_EDGE_COLLAPSE;
 	}
 
 	U32 queue_mode = 0; // KL compiler error on GCC so giving this fella a zero :)
@@ -3819,7 +3876,7 @@ BOOL LLModelPreview::render()
 							gGL.getTexUnit(0)->bind(instance.mMaterial[i].mDiffuseMap, true);
 							if (instance.mMaterial[i].mDiffuseMap->getDiscardLevel() > -1)
 							{
-								mTextureSet.insert(instance.mMaterial[i].mDiffuseMap);
+								mTextureSet.insert(instance.mMaterial[i].mDiffuseMap.get());
 							}
 						}
 					}
@@ -4252,11 +4309,14 @@ void LLFloaterModelPreview::DecompRequest::completed()
 
 	if (sInstance)
 	{
-		if (sInstance->mModelPreview)
+		if (mContinue)
 		{
-			sInstance->mModelPreview->mPhysicsMesh[mModel] = mHullMesh;
-			sInstance->mModelPreview->mDirty = true;
-			LLFloaterModelPreview::sInstance->mModelPreview->refresh();
+			if (sInstance->mModelPreview)
+			{
+				sInstance->mModelPreview->mPhysicsMesh[mModel] = mHullMesh;
+				sInstance->mModelPreview->mDirty = true;
+				LLFloaterModelPreview::sInstance->mModelPreview->refresh();
+			}
 		}
 
 		sInstance->mCurRequest.erase(this);

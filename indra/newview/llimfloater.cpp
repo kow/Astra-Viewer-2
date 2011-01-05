@@ -502,9 +502,9 @@ LLIMFloater* LLIMFloater::show(const LLUUID& session_id)
 //static
 bool LLIMFloater::resetAllowedRectPadding()
 {
-	// S21
-	// Has a slightly different way of doing the side bar
-	// Do not alter!
+	//reset allowed rect right padding if "SidebarCameraMovement" option 
+	//or sidebar state changed
+	sAllowedRectRightPadding = RECT_PADDING_NEED_RECALC ;
 	return true;
 }
 
@@ -512,17 +512,28 @@ void LLIMFloater::getAllowedRect(LLRect& rect)
 {
 	if (sAllowedRectRightPadding == RECT_PADDING_NOT_INIT) //wasn't initialized
 	{
+		gSavedSettings.getControl("SidebarCameraMovement")->getSignal()->connect(boost::bind(&LLIMFloater::resetAllowedRectPadding));
 
+		LLSideTray*	side_bar = LLSideTray::getInstance();
+		side_bar->setVisibleWidthChangeCallback(boost::bind(&LLIMFloater::resetAllowedRectPadding));
+		sAllowedRectRightPadding = RECT_PADDING_NEED_RECALC;
 	}
 
 	rect = gViewerWindow->getWorldViewRectScaled();
-	static S32 right_padding = 0;
-	if (right_padding == 0)
+	if (sAllowedRectRightPadding == RECT_PADDING_NEED_RECALC) //recalc allowed rect right padding
 	{
-		right_padding = 32; // S21
-    // KL S21 is much different than standard 2.0 and the Padding is all thats required.
+		LLPanel* side_bar_tabs =
+				gViewerWindow->getRootView()->getChild<LLPanel> (
+						"side_bar_tabs");
+		sAllowedRectRightPadding = side_bar_tabs->getRect().getWidth();
+		LLTransientFloaterMgr::getInstance()->addControlView(side_bar_tabs);
+
+		if (gSavedSettings.getBOOL("SidebarCameraMovement") == FALSE)
+		{
+			sAllowedRectRightPadding += LLSideTray::getInstance()->getVisibleWidth();
+		}
 	}
-	rect.mRight -= right_padding;
+	rect.mRight -= sAllowedRectRightPadding;
 }
 
 void LLIMFloater::setDocked(bool docked, bool pop_on_undock)

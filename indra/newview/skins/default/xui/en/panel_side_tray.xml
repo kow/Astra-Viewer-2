@@ -24,12 +24,12 @@
   <sidetray_tab
     name="sidebar_openclose"
     help_topic="sidebar_openclose"
-    tab_title="Toggle InfoPanel"
+    tab_title="Toggle Sidebar"
     description="Toggle Sidebar."
-    image="Blank.png"
-	image_selected="Icon_Close_Foreground"
+    image="TabIcon_Open_Off"
+	image_selected="TabIcon_Close_Off"
     mouse_opaque="false"
-    background_visible="false"
+    background_visible="true"
   >
     <panel /> <!-- dummy panel, never to actually be seen -->
   </sidetray_tab>
@@ -39,9 +39,9 @@
     help_topic="sidebar_home"
     tab_title="Home"
     description="Home."
-    image="Blank.png"
-    image_selected="Blank.png"
-    mouse_opaque="true"
+    image="TabIcon_Home_Off"
+    image_selected="TabIcon_Home_Selected"
+    mouse_opaque="false"
     background_visible="false"
   >
       <panel
@@ -57,13 +57,13 @@
     help_topic="sidebar_me"
     tab_title="My Profile"
     description="Edit your public profile and Picks."
-    image="Blank.png"
-    image_selected="Blank.png"
-    mouse_opaque="true"
+    image="TabIcon_Me_Off"
+    image_selected="TabIcon_Me_Selected"
+    mouse_opaque="false"
     background_visible="false"
   >
     <panel_container
-      name="panel_container_me"
+      name="panel_container"
       default_panel_name="panel_me"
       width="333"
     >
@@ -82,13 +82,13 @@
     help_topic="sidebar_people"
     tab_title="People"
     description="Find your friends, contacts and people nearby."
-    image="Blank.png"
-    image_selected="Blank.png"
-    mouse_opaque="true"
+    image="TabIcon_People_Off"
+    image_selected="TabIcon_People_Selected"
+    mouse_opaque="false"
     background_visible="false"
   >
     <panel_container
-      name="panel_container_people"
+      name="panel_container"
       default_panel_name="panel_people"
       width="333"
     >
@@ -126,9 +126,9 @@
     tab_title="Places"
     label="Places"
     description="Find places to go and places you&apos;ve visited before."
-    image="Blank.png"
-	image_selected="Blank.png"
-    mouse_opaque="true"
+    image="TabIcon_Places_Off"
+	image_selected="TabIcon_Places_Selected"
+    mouse_opaque="false"
     background_visible="false"
   >
       <panel
@@ -145,9 +145,9 @@
     help_topic="sidebar_inventory"
     tab_title="My Inventory"
     description="Browse your inventory."
-    image="Blank.png"
-    image_selected="Blank.png"
-    mouse_opaque="true"
+    image="TabIcon_Things_Off"
+    image_selected="TabIcon_Things_Selected"
+    mouse_opaque="false"
     background_visible="false"
   >
       <panel
@@ -164,9 +164,9 @@
     help_topic="sidebar_appearance"
     tab_title="My Appearance"
     description="Change your appearance and current look."
-    image="Blank.png"
-    image_selected="Blank.png"
-    mouse_opaque="true"
+    image="TabIcon_Appearance_Off"
+    image_selected="TabIcon_Appearance_Selected"
+    mouse_opaque="false"
     background_visible="false"
   >
       <panel

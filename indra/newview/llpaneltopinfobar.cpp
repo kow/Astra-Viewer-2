@@ -224,11 +224,7 @@ void LLPanelTopInfoBar::setParcelInfoText(const std::string& new_text)
 {
 	const LLFontGL* font = mParcelInfoText->getDefaultFont();
 	S32 new_text_width = font->getWidth(new_text);
-    S32 max_text_width = 600; // S21 the mini info lives on the topbar in S21
-	if(new_text_width > max_text_width)
-	{
-		new_text_width = max_text_width;
-	}
+
 	mParcelInfoText->setText(new_text);
 
 	LLRect rect = mParcelInfoText->getRect();

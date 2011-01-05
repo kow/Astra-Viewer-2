@@ -6499,7 +6499,7 @@ void LLVOAvatar::updateMeshTextures()
 				 && !other_culled) 
 		{
 			mBakedTextureDatas[i].mTexLayerSet->createComposite();
-			mBakedTextureDatas[i].mTexLayerSet->setUpdatesEnabled(TRUE);
+			mBakedTextureDatas[i].mTexLayerSet->setUpdatesEnabled( TRUE );
 			mBakedTextureDatas[i].mIsUsed = FALSE;
 			for (U32 k=0; k < mBakedTextureDatas[i].mMeshes.size(); k++)
 			{
@@ -6510,7 +6510,7 @@ void LLVOAvatar::updateMeshTextures()
 
 	// set texture and color of hair manually if we are not using a baked image.
 	// This can happen while loading hair for yourself, or for clients that did not
-	// bake a hair texture. Still needed for yourself after 1.22 is deprecated.
+	// bake a hair texture. Still needed for yourself after 1.22 is depricated.
 	if (!is_layer_baked[BAKED_HAIR] || self_customizing)
 	{
 		const LLColor4 color = mTexHairColor ? mTexHairColor->getColor() : LLColor4(1,1,1,1);
@@ -7184,9 +7184,9 @@ void LLVOAvatar::processAvatarAppearance( LLMessageSystem* mesgsys )
 			llinfos << "Re-requesting AvatarAppearance for object: "  << getID() << llendl;
 			LLAvatarPropertiesProcessor::getInstance()->sendAvatarTexturesRequest(getID());
 			mRuthTimer.reset();
-		}
-		else
-		{
+	}
+	else
+	{
 			llinfos << "That's okay, we already have a non-default shape for object: "  << getID() << llendl;
 			// we don't really care.
 		}

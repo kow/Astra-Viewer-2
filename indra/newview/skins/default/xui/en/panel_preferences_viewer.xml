@@ -286,16 +286,7 @@
 	name="DebugAvatarRezTime"
 	top_pad="1"
 	width="256" />
-          <check_box
-          control_name="ShowSidebarButton"
-          height="16"
-          initial_value="true"
-          label="Enable Sidebar Button"
-          layout="topleft"
-          left="5"
-          name="ShowSidebarButton"
-          top_pad="1"
-          width="256" />
+         
           <check_box
           control_name="ShowSearchButton"
           height="16"

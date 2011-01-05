@@ -5,7 +5,7 @@
  bg_opaque_color="MouseGray"
  follows="left|top|right"
  focus_root="true" 
- height="45"
+ height="60"
  layout="topleft"
  name="navigation_bar"
  chrome="true"
@@ -19,29 +19,29 @@
 	 visible="true"
 	 left="0"
 	 top="0"
-	 height="45"
-	 width="600"/>
-	<icon
-	 follows="all"
-	 image_name="NavBar_BG_NoFav"
-	 mouse_opaque="false"
-	 name="bg_icon_no_fav"
-	 scale_image="true"
-	 visible="false"
-	 left="0"
-	 top="0"
-	 height="45"
+	 height="60"
 	 width="600"/>
 	<icon
 	 follows="all"
 	 image_name="NavBar_BG"
 	 mouse_opaque="false"
-	 name="bg_icon"
+	 name="bg_icon_no_fav_bevel"
 	 scale_image="true"
 	 visible="false"
 	 left="0"
 	 top="0"
-	 height="45"
+	 height="60"
+	 width="600"/>
+	<icon
+	 follows="all"
+	 image_name="NavBar_BG"
+	 mouse_opaque="false"
+	 name="bg_icon_no_nav_bevel"
+	 scale_image="true"
+	 visible="false"
+	 left="0"
+	 top="0"
+	 height="60"
 	 width="600"/>
 	<panel
 	 background_visible="false"
@@ -149,7 +149,7 @@
      left="0"
      name="favorite"
      image_drag_indication="Accordion_ArrowOpened_Off"
-     top="30"
+     bottom="55"
      tool_tip="Drag Landmarks here for quick access to your favorite places in Second Life!"
                width="590">
         <label
@@ -160,7 +160,7 @@
          name="favorites_bar_label"
          text_color="LtGray"
          tool_tip="Drag Landmarks here for quick access to your favorite places in Second Life!"
-         top="5"
+         top="12"
          width="102">
           Favorites Bar
         </label>

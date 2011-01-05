@@ -766,7 +766,7 @@ void LLNavigationBar::showNavigationPanel(BOOL visible)
 			reshape(nbRect.getWidth(), nbRect.getHeight());
 			setRect(nbRect);
 			// propagate size to parent container
-			getParent()->reshape(nbRect.getWidth(), 50); // S21
+			getParent()->reshape(nbRect.getWidth(), nbRect.getHeight());
 
 			fb->reshape(fbRect.getWidth(), fbRect.getHeight());
 			fb->setRect(fbRect);
@@ -780,7 +780,7 @@ void LLNavigationBar::showNavigationPanel(BOOL visible)
 
 			reshape(nbRect.getWidth(), nbRect.getHeight());
 			setRect(nbRect);
-			getParent()->reshape(nbRect.getWidth(), 50); // S21
+			getParent()->reshape(nbRect.getWidth(), nbRect.getHeight());
 		}
 	}
 	else
@@ -798,7 +798,7 @@ void LLNavigationBar::showNavigationPanel(BOOL visible)
 			// this is duplicated in 'else' section because it should be called BEFORE fb->reshape
 			reshape(nbRect.getWidth(), nbRect.getHeight());
 			setRect(nbRect);
-			getParent()->reshape(nbRect.getWidth(), 50); // S21
+			getParent()->reshape(nbRect.getWidth(), nbRect.getHeight());
 
 			fb->reshape(fbRect.getWidth(), fbRect.getHeight());
 			fb->setRect(fbRect);
@@ -816,8 +816,8 @@ void LLNavigationBar::showNavigationPanel(BOOL visible)
 	}
 
 	getChildView("bg_icon")->setVisible( visible && fpVisible);
-	getChildView("bg_icon_no_fav")->setVisible( visible && !fpVisible); // S21
-	getChildView("bg_icon")->setVisible( !visible && fpVisible); // S21
+	getChildView("bg_icon_no_fav_bevel")->setVisible( visible && !fpVisible);
+	getChildView("bg_icon_no_nav_bevel")->setVisible( !visible && fpVisible);
 }
 
 void LLNavigationBar::showFavoritesPanel(BOOL visible)
@@ -854,7 +854,7 @@ void LLNavigationBar::showFavoritesPanel(BOOL visible)
 
 		reshape(nbRect.getWidth(), nbRect.getHeight());
 		setRect(nbRect);
-		getParent()->reshape(nbRect.getWidth(), 50); // S21
+		getParent()->reshape(nbRect.getWidth(), nbRect.getHeight());
 
 		fb->reshape(fbRect.getWidth(), fbRect.getHeight());
 		fb->setRect(fbRect);
@@ -879,12 +879,12 @@ void LLNavigationBar::showFavoritesPanel(BOOL visible)
 
 		reshape(nbRect.getWidth(), nbRect.getHeight());
 		setRect(nbRect);
-		getParent()->reshape(nbRect.getWidth(), 50); // S21
+		getParent()->reshape(nbRect.getWidth(), nbRect.getHeight());
 	}
 
 	getChildView("bg_icon")->setVisible( npVisible && visible);
-	getChildView("bg_icon_no_fav")->setVisible( npVisible && !visible); // S21
-	getChildView("bg_icon")->setVisible( !npVisible && visible); // S21
+	getChildView("bg_icon_no_fav_bevel")->setVisible( npVisible && !visible);
+	getChildView("bg_icon_no_nav_bevel")->setVisible( !npVisible && visible);
 
 	fb->setVisible(visible);
 }

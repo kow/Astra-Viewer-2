@@ -43,7 +43,6 @@
 
 #include "llaccordionctrltab.h"
 
-#include "llfloatersidebarctrl.h" // KL
 #include "llfloater.h" //for gFloaterView
 #include "lliconctrl.h"//for OpenClose tab icon
 #include "llsidetraypanelcontainer.h"
@@ -99,7 +98,6 @@ class LLSideTrayTab: public LLPanel
 {
 	friend class LLUICtrlFactory;
 	friend class LLSideTray;
-    friend class LLPanelSidebarctrlControls; // S21
 public:
 	
 	struct Params 

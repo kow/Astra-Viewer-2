@@ -17,7 +17,7 @@
     top="0" 
    scale_image="true"
    follows="left|right|top|bottom"
-   height="44"
+   height="40"
    image_name="menu_bar.tga"
    left="0"
    width="1000" />
@@ -106,7 +106,7 @@
      decimal_digits="0"
      follows="right|top"
      height="15"
-     increment="1"
+     increment="5"
      initial_value="64"
      layout="topleft"
      left_delta="-280"
