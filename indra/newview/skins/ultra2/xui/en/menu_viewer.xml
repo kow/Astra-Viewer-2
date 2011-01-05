@@ -5,7 +5,7 @@
  name="Main Menu">
     <menu
      create_jump_keys="true"
-     label="S20"
+     label="S21"
      name="Me"
      tear_off="true">
         <menu_item_call
@@ -382,7 +382,7 @@
              function="ToggleControl"
              parameter="ChatVisible" />
 	 </menu_item_check>
-	 <menu_item_check
+            <menu_item_check
          label="Mini-Map"
          name="Mini-Map"
          shortcut="control|shift|M">
@@ -1174,6 +1174,29 @@
                  parameter="perm_prefs" />
             </menu_item_call>
         </menu>
+        <menu_item_separator/>
+        <menu_item_call
+         enabled="false"
+         label="Undo"
+         name="Undo"
+         shortcut="control|Z">
+            <on_click
+             function="Edit.Undo"
+             userdata="" />
+            <on_enable
+             function="Edit.EnableUndo" />
+        </menu_item_call>
+        <menu_item_call
+         enabled="false"
+         label="Redo"
+         name="Redo"
+         shortcut="control|Y">
+            <on_click
+             function="Edit.Redo"
+             userdata="" />
+            <on_enable
+             function="Edit.EnableRedo" />
+        </menu_item_call>        
     </menu>
     <menu
      create_jump_keys="true"
@@ -2865,13 +2888,21 @@
                  parameter="BottomPanelNew" />
             </menu_item_check>-->
             <menu_item_call
-             label="Web Browser Test"
+             label="Media Browser Test"
              name="Web Browser Test">
                 <menu_item_call.on_click
                  function="Advanced.WebBrowserTest"
                  parameter="http://secondlife.com/app/search/slurls.html"/>
             </menu_item_call>
-            <menu_item_call
+          <menu_item_call
+           label="Web Content Browser"
+           name="Web Content Browser"
+           shortcut="control|alt|W">
+            <menu_item_call.on_click
+             function="Advanced.WebContentTest"
+             parameter="http://google.com"/>
+          </menu_item_call>
+          <menu_item_call
              label="Dump SelectMgr"
              name="Dump SelectMgr">
                 <menu_item_call.on_click

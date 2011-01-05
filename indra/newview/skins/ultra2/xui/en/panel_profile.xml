@@ -52,11 +52,11 @@
          width="317">
         <!-- Do NOT muck about with this KL -->
         <scroll_container
-         color="Black_50"
+         color="Black_75"
          follows="all"
          layout="topleft"
          height="390" 
-         min_height="300" 
+         
          name="profile_scroll"
          opaque="true"
          width="317"
@@ -268,7 +268,7 @@
                initial_value="(retrieving)"
                layout="topleft"
                left="0"
-               link="true"
+               
                name="partner_text"
                top="0"
                use_ellipses="true"

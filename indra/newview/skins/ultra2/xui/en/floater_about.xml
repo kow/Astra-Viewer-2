@@ -110,7 +110,7 @@ Packets Lost: [PACKETS_LOST,number,0]/[PACKETS_IN,number,0] ([PACKETS_PCT,number
        top="5"
        width="435"
        word_wrap="true">
-  Kirstenlee Cinquetti's Viewer :)  S20 - Based on Secondlife Development Code.
+  Kirstenlee Cinquetti's Viewer :)  S21 - Based on Secondlife Development Code.
 
 
 
@@ -162,6 +162,8 @@ SSLeay Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
 xmlrpc-epi Copyright (C) 2000 Epinions, Inc.
 zlib Copyright (C) 1995-2002 Jean-loup Gailly and Mark Adler.
 google-perftools Copyright (c) 2005, Google Inc.
+
+Second Life Viewer uses Havok (TM) Physics. (c)Copyright 1999-2010 Havok.com Inc. (and its Licensors). All Rights Reserved. See www.havok.com for details.
 
 All rights reserved.  See licenses.txt for details.
 

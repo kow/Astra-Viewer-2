@@ -52,11 +52,13 @@
      name="controls"
      width="226">
        <panel
+         color="Transparent"
          follows="all"
          height="102"
          layout="topleft"
          left="8"
          name="preset_views_list"
+         opaque="true"
          top="4"
          width="212"
          visible="false">
