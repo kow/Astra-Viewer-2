@@ -45,14 +45,14 @@
     background_opaque="true" 
     bg_opaque_image="bevel_background">
     <text
-     auto_resize="true"
+     
      halign="center"
      font="SansSerifSmall"
      follows="all"
      height="18"
      left="0" 
      name="balance"
-     tool_tip="My Balance"
+     tool_tip="Click to refresh your L$ balance"
      v_pad="4"
      top="0"
      wrap="false" 
@@ -99,7 +99,7 @@
      decimal_digits="0"
      follows="right|top"
      height="15"
-     increment="1"
+     increment="5"
      initial_value="64"
      layout="topleft"
      left_delta="-280"
