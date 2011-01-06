@@ -51,7 +51,9 @@ public:
 #if LL_REF_COUNT_DEBUG
 	void ref() const ;
 	S32 unref() const ;
-#else
+#endif
+
+#if !LL_REF_COUNT_DEBUG && LL_WINDOWS
 	void LLRefCount::ref() const
 	{ 
 		mRef++; 
@@ -68,6 +70,25 @@ public:
 		return mRef;
 	}	
 #endif
+
+#if !LL_REF_COUNT_DEBUG && !LL_WINDOWS
+ 	void ref() const
+ 	{ 
+  		mRef++; 
+ 	} 
+
+ 	S32 unref() const
+ 	{
+  		llassert(mRef >= 1);
+  		if (0 == --mRef) 
+  		{
+   			delete this; 
+   			return 0;
+  		}
+  	return mRef;
+ 	}	 
+#endif
+
 
 	//NOTE: when passing around a const LLRefCount object, this can return different results
 	// at different types, since mRef is mutable
