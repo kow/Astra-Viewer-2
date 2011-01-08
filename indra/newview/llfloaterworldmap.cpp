@@ -72,7 +72,6 @@
 #include "llweb.h"
 #include "llslider.h"
 #include "message.h"
-
 #include "llwindow.h"			// copyTextToClipboard()
 
 //---------------------------------------------------------------------------
@@ -106,8 +105,8 @@ class LLWorldMapHandler : public LLCommandHandler
 {
 public:
 	// requires trusted browser to trigger
-	LLWorldMapHandler() : LLCommandHandler("worldmap", UNTRUSTED_THROTTLE) { }
-
+	LLWorldMapHandler() : LLCommandHandler("worldmap", UNTRUSTED_THROTTLE ) { }
+	
 	bool handle(const LLSD& params, const LLSD& query_map,
 				LLMediaCtrl* web)
 	{
@@ -117,21 +116,52 @@ public:
 			LLFloaterReg::showInstance("world_map", "center");
 			return true;
 		}
-
+		
 		// support the secondlife:///app/worldmap/{LOCATION}/{COORDS} SLapp
 		const std::string region_name = LLURI::unescape(params[0].asString());
 		S32 x = (params.size() > 1) ? params[1].asInteger() : 128;
 		S32 y = (params.size() > 2) ? params[2].asInteger() : 128;
 		S32 z = (params.size() > 3) ? params[3].asInteger() : 0;
-
+		
 		LLFloaterWorldMap::getInstance()->trackURL(region_name, x, y, z);
 		LLFloaterReg::showInstance("world_map", "center");
-
+		
 		return true;
 	}
 };
 LLWorldMapHandler gWorldMapHandler;
 
+// SocialMap handler secondlife:///app/maptrackavatar/id
+class LLMapTrackAvatarHandler : public LLCommandHandler
+{
+public:
+	// requires trusted browser to trigger
+	LLMapTrackAvatarHandler() : LLCommandHandler("maptrackavatar", UNTRUSTED_THROTTLE) 
+	{ 
+	}
+	
+	bool handle(const LLSD& params, const LLSD& query_map, LLMediaCtrl* web)
+	{
+		//Make sure we have some parameters
+		if (params.size() == 0)
+		{
+			return false;
+		}
+		
+		//Get the ID
+		LLUUID id;
+		if (!id.set( params[0], FALSE ))
+		{
+			return false;
+		}
+		
+		LLFloaterWorldMap::getInstance()->avatarTrackFromSlapp( id  ); 
+		LLFloaterReg::showInstance( "world_map", "center" );
+		
+		return true;
+	}
+};	
+LLMapTrackAvatarHandler gMapTrackAvatar;
 
 LLFloaterWorldMap* gFloaterWorldMap = NULL;
 
@@ -142,7 +172,7 @@ public:
 	virtual ~LLMapInventoryObserver() {}
 	virtual void changed(U32 mask);
 };
-  
+
 void LLMapInventoryObserver::changed(U32 mask)
 {
 	// if there's a change we're interested in.
@@ -184,22 +214,21 @@ const LLUUID LLFloaterWorldMap::sHomeID( "10000000-0000-0000-0000-000000000001" 
 
 LLFloaterWorldMap::LLFloaterWorldMap(const LLSD& key)
 :	LLFloater(key),
-	mInventory(NULL),
-	mInventoryObserver(NULL),
-	mFriendObserver(NULL),
-	mCompletingRegionName(),
-	mCompletingRegionPos(),
-	mWaitingForTracker(FALSE),
-	mIsClosing(FALSE),
-	mSetToUserPosition(TRUE),
-	mTrackedLocation(0,0,0),
-	mTrackedStatus(LLTracker::TRACKING_NOTHING)
+mInventory(NULL),
+mInventoryObserver(NULL),
+mFriendObserver(NULL),
+mCompletingRegionName(),
+mCompletingRegionPos(),
+mWaitingForTracker(FALSE),
+mIsClosing(FALSE),
+mSetToUserPosition(TRUE),
+mTrackedLocation(0,0,0),
+mTrackedStatus(LLTracker::TRACKING_NOTHING)
 {
 	gFloaterWorldMap = this;
 	
 	mFactoryMap["objects_mapview"] = LLCallbackMap(createWorldMapView, NULL);
 	
-	//Called from floater reg: LLUICtrlFactory::getInstance()->buildFloater(this, "floater_world_map.xml", FALSE);
 	mCommitCallbackRegistrar.add("WMap.Coordinates",	boost::bind(&LLFloaterWorldMap::onCoordinatesCommit, this));
 	mCommitCallbackRegistrar.add("WMap.Location",		boost::bind(&LLFloaterWorldMap::onLocationCommit, this));
 	mCommitCallbackRegistrar.add("WMap.AvatarCombo",	boost::bind(&LLFloaterWorldMap::onAvatarComboCommit, this));
@@ -1069,7 +1098,7 @@ void LLFloaterWorldMap::onLandmarkComboCommit()
 	
 	trackLandmark( item_id);
 	onShowTargetBtn();
-
+	
 	// Reset to user postion if nothing is tracked
 	mSetToUserPosition = ( LLTracker::getTrackingStatus() == LLTracker::TRACKING_NOTHING );
 }
@@ -1081,19 +1110,19 @@ void LLFloaterWorldMap::onAvatarComboPrearrange( )
 	{
 		return;
 	}
-
+	
 	LLCtrlListInterface *list = childGetListInterface("friend combo");
 	if (!list) return;
-
+	
 	LLUUID current_choice;
-
+	
 	if( LLAvatarTracker::instance().haveTrackingInfo() )
 	{
 		current_choice = LLAvatarTracker::instance().getAvatarID();
 	}
-
+	
 	buildAvatarIDList();
-
+	
 	if( !list->setCurrentByID( current_choice ) || current_choice.isNull() )
 	{
 		LLTracker::stopTracking(NULL);
@@ -1106,10 +1135,10 @@ void LLFloaterWorldMap::onAvatarComboCommit()
 	{
 		return;
 	}
-
+	
 	LLCtrlListInterface *list = childGetListInterface("friend combo");
 	if (!list) return;
-
+	
 	const LLUUID& new_avatar_id = list->getCurrentID();
 	if (new_avatar_id.notNull())
 	{
@@ -1123,6 +1152,12 @@ void LLFloaterWorldMap::onAvatarComboCommit()
 	{	// Reset to user postion if nothing is tracked
 		mSetToUserPosition = ( LLTracker::getTrackingStatus() == LLTracker::TRACKING_NOTHING );
 	}
+}
+
+void LLFloaterWorldMap::avatarTrackFromSlapp( const LLUUID& id ) 
+{
+	trackAvatar( id, "av" );		
+	onShowTargetBtn();
 }
 
 void LLFloaterWorldMap::onLocationFocusChanged( LLFocusableElement* focus )

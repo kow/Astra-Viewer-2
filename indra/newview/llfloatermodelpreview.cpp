@@ -379,7 +379,7 @@ LLFloaterModelPreview::~LLFloaterModelPreview()
 {
 	sInstance = NULL;
 
-	if ( mModelPreview->containsRiggedAsset() )
+	if ( mModelPreview->mModelLoader->mResetJoints )
 	{
 		gAgentAvatarp->resetJointPositions();
 	}
@@ -959,7 +959,7 @@ void LLFloaterModelPreview::onMouseCaptureLostModelPreview(LLMouseHandler* handl
 // LLModelLoader
 //-----------------------------------------------------------------------------
 LLModelLoader::LLModelLoader(std::string filename, S32 lod, LLModelPreview* preview)
-: LLThread("Model Loader"), mFilename(filename), mLod(lod), mPreview(preview), mState(STARTING), mFirstTransform(TRUE)
+: LLThread("Model Loader"), mFilename(filename), mLod(lod), mPreview(preview), mState(STARTING), mFirstTransform(TRUE), mResetJoints( FALSE )
 {
 	mJointMap["mPelvis"] = "mPelvis";
 	mJointMap["mTorso"] = "mTorso";
@@ -987,7 +987,7 @@ LLModelLoader::LLModelLoader(std::string filename, S32 lod, LLModelPreview* prev
 	mJointMap["mAnkleLeft"] = "mAnkleLeft";
 	mJointMap["mFootLeft"] = "mFootLeft";
 	mJointMap["mToeLeft"] = "mToeLeft";
-	
+
 	mJointMap["avatar_mPelvis"] = "mPelvis";
 	mJointMap["avatar_mTorso"] = "mTorso";
 	mJointMap["avatar_mChest"] = "mChest";
@@ -1014,8 +1014,8 @@ LLModelLoader::LLModelLoader(std::string filename, S32 lod, LLModelPreview* prev
 	mJointMap["avatar_mAnkleLeft"] = "mAnkleLeft";
 	mJointMap["avatar_mFootLeft"] = "mFootLeft";
 	mJointMap["avatar_mToeLeft"] = "mToeLeft";
-	
-	
+
+
 	mJointMap["hip"] = "mPelvis";
 	mJointMap["abdomen"] = "mTorso";
 	mJointMap["chest"] = "mChest";
@@ -1036,6 +1036,28 @@ LLModelLoader::LLModelLoader(std::string filename, S32 lod, LLModelPreview* prev
 	mJointMap["lThigh"] = "mHipLeft";
 	mJointMap["lShin"] = "mKneeLeft";
 	mJointMap["lFoot"] = "mFootLeft";
+
+	//move into joint mapper class
+	mMasterJointList.push_front("mPelvis");
+	mMasterJointList.push_front("mTorso");
+	mMasterJointList.push_front("mChest");
+	mMasterJointList.push_front("mNeck");
+	mMasterJointList.push_front("mHead");
+	mMasterJointList.push_front("mSkull");
+	mMasterJointList.push_front("mCollarLeft");
+	mMasterJointList.push_front("mShoulderLeft");
+	mMasterJointList.push_front("mElbowLeft");
+	mMasterJointList.push_front("mWristLeft");
+	mMasterJointList.push_front("mCollarRight");
+	mMasterJointList.push_front("mShoulderRight");
+	mMasterJointList.push_front("mElbowRight");
+	mMasterJointList.push_front("mWristRight");
+	mMasterJointList.push_front("mHipRight");
+	mMasterJointList.push_front("mKneeRight");
+	mMasterJointList.push_front("mFootRight");
+	mMasterJointList.push_front("mHipLeft");
+	mMasterJointList.push_front("mKneeLeft");
+	mMasterJointList.push_front("mFootLeft");
 }
 
 void stretch_extents(LLModel* model, LLMatrix4a& mat, LLVector4a& min, LLVector4a& max, BOOL& first_transform)
@@ -1090,13 +1112,13 @@ void stretch_extents(LLModel* model, LLMatrix4& mat, LLVector3& min, LLVector3& 
 {
 	LLVector4a mina, maxa;
 	LLMatrix4a mata;
-	
+
 	mata.loadu(mat);
 	mina.load3(min.mV);
 	maxa.load3(max.mV);
-	
+
 	stretch_extents(model, mata, mina, maxa, first_transform);
-	
+
 	min.set(mina.getF32ptr());
 	max.set(maxa.getF32ptr());
 }
@@ -1188,7 +1210,7 @@ void LLModelLoader::run()
 			db->getElement((daeElement**) &skin, idx, NULL, COLLADA_TYPE_SKIN);
 			
 			if (skin)
-			{	
+			{
 				domGeometry* geom = daeSafeCast<domGeometry>(skin->getSource().getElement());
 				
 				if (geom)
@@ -1213,7 +1235,7 @@ void LLModelLoader::run()
 							
 							glh::matrix4f inv_mat((F32*) normalized_transformation.mMatrix);
 							inv_mat = inv_mat.inverse();
-							LLMatrix4 inverse_normalized_transformation(inv_mat.m);							
+							LLMatrix4 inverse_normalized_transformation(inv_mat.m);
 							
 							domSkin::domBind_shape_matrix* bind_mat = skin->getBind_shape_matrix();
 							
@@ -1228,26 +1250,26 @@ void LLModelLoader::run()
 										model->mBindShapeMatrix.mMatrix[i][j] = dom_value[i + j*4];
 									}
 								}
-
+								
 								LLMatrix4 trans = normalized_transformation;
 								trans *= model->mBindShapeMatrix;
 								model->mBindShapeMatrix = trans;
-
+								
 							}
-
-
+							
+							
 							//The joint transfom map that we'll populate below
 							std::map<std::string,LLMatrix4> jointTransforms;
 							jointTransforms.clear();
-
+							
 							//Some collada setup for accessing the skeleton
 							daeElement* pElement = 0;
 							dae.getDatabase()->getElement( &pElement, 0, 0, "skeleton" );
-
+							
 							//Try to get at the skeletal instance controller
 							domInstance_controller::domSkeleton* pSkeleton = daeSafeCast<domInstance_controller::domSkeleton>( pElement );
 							bool missingSkeletonOrScene = false;
-
+							
 							//If no skeleton, do a breadth-first search to get at specific joints
 							if ( !pSkeleton )
 							{
@@ -1341,39 +1363,7 @@ void LLModelLoader::run()
 								}//got skeleton?
 							}
 							
-							if ( !missingSkeletonOrScene )
-							{
-								//Set the joint translations on the avatar
-								//The joints are reset in the dtor
-								const int jointCnt = mJointMap.size();
-								std::map<std::string, std::string> :: const_iterator jointIt = mJointMap.begin();
-								for ( int i=0; i<jointCnt; ++i, ++jointIt )
-								{
-									std::string lookingForJoint = (*jointIt).first.c_str();
-									if ( jointTransforms.find( lookingForJoint ) != jointTransforms.end() )
-									{
-										LLMatrix4 jointTransform = jointTransforms[lookingForJoint];
-										LLJoint* pJoint = gAgentAvatarp->getJoint( lookingForJoint );
-										if ( pJoint )
-										{
-											pJoint->storeCurrentXform( jointTransform.getTranslation() );
-										}
-										else
-										{
-											//Most likely an error in the asset.
-											llwarns<<"Tried to apply joint position from .dae, but it did not exist in the avatar rig." << llendl;
-										}
-										//Reposition the avatars pelvis (avPos+offset)
-										//if ( lookingForJoint == "mPelvis" )
-										//{
-										//	const LLVector3& pos = gAgentAvatarp->getCharacterPosition();
-										//	gAgentAvatarp->setPelvisOffset( true, jointTransform.getTranslation() );
-										//	gAgentAvatarp->setPosition( pos + jointTransform.getTranslation() );
-										//}
-									}
-								}
-							} //missingSkeletonOrScene
-
+							
 							domSkin::domJoints* joints = skin->getJoints();
 
 							domInputLocal_Array& joint_input = joints->getInput_array();
@@ -1459,7 +1449,48 @@ void LLModelLoader::run()
 									}
 								}
 							}
-
+							
+							//Now that we've parsed the joint array, let's determine if we have a full rig
+							//(which means we have all the joints that are required for an avatar versus
+							//a skinned asset attached to a node in a file that contains an entire skeleton,
+							//but does not use the skeleton).
+							
+							if ( !model->mJointList.empty() && doesJointArrayContainACompleteRig( model->mJointList ) ) 
+							{
+								mResetJoints = true;
+							}
+							
+							if ( !missingSkeletonOrScene )
+							{
+								//Set the joint translations on the avatar - if it's a full mapping
+								//The joints are reset in the dtor
+								if ( mResetJoints )
+								{	
+									std::map<std::string, std::string> :: const_iterator masterJointIt = mJointMap.begin();
+									std::map<std::string, std::string> :: const_iterator masterJointItEnd = mJointMap.end();
+									for (;masterJointIt!=masterJointItEnd;++masterJointIt )
+									{
+										std::string lookingForJoint = (*masterJointIt).first.c_str();
+										
+										if ( jointTransforms.find( lookingForJoint ) != jointTransforms.end() )
+										{
+											//llinfos<<"joint "<<lookingForJoint.c_str()<<llendl;
+											LLMatrix4 jointTransform = jointTransforms[lookingForJoint];
+											LLJoint* pJoint = gAgentAvatarp->getJoint( lookingForJoint );
+											if ( pJoint )
+											{   
+												pJoint->storeCurrentXform( jointTransform.getTranslation() );												
+											}
+											else
+											{
+												//Most likely an error in the asset.
+												llwarns<<"Tried to apply joint position from .dae, but it did not exist in the avatar rig." << llendl;
+											}
+										}
+									}
+								}
+							} //missingSkeletonOrScene
+							
 							//We need to construct the alternate bind matrix (which contains the new joint positions)
 							//in the same order as they were stored in the joint buffer. The joints associated
 							//with the skeleton are not stored in the same order as they are in the exported joint buffer.
@@ -1483,9 +1514,9 @@ void LLModelLoader::run()
 									llwarns<<"Possibly misnamed/missing joint [" <<lookingForJoint.c_str()<<" ] "<<llendl;
 								}
 							}
-
+							
 							//grab raw position array
-
+							
 							domVertices* verts = mesh->getVertices();
 							if (verts)
 							{
@@ -1501,7 +1532,7 @@ void LLModelLoader::run()
 											if (pos_array)
 											{
 												domListOfFloats& pos = pos_array->getValue();
-
+												
 												for (size_t j = 0; j < pos.getCount(); j += 3)
 												{
 													if (pos.getCount() <= j+2)
@@ -1521,7 +1552,7 @@ void LLModelLoader::run()
 									}
 								}
 							}
-
+							
 							//grab skin weights array
 							domSkin::domVertex_weights* weights = skin->getVertex_weights();
 							if (weights)
@@ -1539,26 +1570,26 @@ void LLModelLoader::run()
 										}
 									}
 								}
-
+								
 								if (vertex_weights)
 								{
 									domListOfFloats& w = vertex_weights->getValue();
 									domListOfUInts& vcount = weights->getVcount()->getValue();
 									domListOfInts& v = weights->getV()->getValue();
-
+									
 									U32 c_idx = 0;
 									for (size_t vc_idx = 0; vc_idx < vcount.getCount(); ++vc_idx)
 									{ //for each vertex
 										daeUInt count = vcount[vc_idx];
-
+										
 										//create list of weights that influence this vertex
 										LLModel::weight_list weight_list;
-
+										
 										for (daeUInt i = 0; i < count; ++i)
 										{ //for each weight
 											daeInt joint_idx = v[c_idx++];
 											daeInt weight_idx = v[c_idx++];
-
+											
 											if (joint_idx == -1)
 											{
 												//ignore bindings to bind_shape_matrix
@@ -1594,12 +1625,12 @@ void LLModelLoader::run()
 												wght[i].mWeight *= scale;
 											}
 										}
-
+										
 										model->mSkinWeights[model->mPosition[vc_idx]] = wght;
 									}
-
+									
 									//add instance to scene for this model
-
+									
 									LLMatrix4 transformation = mTransform;
 									// adjust the transformation to compensate for mesh normalization
 									
@@ -1607,12 +1638,12 @@ void LLModelLoader::run()
 									mesh_translation.setTranslation(mesh_translation_vector);
 									mesh_translation *= transformation;
 									transformation = mesh_translation;
-
+									
 									LLMatrix4 mesh_scale;
 									mesh_scale.initScale(mesh_scale_vector);
 									mesh_scale *= transformation;
 									transformation = mesh_scale;
-
+									
 									std::vector<LLImportMaterial> materials;
 									materials.resize(model->getNumVolumeFaces());
 									mScene[transformation].push_back(LLModelInstance(model, transformation, materials));
@@ -1624,20 +1655,50 @@ void LLModelLoader::run()
 				}
 			}
 		}
-
+		
 		daeElement* scene = root->getDescendant("visual_scene");
-
+		
 		if (!scene)
 		{
 			llwarns << "document has no visual_scene" << llendl;
 			setLoadState( ERROR_PARSING );
 			return;
 		}
-
 		processElement(scene);
-
+		
 		doOnIdleOneTime(boost::bind(&LLModelPreview::loadModelCallback,mPreview,mLod));
 	}
+}
+
+bool LLModelLoader::doesJointArrayContainACompleteRig( const std::vector<std::string> &jointListFromModel )
+{
+	std::deque<std::string> :: const_iterator masterJointIt = mMasterJointList.begin();	
+	std::deque<std::string> :: const_iterator masterJointEndIt = mMasterJointList.end();
+	
+	std::vector<std::string> :: const_iterator modelJointIt = jointListFromModel.begin();	
+	std::vector<std::string> :: const_iterator modelJointItEnd = jointListFromModel.end();
+	
+	bool found = false;
+	for ( ;masterJointIt!=masterJointEndIt;++masterJointIt )
+	{
+		found = false;
+		modelJointIt = jointListFromModel.begin();
+		for ( ;modelJointIt!=modelJointItEnd; ++modelJointIt )
+		{
+			if ( *masterJointIt == *modelJointIt )
+			{
+				found = true;
+				break;
+			}			
+		}		
+		if ( !found )
+		{
+			llinfos<<" Asset did not contain the joint (if you're u/l a fully rigged asset - it is required)." << *masterJointIt<< llendl;
+			break;
+		}
+	}
+	
+	return found;
 }
 
 //called in the main thread
@@ -3009,31 +3070,31 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 		for (U32 mdl_idx = 0; mdl_idx < mBaseModel.size(); ++mdl_idx)
 		{
 			LLModel* base = mBaseModel[mdl_idx];
-			
+
 			GLint patch_count = 0;
 			glodGetObjectParameteriv(mObject[base], GLOD_NUM_PATCHES, &patch_count);
 			stop_gloderror();
-			
+
 			LLVolumeParams volume_params;
 			volume_params.setType(LL_PCODE_PROFILE_SQUARE, LL_PCODE_PATH_LINE);
 			mModel[lod][mdl_idx] = new LLModel(volume_params, 0.f);
-			
+
 			GLint* sizes = new GLint[patch_count*2];
 			glodGetObjectParameteriv(mObject[base], GLOD_PATCH_SIZES, sizes);
 			stop_gloderror();
-			
+
 			GLint* names = new GLint[patch_count];
 			glodGetObjectParameteriv(mObject[base], GLOD_PATCH_NAMES, names);
 			stop_gloderror();
-			
+
 			mModel[lod][mdl_idx]->setNumVolumeFaces(patch_count);
-			
+
 			LLModel* target_model = mModel[lod][mdl_idx];
-			
+
 			for (GLint i = 0; i < patch_count; ++i)
 			{
 				LLPointer<LLVertexBuffer> buff = new LLVertexBuffer(type_mask, 0);
-				
+
 				if (sizes[i*2+1] > 0 && sizes[i*2] > 0)
 				{
 					buff->allocateBuffer(sizes[i*2+1], sizes[i*2], true);
@@ -3047,30 +3108,30 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 					memset(buff->getMappedData(), 0, buff->getSize());
 					memset(buff->getIndicesPointer(), 0, buff->getIndicesSize());
 				}
-				
+
 				buff->validateRange(0, buff->getNumVerts()-1, buff->getNumIndices(), 0);
-				
+
 				LLStrider<LLVector3> pos;
 				LLStrider<LLVector3> norm;
 				LLStrider<LLVector2> tc;
 				LLStrider<U16> index;
-				
+
 				buff->getVertexStrider(pos);
 				buff->getNormalStrider(norm);
 				buff->getTexCoord0Strider(tc);
 				buff->getIndexStrider(index);
-								
+
 				target_model->setVolumeFaceData(names[i], pos, norm, tc, index, buff->getNumVerts(), buff->getNumIndices());
 				actual_tris += buff->getNumIndices()/3;
 				actual_verts += buff->getNumVerts();
 				++submeshes;
-				
+
 				if (!validate_face(target_model->getVolumeFace(names[i])))
 				{
 					llerrs << "Invalid face generated during LOD generation." << llendl;
 				}
 			}
-			
+
 			//blind copy skin weights and just take closest skin weight to point on
 			//decimated mesh for now (auto-generating LODs with skin weights is still a bit
 			//of an open problem).
@@ -3083,20 +3144,20 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 			target_model->mAlternateBindMatrix = base->mAlternateBindMatrix;
 			//copy material list
 			target_model->mMaterialList = base->mMaterialList;
-			
+
 			if (!validate_model(target_model))
 			{
 				llerrs << "Invalid model generated when creating LODs" << llendl;
 			}
-			
+
 			delete [] sizes;
 			delete [] names;
 		}
-		
+
 		//rebuild scene based on mBaseScene
 		mScene[lod].clear();
 		mScene[lod] = mBaseScene;
-		
+
 		for (U32 i = 0; i < mBaseModel.size(); ++i)
 		{
 			LLModel* mdl = mBaseModel[i];
@@ -4010,40 +4071,40 @@ BOOL LLModelPreview::render()
 		{
 			LLVOAvatarSelf* avatar = gAgentAvatarp;
 			target_pos = avatar->getPositionAgent();
-			
+
 			LLViewerCamera::getInstance()->setOriginAndLookAt(
 															  target_pos + ((LLVector3(mCameraDistance, 0.f, 0.f) + offset) * av_rot),		// camera
 															  LLVector3::z_axis,																	// up
 															  target_pos);											// point of interest
-			
+
 			if (joint_positions)
 			{
 				avatar->renderCollisionVolumes();
 			}
-			
+
 			for (LLModelLoader::scene::iterator iter = mScene[mPreviewLOD].begin(); iter != mScene[mPreviewLOD].end(); ++iter)
 			{
 				for (LLModelLoader::model_instance_list::iterator model_iter = iter->second.begin(); model_iter != iter->second.end(); ++model_iter)
 				{
 					LLModelInstance& instance = *model_iter;
 					LLModel* model = instance.mModel;
-					
+
 					if (!model->mSkinWeights.empty())
 					{
 						for (U32 i = 0; i < mVertexBuffer[mPreviewLOD][model].size(); ++i)
 						{
 							LLVertexBuffer* buffer = mVertexBuffer[mPreviewLOD][model][i];
-							
+
 							const LLVolumeFace& face = model->getVolumeFace(i);
-							
+
 							LLStrider<LLVector3> position;
 							buffer->getVertexStrider(position);
-							
+
 							LLStrider<LLVector4> weight;
 							buffer->getWeight4Strider(weight);
-							
+
 							//quick 'n dirty software vertex skinning
-							
+
 							//build matrix palette
 							LLMatrix4 mat[64];
 							for (U32 j = 0; j < model->mJointList.size(); ++j)

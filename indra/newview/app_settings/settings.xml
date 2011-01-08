@@ -4014,6 +4014,17 @@
       <key>Value</key>
       <string>http://search.secondlife.com/viewer/[CATEGORY]/?q=[QUERY]&amp;p=[AUTH_TOKEN]&amp;r=[MATURITY]&amp;lang=[LANGUAGE]&amp;g=[GODLIKE]&amp;sid=[SESSION_ID]&amp;rid=[REGION_ID]&amp;pid=[PARCEL_ID]&amp;channel=[CHANNEL]&amp;version=[VERSION]&amp;major=[VERSION_MAJOR]&amp;minor=[VERSION_MINOR]&amp;patch=[VERSION_PATCH]&amp;build=[VERSION_BUILD]</string>
     </map>
+    <key>WebProfileURL</key>
+    <map>
+      <key>Comment</key>
+      <string>URL for Web Profiles</string>
+      <key>Persist</key>
+      <integer>0</integer>
+      <key>Type</key>
+      <string>String</string>
+      <key>Value</key>
+      <string>https://my.secondlife.com/[AGENT_NAME]</string>
+    </map>
     <key>HighResSnapshot</key>
     <map>
       <key>Comment</key>
@@ -4025,7 +4036,7 @@
       <key>Value</key>
       <integer>0</integer>
     </map>
-     <key>HideL$Balance</key>
+    <key>HideL$Balance</key>
       <map>
        <key>Comment</key>
        <string>Prevents-Disables L$ Balance from updating,shows ###. Restart Required!</string>
@@ -4079,7 +4090,7 @@
     <string>F32</string>
     <key>Value</key>
     <integer>1.5</integer>
-    </map>	
+    </map>
     <key>HtmlHelpLastPage</key>
     <map>
       <key>Comment</key>
@@ -7760,7 +7771,6 @@
     <key>Value</key>
     <real>0.01</real>
   </map>
-
   <key>RenderShadowBiasError</key>
   <map>
     <key>Comment</key>
@@ -9029,7 +9039,7 @@
     <key>Type</key>
     <string>F32</string>
     <key>Value</key>
-    <real>0.125f</real>
+    <real>0.125</real>
   </map>
   <key>MeshThreadCount</key>
   <map>
@@ -11935,7 +11945,7 @@
       <key>Type</key>
       <string>F32</string>
       <key>Value</key>
-      <integer>3.0</integer>
+      <real>3.0</real>
     </map>
     <key>InterpolationPhaseOut</key>
     <map>
@@ -11946,7 +11956,7 @@
       <key>Type</key>
       <string>F32</string>
       <key>Value</key>
-      <integer>1.0</integer>
+      <real>1.0</real>
     </map>
     <key>VerboseLogs</key>
     <map>
