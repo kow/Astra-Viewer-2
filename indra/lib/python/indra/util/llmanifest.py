@@ -94,7 +94,7 @@ def get_channel(srctree):
     for p in paths:
         if os.path.exists(p):
             contents = open(p, 'r').read()
-            channel = "Kirstens S20"
+            channel = "Kirstens S21"
             return channel
     
 
