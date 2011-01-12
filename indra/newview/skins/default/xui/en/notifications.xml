@@ -6636,7 +6636,8 @@ Mute everyone?
               text="Open pop-up window"/>
     </form>
   </notification>
-<notification
+
+  <notification
   name="AuthRequest"
   type="browser">
 The site at &apos;&lt;nolink&gt;[HOST_NAME]&lt;/nolink&gt;&apos; in realm &apos;[REALM]&apos; requires a user name and password.

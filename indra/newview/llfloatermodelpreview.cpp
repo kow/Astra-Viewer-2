@@ -291,7 +291,7 @@ BOOL LLFloaterModelPreview::postBuild()
 
 	childSetCommitCallback("lod_mode", onLODParamCommit, this);
 	childSetCommitCallback("lod_error_threshold", onLODParamCommit, this);
-	childSetCommitCallback("lod_triangle_limit", onLODParamCommit, this);
+	childSetCommitCallback("lod_triangle_limit", onLODParamCommitTriangleLimit, this);
 	childSetCommitCallback("build_operator", onLODParamCommit, this);
 	childSetCommitCallback("queue_mode", onLODParamCommit, this);
 	childSetCommitCallback("border_mode", onLODParamCommit, this);
@@ -340,6 +340,7 @@ BOOL LLFloaterModelPreview::postBuild()
 
 	mModelPreview = new LLModelPreview(512, 512, this);
 	mModelPreview->setPreviewTarget(16.f);
+	mModelPreview->setDetailsCallback(boost::bind(&LLFloaterModelPreview::setDetails, this, _1, _2, _3, _4, _5));
 
 	//set callbacks for left click on line editor rows
 	for (U32 i = 0; i <= LLModel::LOD_HIGH; i++)
@@ -379,7 +380,8 @@ LLFloaterModelPreview::~LLFloaterModelPreview()
 {
 	sInstance = NULL;
 
-	if ( mModelPreview->mModelLoader->mResetJoints )
+	const LLModelLoader *model_loader = mModelPreview->mModelLoader;
+	if (model_loader && model_loader->mResetJoints)
 	{
 		gAgentAvatarp->resetJointPositions();
 	}
@@ -531,9 +533,14 @@ void LLFloaterModelPreview::onAutoFillCommit(LLUICtrl* ctrl, void* userdata)
 void LLFloaterModelPreview::onLODParamCommit(LLUICtrl* ctrl, void* userdata)
 {
 	LLFloaterModelPreview* fp = (LLFloaterModelPreview*) userdata;
-	fp->mModelPreview->genLODs(fp->mModelPreview->mPreviewLOD);
-	fp->mModelPreview->updateStatusMessages();
-	fp->mModelPreview->refresh();
+	fp->mModelPreview->onLODParamCommit(false);
+}
+
+//static
+void LLFloaterModelPreview::onLODParamCommitTriangleLimit(LLUICtrl* ctrl, void* userdata)
+{
+	LLFloaterModelPreview* fp = (LLFloaterModelPreview*) userdata;
+	fp->mModelPreview->onLODParamCommit(true);
 }
 
 
@@ -1298,7 +1305,7 @@ void LLModelLoader::run()
 								}
 							}
 							else
-							//Has Skeleton
+								//Has Skeleton
 							{
 								//Get the root node of the skeleton
 								daeElement* pSkeletonRootNode = pSkeleton->getValue().getElement();
@@ -1307,7 +1314,7 @@ void LLModelLoader::run()
 									//Once we have the root node - start acccessing it's joint components
 									const int jointCnt = mJointMap.size();
 									std::map<std::string, std::string> :: const_iterator jointIt = mJointMap.begin();
-
+									
 									//Loop over all the possible joints within the .dae - using the allowed joint list in the ctor.
 									for ( int i=0; i<jointCnt; ++i, ++jointIt )
 									{
@@ -1315,10 +1322,10 @@ void LLModelLoader::run()
 										char str[64]={0};
 										sprintf(str,"./%s",(*jointIt).second.c_str() );
 										//llwarns<<"Joint "<< str <<llendl;
-
+										
 										//Setup the resolver
                                         daeSIDResolver resolver( pSkeletonRootNode, str );
-
+										
                                         //Look for the joint
                                         domNode* pJoint = daeSafeCast<domNode>( resolver.getElement() );
                                         if ( pJoint )
@@ -1326,9 +1333,9 @@ void LLModelLoader::run()
 											//Pull out the translate id and store it in the jointTranslations map
 											daeSIDResolver jointResolver( pJoint, "./translate" );
 											domTranslate* pTranslate = daeSafeCast<domTranslate>( jointResolver.getElement() );
-
+											
 											LLMatrix4 workingTransform;
-
+											
 											//Translation via SID
 											if ( pTranslate )
 											{
@@ -1344,13 +1351,13 @@ void LLModelLoader::run()
 													missingSkeletonOrScene = true;
 												}
 												else
-												{                                                  
+												{
 													extractTranslationViaElement( pTranslateElement, workingTransform );
 												}
 											}
 											
 											//Store the joint transform w/respect to it's name.
-											jointTransforms[(*jointIt).second.c_str()] = workingTransform;                                                                                                                             
+											jointTransforms[(*jointIt).second.c_str()] = workingTransform;
                                         }
 									}
 									
@@ -1365,28 +1372,28 @@ void LLModelLoader::run()
 							
 							
 							domSkin::domJoints* joints = skin->getJoints();
-
+							
 							domInputLocal_Array& joint_input = joints->getInput_array();
-
+							
 							for (size_t i = 0; i < joint_input.getCount(); ++i)
 							{
 								domInputLocal* input = joint_input.get(i);
 								xsNMTOKEN semantic = input->getSemantic();
-
+								
 								if (strcmp(semantic, COMMON_PROFILE_INPUT_JOINT) == 0)
 								{ //found joint source, fill model->mJointMap and model->mJointList
 									daeElement* elem = input->getSource().getElement();
-
+									
 									domSource* source = daeSafeCast<domSource>(elem);
 									if (source)
 									{
-
-
+										
+										
 										domName_array* names_source = source->getName_array();
 										
 										if (names_source)
 										{
-											domListOfNames &names = names_source->getValue();					
+											domListOfNames &names = names_source->getValue();
 											
 											for (size_t j = 0; j < names.getCount(); ++j)
 											{
@@ -1397,7 +1404,7 @@ void LLModelLoader::run()
 												}
 												model->mJointList.push_back(name);
 												model->mJointMap[name] = j;
-											}	
+											}
 										}
 										else
 										{
@@ -1430,11 +1437,11 @@ void LLModelLoader::run()
 										{
 											domListOfFloats& transform = t->getValue();
 											S32 count = transform.getCount()/16;
-
+											
 											for (S32 k = 0; k < count; ++k)
 											{
 												LLMatrix4 mat;
-
+												
 												for (int i = 0; i < 4; i++)
 												{
 													for(int j = 0; j < 4; j++)
@@ -1442,7 +1449,7 @@ void LLModelLoader::run()
 														mat.mMatrix[i][j] = transform[k*16 + i + j*4];
 													}
 												}
-
+												
 												model->mInvBindMatrix.push_back(mat);
 											}
 										}
@@ -1539,12 +1546,12 @@ void LLModelLoader::run()
 													{
 														llerrs << "WTF?" << llendl;
 													}
-
+													
 													LLVector3 v(pos[j], pos[j+1], pos[j+2]);
-
+													
 													//transform from COLLADA space to volume space
 													v = v * inverse_normalized_transformation;
-
+													
 													model->mPosition.push_back(v);
 												}
 											}
@@ -1595,19 +1602,19 @@ void LLModelLoader::run()
 												//ignore bindings to bind_shape_matrix
 												continue;
 											}
-
+											
 											F32 weight_value = w[weight_idx];
-
+											
 											weight_list.push_back(LLModel::JointWeight(joint_idx, weight_value));
 										}
-
+										
 										//sort by joint weight
 										std::sort(weight_list.begin(), weight_list.end(), LLModel::CompareWeightGreater());
-
+										
 										std::vector<LLModel::JointWeight> wght;
-
+										
 										F32 total = 0.f;
-
+										
 										for (U32 i = 0; i < llmin((U32) 4, (U32) weight_list.size()); ++i)
 										{ //take up to 4 most significant weights
 											if (weight_list[i].mWeight > 0.f)
@@ -1616,7 +1623,7 @@ void LLModelLoader::run()
 												total += weight_list[i].mWeight;
 											}
 										}
-
+										
 										F32 scale = 1.f/total;
 										if (scale != 1.f)
 										{ //normalize weights
@@ -1664,6 +1671,8 @@ void LLModelLoader::run()
 			setLoadState( ERROR_PARSING );
 			return;
 		}
+		setLoadState( DONE );
+
 		processElement(scene);
 		
 		doOnIdleOneTime(boost::bind(&LLModelPreview::loadModelCallback,mPreview,mLod));
@@ -1789,7 +1798,25 @@ void LLModelLoader::processJointNode( domNode* pNode, std::map<std::string,LLMat
 		daeElement* pTranslateElement = getChildFromElement( pNode, "translate" );
 		if ( !pTranslateElement || pTranslateElement->typeID() != domTranslate::ID() )
 		{
-			llwarns<< "The found element is not a translate node" <<llendl;
+			//llwarns<< "The found element is not a translate node" <<llendl;
+			daeSIDResolver jointResolver( pNode, "./matrix" );
+			domMatrix* pMatrix = daeSafeCast<domMatrix>( jointResolver.getElement() );
+			if ( pMatrix )
+			{
+				//llinfos<<"A matrix SID was however found!"<<llendl;
+				domFloat4x4 domArray = pMatrix->getValue();									
+				for ( int i = 0; i < 4; i++ )
+				{
+					for( int j = 0; j < 4; j++ )
+					{
+						workingTransform.mMatrix[i][j] = domArray[i + j*4];
+					}
+				}
+			}
+			else
+			{
+				llwarns<< "The found element is not translate or matrix node - most likely a corrupt export!" <<llendl;
+			}
 		}
 		else
 		{
@@ -2245,16 +2272,22 @@ U32 LLModelPreview::calcResourceCost()
 
 	//mFMP->childSetTextArg(info_name[LLModel::LOD_PHYSICS], "[HULLS]", llformat("%d",num_hulls));
 	//mFMP->childSetTextArg(info_name[LLModel::LOD_PHYSICS], "[POINTS]", llformat("%d",num_points));
-	mFMP->childSetTextArg("streaming cost", "[COST]", llformat("%.3f", streaming_cost));
-	mFMP->childSetTextArg("physics cost", "[COST]", llformat("%.3f", physics_cost));	
 	F32 scale = mFMP->childGetValue("import_scale").asReal()*2.f;
-	mFMP->childSetTextArg("import_dimensions", "[X]", llformat("%.3f", mPreviewScale[0]*scale));
-	mFMP->childSetTextArg("import_dimensions", "[Y]", llformat("%.3f", mPreviewScale[1]*scale));
-	mFMP->childSetTextArg("import_dimensions", "[Z]", llformat("%.3f", mPreviewScale[2]*scale));
+
+	mDetailsSignal(mPreviewScale[0]*scale, mPreviewScale[1]*scale, mPreviewScale[2]*scale, streaming_cost, physics_cost);
 
 	updateStatusMessages();
 
 	return cost;
+}
+
+void LLFloaterModelPreview::setDetails(F32 x, F32 y, F32 z, F32 streaming_cost, F32 physics_cost)
+{
+	childSetTextArg("import_dimensions", "[X]", llformat("%.3f", x));
+	childSetTextArg("import_dimensions", "[Y]", llformat("%.3f", y));
+	childSetTextArg("import_dimensions", "[Z]", llformat("%.3f", z));
+	childSetTextArg("streaming cost", "[COST]", llformat("%.3f", streaming_cost));
+	childSetTextArg("physics cost", "[COST]", llformat("%.3f", physics_cost));	
 }
 
 void LLModelPreview::rebuildUploadData()
@@ -2373,11 +2406,9 @@ void LLModelPreview::loadModel(std::string filename, S32 lod)
 
 	LLMutexLock lock(this);
 
-	if (mModelLoader)
-	{
-		delete mModelLoader;
-		mModelLoader = NULL;
-	}
+	// This triggers if you bring up the file picker and then hit CANCEL.
+	// Just use the previous model (if any) and ignore that you brought up
+	// the file picker.
 
 	if (filename.empty())
 	{
@@ -2386,10 +2417,15 @@ void LLModelPreview::loadModel(std::string filename, S32 lod)
 			// this is the initial file picking. Close the whole floater
 			// if we don't have a base model to show for high LOD.
 			mFMP->closeFloater(false);
+			mLoading = false;
 		}
-
-		mLoading = false;
 		return;
+	}
+
+	if (mModelLoader)
+	{
+		delete mModelLoader;
+		mModelLoader = NULL;
 	}
 
 	mLODFile[lod] = filename;
@@ -2735,11 +2771,11 @@ void LLModelPreview::consolidate()
 			}
 		}
 	}
-	
+
 	mScene[mPreviewLOD] = new_scene;
 	mModel[mPreviewLOD] = new_model;
 	mVertexBuffer[mPreviewLOD].clear();
-	
+
 	if (mPreviewLOD == LLModel::LOD_HIGH)
 	{
 		mBaseScene = new_scene;
@@ -2790,7 +2826,7 @@ void LLModelPreview::clearMaterials()
 		clearGLODGroup();
 		mVertexBuffer[5].clear();
 	}
-	
+
 	mResourceCost = calcResourceCost();
 	refresh();
 }
@@ -2810,7 +2846,7 @@ bool LLModelPreview::containsRiggedAsset( void )
 	}
 	return false;
 }
-void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
+void LLModelPreview::genLODs(S32 which_lod, U32 decimation, bool enforce_tri_limit)
 {
 	if (mBaseModel.empty())
 	{
@@ -2886,7 +2922,7 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 		build_operator = GLOD_OPERATOR_HALF_EDGE_COLLAPSE;
 	}
 
-	U32 queue_mode = 0; // KL compiler error on GCC so giving this fella a zero :)
+	U32 queue_mode=0;
 	iface = mFMP->childGetSelectionInterface("queue_mode");
 	if (iface)
 	{
@@ -2961,14 +2997,14 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 		for (LLModelLoader::model_list::iterator iter = mBaseModel.begin(); iter != mBaseModel.end(); ++iter)
 		{ //build GLOD objects for each model in base model list
 			LLModel* mdl = *iter;
-			
+
 			if (mObject[mdl] != 0)
 			{
 				glodDeleteObject(mObject[mdl]);
 			}
 
 			mObject[mdl] = cur_name++;
-			
+
 			glodNewObject(mObject[mdl], mGroup, GLOD_DISCRETE);
 			stop_gloderror();
 
@@ -2976,12 +3012,12 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 			{ //regenerate vertex buffer for skinned models to prevent animation feedback during LOD generation
 				mVertexBuffer[5].clear();
 			}
-			
+
 			if (mVertexBuffer[5].empty())
 			{
 				genBuffers(5, false);
 			}
-			
+
 			U32 tri_count = 0;
 			for (U32 i = 0; i < mVertexBuffer[5][mdl].size(); ++i)
 			{
@@ -3041,7 +3077,17 @@ void LLModelPreview::genLODs(S32 which_lod, U32 decimation)
 		}
 		else
 		{
-			triangle_count = limit;
+			if (enforce_tri_limit)
+			{
+				triangle_count = limit;
+			}
+			else
+			{
+				for (S32 j=LLModel::LOD_HIGH; j>which_lod; --j)
+				{
+					triangle_count /= decimation;
+				}
+			}
 		}
 
 		mModel[lod].clear();
@@ -3210,32 +3256,32 @@ void LLModelPreview::updateStatusMessages()
 	{
 		//initialize total for this lod to 0
 		total_tris[lod] = total_verts[lod] = total_submeshes[lod] = 0;
-		
+
 		for (U32 i = 0; i < mModel[lod].size(); ++i)
 		{ //for each model in the lod
 			S32 cur_tris = 0;
 			S32 cur_verts = 0;
 			S32 cur_submeshes = mModel[lod][i]->getNumVolumeFaces();
-			
+
 			for (S32 j = 0; j < cur_submeshes; ++j)
 			{ //for each submesh (face), add triangles and vertices to current total
 				const LLVolumeFace& face = mModel[lod][i]->getVolumeFace(j);
 				cur_tris += face.mNumIndices/3;
 				cur_verts += face.mNumVertices;
 			}
-			
+
 			//add this model to the lod total
 			total_tris[lod] += cur_tris;
 			total_verts[lod] += cur_verts;
 			total_submeshes[lod] += cur_submeshes;
-			
+
 			//store this model's counts to asset data
 			tris[lod].push_back(cur_tris);
 			verts[lod].push_back(cur_verts);
 			submeshes[lod].push_back(cur_submeshes);
 		}
 	}
-	
+
 	if (mMaxTriangleLimit == 0)
 	{
 		mMaxTriangleLimit = total_tris[LLModel::LOD_HIGH];
@@ -3243,11 +3289,11 @@ void LLModelPreview::updateStatusMessages()
 
 
 	mFMP->childSetTextArg("submeshes_info", "[SUBMESHES]", llformat("%d", total_submeshes[LLModel::LOD_HIGH]));
-	
+
 	std::string mesh_status_na = mFMP->getString("mesh_status_na");
-		
+
 	S32 upload_status[LLModel::LOD_HIGH+1];
-	
+
 	bool upload_ok = true;
 
 	for (S32 lod = 0; lod <= LLModel::LOD_HIGH; ++lod)
@@ -3283,9 +3329,9 @@ void LLModelPreview::updateStatusMessages()
 			mFMP->childSetText(lod_triangles_name[lod], mesh_status_na);
 			mFMP->childSetText(lod_vertices_name[lod], mesh_status_na);
 		}
-		
+
 		const U32 lod_high = LLModel::LOD_HIGH;
-		
+
 		if (lod != lod_high)
 		{
 			if (total_submeshes[lod] && total_submeshes[lod] != total_submeshes[lod_high])
@@ -4063,7 +4109,7 @@ BOOL LLModelPreview::render()
 
 					gGL.popMatrix();
 				}
-			
+
 				gGL.setSceneBlendType(LLRender::BT_ALPHA);
 			}
 		}
@@ -4199,7 +4245,7 @@ void LLModelPreview::refresh()
 void LLModelPreview::rotate(F32 yaw_radians, F32 pitch_radians)
 {
 	mCameraYaw = mCameraYaw + yaw_radians;
-	
+
 	mCameraPitch = llclamp(mCameraPitch + pitch_radians, F_PI_BY_TWO * -0.8f, F_PI_BY_TWO * 0.8f);
 }
 
@@ -4209,7 +4255,7 @@ void LLModelPreview::rotate(F32 yaw_radians, F32 pitch_radians)
 void LLModelPreview::zoom(F32 zoom_amt)
 {
 	F32 new_zoom = mCameraZoom+zoom_amt;
-	
+
 	mCameraZoom	= llclamp(new_zoom, 1.f, 10.f);
 }
 
@@ -4226,7 +4272,7 @@ void LLModelPreview::setPreviewLOD(S32 lod)
 	if (lod != mPreviewLOD)
 	{
 		mPreviewLOD = lod;
-		
+
 		LLComboBox* combo_box = mFMP->getChild<LLComboBox>("preview_lod_combo");
 		combo_box->setCurrentByIndex((NUM_LOD-1)-mPreviewLOD); // combo box list of lods is in reverse order
 		mFMP->childSetTextArg("lod_table_footer", "[DETAIL]", mFMP->getString(lod_name[mPreviewLOD]));
@@ -4305,6 +4351,13 @@ void LLModelPreview::textureLoadedCallback( BOOL success, LLViewerFetchedTexture
 {
 	LLModelPreview* preview = (LLModelPreview*) userdata;
 	preview->refresh();
+}
+
+void LLModelPreview::onLODParamCommit(bool enforce_tri_limit)
+{
+	genLODs(mPreviewLOD, 3, enforce_tri_limit);
+	updateStatusMessages();
+	refresh();
 }
 
 LLFloaterModelPreview::DecompRequest::DecompRequest(const std::string& stage, LLModel* mdl)

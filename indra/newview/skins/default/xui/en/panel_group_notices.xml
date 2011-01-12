@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <panel
- height="600"
+ height="530"
  label="Notices"
  layout="topleft"
  left="0"

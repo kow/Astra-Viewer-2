@@ -62,7 +62,7 @@ public:
 	struct MaxLength : public LLInitParam::Choice<MaxLength>
 	{
 		Alternative<S32> bytes, chars;
-		
+		// S21 this may not be needed now KL
 		MaxLength() : bytes("max_length_bytes", 1016),
 					  chars("max_length_chars", 0) 
 		{}

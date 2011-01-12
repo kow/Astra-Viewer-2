@@ -306,7 +306,7 @@ BOOL gLogoutInProgress = FALSE;
 
 ////////////////////////////////////////////////////////////
 // Internal globals... that should be removed.
-static std::string gArgs = "Build 3 RC2";
+static std::string gArgs = "Build 3 RC3";
 
 const std::string MARKER_FILE_NAME("SecondLife.exec_marker");
 const std::string ERROR_MARKER_FILE_NAME("SecondLife.error_marker");
@@ -2311,9 +2311,7 @@ bool LLAppViewer::initConfiguration()
     if(skinfolder && LLStringUtil::null != skinfolder->getValue().asString())
     {   
   	  gDirUtilp->setSkinFolder(skinfolder->getValue().asString());   // S21
-		// hack to force the skin to default.
-        //gDirUtilp->setSkinFolder(skinfolder->getValue().asString());
-  	  // gDirUtilp->setSkinFolder("default");  // Viewer 2.0 original
+		//gDirUtilp->setSkinFolder("default");
     }
 
     mYieldTime = gSavedSettings.getS32("YieldTime");
