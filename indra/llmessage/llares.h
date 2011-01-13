@@ -39,9 +39,7 @@
 # pragma warning(pop)
 #endif
 
-#ifndef LL_LINUX
 #include "ares/ares.h"
-#endif
 
 #include "llpointer.h"
 #include "llrefcount.h"
