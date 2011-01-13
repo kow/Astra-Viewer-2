@@ -1178,7 +1178,7 @@ void LLBottomTray::processShowButtons(S32& available_width)
 bool LLBottomTray::processShowButton(EResizeState shown_object_type, S32& available_width)
 {
 	lldebugs << "Trying to show object type: " << shown_object_type << llendl;
-	llassert(mStateProcessedObjectMap[shown_object_type] != NULL);
+	// llassert(mStateProcessedObjectMap[shown_object_type] != NULL); // KL do not assert...
 
 	LLPanel* panel = mStateProcessedObjectMap[shown_object_type];
 	if (NULL == panel)
@@ -1542,7 +1542,7 @@ void LLBottomTray::initButtonsVisibility()
 
 void LLBottomTray::setButtonsControlsAndListeners()
 {
-	gSavedSettings.declareBOOL("ShowInventoryButton", TRUE, "Shows/Hides Inventory button in the bottom tray. (Declared in code)"); // S21
+	//gSavedSettings.declareBOOL("ShowInventoryButton", TRUE, "Shows/Hides Inventory button in the bottom tray. (Declared in code)"); // S21
 	gSavedSettings.getControl("ShowGestureButton")->getSignal()->connect(boost::bind(&LLBottomTray::toggleShowButton, RS_BUTTON_GESTURES, _2));
 	gSavedSettings.getControl("ShowMoveButton")->getSignal()->connect(boost::bind(&LLBottomTray::toggleShowButton, RS_BUTTON_MOVEMENT, _2));
 	gSavedSettings.getControl("ShowCameraButton")->getSignal()->connect(boost::bind(&LLBottomTray::toggleShowButton, RS_BUTTON_CAMERA, _2));

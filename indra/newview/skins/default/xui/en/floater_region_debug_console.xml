@@ -34,7 +34,7 @@
    height="19"
    layout="topleft"
    bottom_delta="20"
-   max_length="127"
+   max_length_bytes="127"
    name="region_debug_console_input"
    top_delta="0"
    width="576" />

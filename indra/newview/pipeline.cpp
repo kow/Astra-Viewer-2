@@ -2927,7 +2927,7 @@ void LLPipeline::postSort(LLCamera& camera)
 	//clear one bin per frame to avoid memory bloat
 	static S32 clear_idx = 0;
 	clear_idx = (1+clear_idx)%bin_count;
-	alpha_bins[clear_idx].clear();
+	alpha_bins[clear_idx].clear();// I bet this is not working KL
 
 	for (U32 j = 0; j < bin_count; j++)
 	{
@@ -3021,7 +3021,7 @@ void LLPipeline::postSort(LLCamera& camera)
 
 		std::sort(sCull->beginAlphaGroups(), sCull->endAlphaGroups(), LLSpatialGroup::CompareDepthGreater());
 	}
-	llpushcallstacks ;
+	//llpushcallstacks ;
 	// only render if the flag is set. The flag is only set if we are in edit mode or the toggle is set in the menus
 	if (LLFloaterReg::instanceVisible("beacons") && !sShadowRender)
 	{
@@ -3069,7 +3069,7 @@ void LLPipeline::postSort(LLCamera& camera)
 			forAllVisibleDrawables(renderSoundHighlights);
 		}
 	}
-	llpushcallstacks ;
+	//llpushcallstacks ;
 	// If managing your telehub, draw beacons at telehub and currently selected spawnpoint.
 	if (LLFloaterTelehub::renderBeacons())
 	{
@@ -3099,7 +3099,7 @@ void LLPipeline::postSort(LLCamera& camera)
 	}
 
 	//LLSpatialGroup::sNoDelete = FALSE;
-	llpushcallstacks ;
+//	llpushcallstacks ;
 }
 
 
