@@ -40,22 +40,22 @@
 
 // set to 1 if you're using the version of llqtwebkit that's QPixmap-ified
 #if LL_LINUX
-# define LL_QTWEBKIT_USES_PIXMAPS 1 //doh.... was 0....
+#define LL_QTWEBKIT_USES_PIXMAPS 0 //now understand why always disabled.....
 extern "C" {
-# include <glib.h>
-# include <glib-object.h>
+#include <glib.h>
+#include <glib-object.h>
 }
 #else
-# define LL_QTWEBKIT_USES_PIXMAPS 0
+#define LL_QTWEBKIT_USES_PIXMAPS 0
 #endif // LL_LINUX
 
 # include "volume_catcher.h"
 
 #if LL_WINDOWS
-# include <direct.h>
+#include <direct.h>
 #else
-# include <unistd.h>
-# include <stdlib.h>
+#include <unistd.h>
+#include <stdlib.h>
 #endif
 
 #if LL_WINDOWS
