@@ -70,6 +70,22 @@ extern "C" {
 	}
 #endif
 
+	
+#ifdef LL_STANDALONE
+#include <qglobal.h>
+#elif LL_LINUX
+// We don't provide Qt headers for non-standalone, therefore define this here.
+// Our prebuilt is built with QT_NAMESPACE undefined.
+#define QT_MANGLE_NAMESPACE(name) name
+#define Q_INIT_RESOURCE(name) \
+	do { extern int QT_MANGLE_NAMESPACE(qInitResources_ ## name) ();       \
+		 QT_MANGLE_NAMESPACE(qInitResources_ ## name) (); } while (0)
+#else
+// Apparently this symbol doesn't exist in the windows and Mac tar balls provided by LL.
+#define Q_INIT_RESOURCE(name) /*nothing*/
+#endif
+
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 class MediaPluginWebKit : 
@@ -811,6 +827,8 @@ MediaPluginWebKit::MediaPluginWebKit(LLPluginInstance::sendMessageFunction host_
 	mJavascriptEnabled = true;	// default to on
 	mPluginsEnabled = true;		// default to on
 	mUserAgent = "LLPluginMedia Web Browser";
+	// Initialize WebCore resource.
+	Q_INIT_RESOURCE(WebCore);
 }
 
 MediaPluginWebKit::~MediaPluginWebKit()
