@@ -1413,22 +1413,16 @@ void LLTextureCache::readHeaderCache()
 					}
 				}
 			}
-			if (num_entries > sCacheMaxEntries)
+			if (num_entries - empty_entries > sCacheMaxEntries)
 			{
 				// Special case: cache size was reduced, need to remove entries
 				// Note: After we prune entries, we will call this again and create the LRU
-				U32 entries_to_purge = (num_entries-empty_entries) - sCacheMaxEntries;
+				U32 entries_to_purge = (num_entries - empty_entries) - sCacheMaxEntries;
 				llinfos << "Texture Cache Entries: " << num_entries << " Max: " << sCacheMaxEntries << " Empty: " << empty_entries << " Purging: " << entries_to_purge << llendl;
-				if (entries_to_purge > 0)
-				{
-					for (std::set<lru_data_t>::iterator iter = lru.begin(); iter != lru.end(); ++iter)
+					for (std::set<lru_data_t>::iterator iter = lru.begin(); purge_list.size() < entries_to_purge; ++iter)
 					{
 						purge_list.insert(iter->second);
-						if (purge_list.size() >= entries_to_purge)
-							break;
-					}
 				}
-				llassert_always(purge_list.size() >= entries_to_purge);
 			}
 			else
 			{
