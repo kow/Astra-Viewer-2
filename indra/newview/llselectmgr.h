@@ -228,7 +228,7 @@ public:
 	{
 		bool operator()(LLSelectNode* node);
 	};
-	typedef boost::filter_iterator<is_valid_root, list_t::iterator > root_iterator;
+	typedef boost::filter_iterator<is_root, list_t::iterator > root_iterator;
 	root_iterator root_begin() { return root_iterator(mList.begin(), mList.end()); }
 	root_iterator root_end() { return root_iterator(mList.end(), mList.end()); }
 	
