@@ -290,7 +290,7 @@ BOOL LLFeatureManager::parseFeatureTable(std::string filename)
 	mTableVersion = version;
 
 	LLFeatureList *flp = NULL;
-	while (file > name)
+	while (file >> name)
 	{
 		char buffer[MAX_STRING];		 /*Flawfinder: ignore*/
 
