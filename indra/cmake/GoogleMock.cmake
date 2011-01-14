@@ -9,8 +9,8 @@ set(GOOGLEMOCK_INCLUDE_DIRS
 
 if (LINUX)
     set(GOOGLEMOCK_LIBRARIES 
-        gmock  
-        gtest)
+        gmock -Wl,--no-as-needed 
+        gtest -Wl,--as-needed)
 elseif(WINDOWS)
     set(GOOGLEMOCK_LIBRARIES 
         gmock)

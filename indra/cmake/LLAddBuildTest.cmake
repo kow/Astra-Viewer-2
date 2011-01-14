@@ -58,9 +58,9 @@ INCLUDE(GoogleMock)
     )
 
   # Use the default flags
-  if (LINUX)
-    SET(CMAKE_EXE_LINKER_FLAGS "")
-  endif (LINUX)
+  #if (LINUX)
+  #  SET(CMAKE_EXE_LINKER_FLAGS "")
+  #endif (LINUX)
 
   # start the source test executable definitions
   SET(${project}_TEST_OUTPUT "")
