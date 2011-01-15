@@ -360,7 +360,8 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			mesgsys->getU32Fast(_PREHASH_ObjectData, _PREHASH_CRC, crc, i);
 		
 			// Lookup data packer and add this id to cache miss lists if necessary.
-			cached_dpp = regionp->getDP(id, crc);
+			U8 cache_miss_type = LLViewerRegion::CACHE_MISS_TYPE_NONE;
+			cached_dpp = regionp->getDP(id, crc, cache_miss_type);
 			if (cached_dpp)
 			{
 				cached_dpp->reset();

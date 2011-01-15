@@ -95,6 +95,7 @@
 #include "llmemory.h"
 #include "llprimitive.h"
 #include "llurlaction.h"
+#include "llurlentry.h"
 #include "llvfile.h"
 #include "llvfsthread.h"
 #include "llvolumemgr.h"
@@ -1286,13 +1287,13 @@ bool LLAppViewer::mainLoop()
 		catch(std::bad_alloc)
 		{			
 			{
-				llinfos << "Availabe physical memory(KB) at the beginning of the frame: " << mAvailPhysicalMemInKB << llendl ;
-				llinfos << "Availabe virtual memory(KB) at the beginning of the frame: " << mAvailVirtualMemInKB << llendl ;
+				llinfos << "Available physical memory(KB) at the beginning of the frame: " << mAvailPhysicalMemInKB << llendl ;
+				llinfos << "Available virtual memory(KB) at the beginning of the frame: " << mAvailVirtualMemInKB << llendl ;
 
 				LLMemoryInfo::getAvailableMemoryKB(mAvailPhysicalMemInKB, mAvailVirtualMemInKB) ;
 
-				llinfos << "Current availabe physical memory(KB): " << mAvailPhysicalMemInKB << llendl ;
-				llinfos << "Current availabe virtual memory(KB): " << mAvailVirtualMemInKB << llendl ;
+				llinfos << "Current available physical memory(KB): " << mAvailPhysicalMemInKB << llendl ;
+				llinfos << "Current available virtual memory(KB): " << mAvailVirtualMemInKB << llendl ;
 			}
 
 			//stop memory leaking simulation
@@ -2042,7 +2043,7 @@ bool LLAppViewer::initConfiguration()
 	gSavedSettings.setString("ClientSettingsFile", 
         gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, getSettingsFilename("Default", "Global")));
 
-	gSavedSettings.setString("VersionChannelName", LLVersionInfo::getChannel());
+	// gSavedSettings.setString("VersionChannelName", LLVersionInfo::getChannel()); // invalid KL
 
 #ifndef	LL_RELEASE_FOR_DOWNLOAD
 	// provide developer build only overrides for these control variables that are not
@@ -4449,6 +4450,10 @@ void LLAppViewer::disconnectViewer()
 
 	cleanup_xfer_manager();
 	gDisconnected = TRUE;
+
+	// Pass the connection state to LLUrlEntryParcel not to attempt
+	// parcel info requests while disconnected.
+	LLUrlEntryParcel::setDisconnected(gDisconnected);
 }
 
 void LLAppViewer::forceErrorLLError()
