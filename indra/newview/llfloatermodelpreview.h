@@ -253,7 +253,8 @@ private:
 class LLModelPreview : public LLViewerDynamicTexture, public LLMutex
 {	
 	typedef boost::signals2::signal<void (F32 x, F32 y, F32 z, F32 streaming_cost, F32 physics_cost)> details_signal_t;
- 
+	typedef boost::signals2::signal<void (void)> model_loaded_signal_t;
+
 public:
 	LLModelPreview(S32 width, S32 height, LLFloater* fmp);
 	virtual ~LLModelPreview();
@@ -284,13 +285,13 @@ public:
 	void rebuildUploadData();
 	void clearIncompatible(S32 lod);
 	void updateStatusMessages();
-	bool containsRiggedAsset( void );
 	void clearGLODGroup();
 	void onLODParamCommit(bool enforce_tri_limit);
 
 	static void	textureLoadedCallback( BOOL success, LLViewerFetchedTexture *src_vi, LLImageRaw* src, LLImageRaw* src_aux, S32 discard_level, BOOL final, void* userdata );
 	
 	boost::signals2::connection setDetailsCallback( const details_signal_t::slot_type& cb ){  return mDetailsSignal.connect(cb);  }
+	boost::signals2::connection setModelLoadedCallback( const model_loaded_signal_t::slot_type& cb ){  return mModelLoadedSignal.connect(cb);  }
 	
  protected:
 	friend class LLFloaterModelPreview;
@@ -345,6 +346,7 @@ public:
 	std::map<LLModel*, std::vector<LLPointer<LLVertexBuffer> > > mVertexBuffer[LLModel::NUM_LODS+1];
 
 	details_signal_t mDetailsSignal;
+	model_loaded_signal_t mModelLoadedSignal;
 };
 
 
