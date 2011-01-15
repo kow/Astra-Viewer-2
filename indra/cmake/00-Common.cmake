@@ -152,7 +152,16 @@ if (LINUX)
       -mfpmath=sse
       -pthread
       -O2
-      )
+      -fno-builtin-malloc
+      -fno-builtin-calloc
+      -fno-builtin-realloc
+      -fno-builtin-free
+      -nostdlibs 
+      -llibtcmalloc 
+      -llibm 
+      -llibc 
+      -llibgcc
+      )#tcmalloc don't want malloc from GCC of other native system
 
   if (SERVER)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-depth-60")
