@@ -1214,7 +1214,7 @@ bool LLAppViewer::mainLoop()
 				}
 
 				static const F64 FRAME_SLOW_THRESHOLD = 0.5; //2 frames per seconds				
-				const F64 max_idle_time = llmin(.005*10.0*gFrameIntervalSeconds, 0.005); // 50 ms/second, up to 5 ms/frame ( thx Thickbrick )
+				const F64 max_idle_time = llmin(.005*10.0*gFrameTimeSeconds, 0.005); // 5 ms a second
 				idleTimer.reset();
 				bool is_slow = (frameTimer.getElapsedTimeF64() > FRAME_SLOW_THRESHOLD) ;
 				S32 total_work_pending = 0;

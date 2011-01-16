@@ -108,7 +108,7 @@ public:
 
 	inline void clear() 
 	{
-		mQ = _mm_setzero_ps();
+	    __m128	mQ = _mm_setzero_ps();
 	}
 
 	template<int N> void setElement()
