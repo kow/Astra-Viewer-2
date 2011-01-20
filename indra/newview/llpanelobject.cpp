@@ -1910,6 +1910,33 @@ void LLPanelObject::refresh()
 	{
 		mRootObject = NULL;
 	}
+	
+	bool enable_mesh = gSavedSettings.getBOOL("MeshEnabled");
+
+	getChildView("label physicsshapetype")->setVisible(enable_mesh);
+	getChildView("Physics Shape Type Combo Ctrl")->setVisible(enable_mesh);
+	getChildView("Physics Gravity")->setVisible(enable_mesh);
+	getChildView("Physics Material Override")->setVisible(enable_mesh);
+	getChildView("Physics Friction")->setVisible(enable_mesh);
+	getChildView("Physics Density")->setVisible(enable_mesh);
+	getChildView("Physics Restitution")->setVisible(enable_mesh);
+
+	// if mesh isn't enabled we want to the scale max to be 10
+	// Ok KL we will roll with Daves code but this may not be entirely true for us on an opensim grid..
+	getChild<LLSpinCtrl>("Scale X")->setMaxValue(enable_mesh ? 64 : 10);
+	getChild<LLSpinCtrl>("Scale Y")->setMaxValue(enable_mesh ? 64 : 10);
+	getChild<LLSpinCtrl>("Scale Z")->setMaxValue(enable_mesh ? 64 : 10);
+
+	LLComboBox* sculpt_combo = getChild<LLComboBox>("sculpt type control");
+	BOOL found = sculpt_combo->itemExists("Mesh");
+	if (enable_mesh && !found)
+	{
+		sculpt_combo->add("Mesh");
+	}
+	else if (!enable_mesh && found)
+	{
+		sculpt_combo->remove("Mesh");
+	}
 }
 
 

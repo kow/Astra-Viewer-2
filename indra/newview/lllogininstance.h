@@ -58,12 +58,6 @@ public:
 	// Only valid when authSuccess == true.
 	const F64 getLastTransferRateBPS() { return mTransferRate; }
 
-		// Set whether this class will drive user interaction.
-	// If not, login failures like 'need tos agreement' will 
-	// end the login attempt.
-	void setUserInteraction(bool state) { mUserInteraction = state; } 
-	bool getUserInteraction() { return mUserInteraction; }
-
 	// Whether to tell login to skip optional update request.
 	// False by default.
 	void setSkipOptionalUpdate(bool state) { mSkipOptionalUpdate = state; }
@@ -96,7 +90,6 @@ private:
 	std::string mLoginState;
 	LLSD mRequestData;
 	LLSD mResponseData;
-	bool mUserInteraction; 
 	bool mSkipOptionalUpdate;
 	bool mAttemptComplete;
 	F64 mTransferRate;

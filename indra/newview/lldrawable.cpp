@@ -86,6 +86,7 @@ void LLDrawable::incrementVisible()
 	sCurVisible++;
 	sCurPixelAngle = (F32) gViewerWindow->getWindowHeightRaw()/LLViewerCamera::getInstance()->getView();
 }
+
 void LLDrawable::init()
 {
 	// mXform
@@ -139,6 +140,7 @@ void LLDrawable::destroy()
 	{
 		llinfos << "- Zombie drawables: " << sNumZombieDrawables << llendl;
 	}*/	
+
 }
 
 void LLDrawable::markDead()
@@ -761,7 +763,7 @@ void LLDrawable::updateTexture()
 
 	if (getVOVolume())
 	{
-		if (isActive())
+		/*if (isActive())
 		{
 			if (isRoot())
 			{
@@ -771,7 +773,7 @@ void LLDrawable::updateTexture()
 			{
 				getParent()->mQuietCount = 0;
 			}
-		}
+		}*/
 				
 		gPipeline.markRebuild(this, LLDrawable::REBUILD_MATERIAL, TRUE);
 	}

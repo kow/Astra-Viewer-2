@@ -2465,7 +2465,7 @@ void renderOctree(LLSpatialGroup* group)
 {
 	//render solid object bounding box, color
 	//coded by buffer usage and activity
-	LLGLDepthTest depth(GL_TRUE, GL_FALSE);
+	//LLGLDepthTest depth(GL_TRUE, GL_FALSE);
 	gGL.setSceneBlendType(LLRender::BT_ADD_WITH_ALPHA);
 	LLVector4 col;
 	if (group->mBuilt > 0.f)
@@ -2557,7 +2557,10 @@ void renderOctree(LLSpatialGroup* group)
 	size.mul(1.01f);
 	size.add(fudge);
 
-	drawBox(group->mObjectBounds[0], fudge);
+	{
+		LLGLDepthTest depth(GL_TRUE, GL_FALSE);
+		drawBox(group->mObjectBounds[0], fudge);
+	}
 	
 	gGL.setSceneBlendType(LLRender::BT_ALPHA);
 
@@ -2669,6 +2672,49 @@ void renderCrossHairs(LLVector3 position, F32 size, LLColor4 color)
 		gGL.vertex3fv((position + LLVector3(0.f, 0.f, size)).mV);
 	}
 	gGL.end();
+}
+
+void renderUpdateType(LLDrawable* drawablep)
+{
+	LLViewerObject* vobj = drawablep->getVObj();
+	if (!vobj || OUT_UNKNOWN == vobj->getLastUpdateType())
+	{
+		return;
+	}
+	LLGLEnable blend(GL_BLEND);
+	switch (vobj->getLastUpdateType())
+	{
+	case OUT_FULL:
+		glColor4f(0,1,0,0.5f);
+		break;
+	case OUT_TERSE_IMPROVED:
+		glColor4f(0,1,1,0.5f);
+		break;
+	case OUT_FULL_COMPRESSED:
+		if (vobj->getLastUpdateCached())
+		{
+			glColor4f(1,0,0,0.5f);
+		}
+		else
+		{
+			glColor4f(1,1,0,0.5f);
+		}
+		break;
+	case OUT_FULL_CACHED:
+		glColor4f(0,0,1,0.5f);
+		break;
+	default:
+		llwarns << "Unknown update_type " << vobj->getLastUpdateType() << llendl;
+		break;
+	};
+	S32 num_faces = drawablep->getNumFaces();
+	if (num_faces)
+	{
+		for (S32 i = 0; i < num_faces; ++i)
+		{
+			pushVerts(drawablep->getFace(i), LLVertexBuffer::MAP_VERTEX);
+		}
+	}
 }
 
 
@@ -3774,6 +3820,10 @@ public:
 			{
 				renderRaycast(drawable);
 			}
+			if (gPipeline.hasRenderDebugMask(LLPipeline::RENDER_DEBUG_UPDATE_TYPE))
+			{
+				renderUpdateType(drawable);
+			}
 
 			LLVOAvatar* avatar = dynamic_cast<LLVOAvatar*>(drawable->getVObj().get());
 			
@@ -3990,6 +4040,7 @@ void LLSpatialPartition::renderDebug()
 									  LLPipeline::RENDER_DEBUG_OCCLUSION |
 									  LLPipeline::RENDER_DEBUG_LIGHTS |
 									  LLPipeline::RENDER_DEBUG_BATCH_SIZE |
+									  LLPipeline::RENDER_DEBUG_UPDATE_TYPE |
 									  LLPipeline::RENDER_DEBUG_BBOXES |
 									  LLPipeline::RENDER_DEBUG_NORMALS |
 									  LLPipeline::RENDER_DEBUG_POINTS |

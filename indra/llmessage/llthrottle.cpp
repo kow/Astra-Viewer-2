@@ -126,16 +126,16 @@ const F32 THROTTLE_LOOKAHEAD_TIME = 1.f;	// seconds
 // client side to set max bandwidth throttling there,
 // in llviewerthrottle.cpp. These values are the sum
 // of the top two tiers of bandwidth there.
-// S21
+
 F32 gThrottleMaximumBPS[TC_EOF] =
 {
 	150000.f, // TC_RESEND
 	170000.f, // TC_LAND
 	34000.f, // TC_WIND
 	34000.f, // TC_CLOUD
-	972000.f, // TC_TASK
-	1200000.f, // TC_TEXTURE
-	440000.f, // TC_ASSET
+	446000.f, // TC_TASK
+	446000.f, // TC_TEXTURE
+	220000.f, // TC_ASSET
 };
 
 // Start low until viewer informs us of capability
@@ -143,16 +143,16 @@ F32 gThrottleMaximumBPS[TC_EOF] =
 // aren't used JUST by the viewer necessarily.
 // This is a HACK and should be dealt with more properly on
 // circuit creation.
-// S21
+
 F32 gThrottleDefaultBPS[TC_EOF] =
 {
-	150000.f, // TC_RESEND
+	100000.f, // TC_RESEND
 	4000.f, // TC_LAND
 	4000.f, // TC_WIND
 	4000.f, // TC_CLOUD
-	20000.f, // TC_TASK
+	4000.f, // TC_TASK
 	4000.f, // TC_TEXTURE
-	200000.f, // TC_ASSET
+	100000.f, // TC_ASSET
 };
 
 // Don't throttle down lower than this

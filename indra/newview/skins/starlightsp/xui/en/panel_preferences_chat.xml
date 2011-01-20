@@ -1,0 +1,919 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<panel
+ border="true"
+ follows="left|top|right|bottom"
+ height="408"
+ label="Text Chat"
+ layout="topleft"
+ left="115"
+ name="chat"
+ top="1"
+ width="540">
+  <tab_container
+       follows="left|top"
+       height="439"
+       halign="center"
+       left="0"
+       name="Chat Info Tabs"
+       tab_max_width="130"
+       tab_min_width="40"
+       tab_position="top"
+       tab_height="25"
+       top="408"
+       width="540">
+    <panel
+     border="true"
+     follows="all"
+     label="General"
+     layout="topleft"
+     mouse_opaque="false"
+     name="Chat General"
+     top="16"
+     width="280">
+  <text
+   follows="left|top"
+   layout="topleft"
+   left="30"
+   height="12"
+   name="font_size"
+   width="120"
+   top="10">
+    Font size:
+  </text>
+  <radio_group
+     height="30"
+     layout="topleft"
+     left="40"
+	   control_name="ChatFontSize"
+     name="chat_font_size"
+     top_pad="0"
+     width="440">
+        <radio_item
+         height="16"
+         label="Small"
+         layout="topleft"
+         left="0"
+         name="radio"
+         value="0"
+         top="10"
+         width="125" />
+        <radio_item
+         height="16"
+         label="Medium"
+         layout="topleft"
+         left_delta="145"
+         name="radio2"
+         value="1"
+         top_delta="0"
+         width="125" />
+        <radio_item
+         height="16"
+         label="Large"
+         layout="topleft"
+         left_delta="170"
+         name="radio3"
+         value="2"
+         top_delta="0"
+         width="125" />
+    </radio_group>
+
+    <text
+      follows="left|top"
+      layout="topleft"
+      left="30"
+      height="12"
+      name="font_colors" 
+      top_pad="10" 
+      width="120"
+      >
+    Font colors:
+    </text>  
+  
+    <color_swatch
+     can_apply_immediately="true"
+     follows="left|top"
+     height="47"
+     layout="topleft"
+     left="40"
+     name="user"
+     top_pad="10"
+     width="44" >
+		<color_swatch.init_callback
+		 function="Pref.getUIColor"
+		 parameter="UserChatColor" />
+		<color_swatch.commit_callback
+		 function="Pref.applyUIColor"
+		 parameter="UserChatColor" />
+	</color_swatch>
+    <text
+     type="string"
+     length="1"
+     follows="left|top"
+     height="10"
+     layout="topleft"
+     left_pad="5"
+     mouse_opaque="false"
+     name="text_box1"
+     top_delta="5"
+     width="95">
+        Me
+    </text>
+    <color_swatch
+     can_apply_immediately="true"
+     follows="left|top"
+     height="47"
+     layout="topleft"
+     left="190"
+     name="agent"
+     top_pad="-15"
+     width="44" >
+		<color_swatch.init_callback
+		 function="Pref.getUIColor"
+		 parameter="AgentChatColor" />
+		<color_swatch.commit_callback
+		 function="Pref.applyUIColor"
+		 parameter="AgentChatColor" />
+	</color_swatch>
+    <text
+     type="string"
+     length="1"
+     follows="left|top"
+     height="10"
+     layout="topleft"
+     left_pad="5"
+     mouse_opaque="false"
+     name="text_box2"
+     top_delta="5"
+     width="95">
+        Others
+    </text>
+    <color_swatch
+     can_apply_immediately="true"
+     color="EmphasisColor_35"
+     follows="left|top"
+     height="47"
+     layout="topleft"
+     left="360"
+     name="objects"
+     top_pad="-15"
+     width="44" >
+		<color_swatch.init_callback
+		 function="Pref.getUIColor"
+		 parameter="ObjectChatColor" />
+		<color_swatch.commit_callback
+		 function="Pref.applyUIColor"
+		 parameter="ObjectChatColor" />
+	</color_swatch>
+    <text
+     type="string"
+     length="1"
+     follows="left|top"
+     height="10"
+     layout="topleft"
+     left_pad="5"
+     mouse_opaque="false"
+     name="text_box6"
+     top_delta="5"
+     width="95">
+        Objects
+    </text>
+    <color_swatch
+     can_apply_immediately="true"
+     color="LtGray"
+     follows="left|top"
+     height="47"
+     label_width="44"
+     layout="topleft"
+     left="40"
+     name="system"
+     top_pad="22"
+     width="44" >
+		<color_swatch.init_callback
+		 function="Pref.getUIColor"
+		 parameter="SystemChatColor" />
+		<color_swatch.commit_callback
+		 function="Pref.applyUIColor"
+		 parameter="SystemChatColor" />
+	</color_swatch>
+    <text
+     type="string"
+     length="1"
+     follows="left|top"
+     height="10"
+     layout="topleft"
+     left_pad="5"
+     mouse_opaque="false"
+     name="text_box4"
+     top_delta="5"
+     width="95">
+        System
+    </text>
+    <color_swatch
+     can_apply_immediately="true"
+     color="Red"
+     follows="left|top"
+     height="47"
+     layout="topleft"
+     left="190"
+     name="script_error"
+     top_pad="-15"
+     width="44">
+		<color_swatch.init_callback
+		 function="Pref.getUIColor"
+		 parameter="ScriptErrorColor" />
+		<color_swatch.commit_callback
+		 function="Pref.applyUIColor"
+		 parameter="ScriptErrorColor" />
+	</color_swatch>
+    <text
+     type="string"
+     length="1"
+     follows="left|top"
+     height="10"
+     layout="topleft"
+     left_pad="5"
+     mouse_opaque="false"
+     name="text_box5"
+     top_delta="5"
+     width="95">
+        Errors
+    </text>
+    <color_swatch
+     can_apply_immediately="true"
+     color="EmphasisColor_35"
+     follows="left|top"
+     height="47"
+     layout="topleft"
+     left="360"
+     name="links"
+     top_pad="-15"
+     width="44" >
+		<color_swatch.init_callback
+		 function="Pref.getUIColor"
+		 parameter="HTMLLinkColor" />
+		<color_swatch.commit_callback
+		 function="Pref.applyUIColor"
+		 parameter="HTMLLinkColor" />
+	</color_swatch>
+    <text
+     type="string"
+     length="1"
+     follows="left|top"
+     height="10"
+     layout="topleft"
+     left_pad="5"
+     mouse_opaque="false"
+     name="text_box9"
+     top_delta="5"
+     width="95">
+        URLs
+    </text>
+    <color_swatch
+     can_apply_immediately="true"
+     color="LtYellow"
+     follows="left|top"
+     height="47"
+     layout="topleft"
+     left="40"
+     name="owner"
+     top_pad="22"
+     width="44" >
+		<color_swatch.init_callback
+		 function="Pref.getUIColor"
+		 parameter="llOwnerSayChatColor" />
+		<color_swatch.commit_callback
+		 function="Pref.applyUIColor"
+		 parameter="llOwnerSayChatColor" />
+	</color_swatch>
+    <text
+     type="string"
+     length="1"
+     follows="left|top"
+     height="10"
+     layout="topleft"
+     left_pad="5"
+     mouse_opaque="false"
+     name="text_box7"
+     top_delta="5"
+     width="95">
+        Owner
+    </text>
+  <color_swatch
+   can_apply_immediately="true"
+   color="SL-Black"
+   control_name="NameTagBackground"
+   follows="left|top"
+   height="47"
+   layout="topleft"
+   left="190"
+   top_pad="-15"
+   name="backgroundchat"
+   tool_tip="Choose name tag color"
+   width="44">
+   <color_swatch.init_callback
+    function="Pref.getUIColor"
+    parameter="NameTagBackground" />
+   <color_swatch.commit_callback
+    function="Pref.applyUIColor"
+    parameter="NameTagBackground" />
+  </color_swatch>
+    <text
+     type="string"
+     length="1"
+     follows="left|top"
+     height="10"
+     layout="topleft"
+     left_pad="5"
+     mouse_opaque="false"
+     name="bubble_chat"
+     top_delta="5"
+     width="300">
+        Name Tag and Bubble Chat Background
+    </text>
+       <check_box
+     control_name="UseChatBubbles"
+     follows="left|top"
+     height="16"
+     label="Use Bubble chat"
+     layout="topleft"
+     left="30"
+     top_pad="20"
+     name="bubble_text_chat"
+     width="150" />
+    <slider
+     control_name="ChatBubbleOpacity"
+     follows="left|top"
+     height="16"
+     increment="0.05"
+     initial_value="1"
+     label="Opacity"
+     layout="topleft"
+     left="250"
+     label_width="86"
+     top_delta="2"
+     name="bubble_chat_opacity"
+     tool_tip="Choose name tag opacity"
+     width="200" />
+    <check_box
+     control_name="CloseChatOnReturn"
+     follows="left|top"
+     height="16"
+     label="Deselect Chat after sending Messages"
+     layout="topleft"
+     left="30"
+     name="CloseChatOnReturn"
+     top_pad="5"
+     width="256" />
+    <check_box
+     control_name="PlayTypingAnim"
+     height="16"
+     initial_value="true"
+     label="Play typing animation when chatting"
+     layout="topleft"
+     left="30"
+     name="play_typing_animation"
+     top_pad="5"
+     width="400" />
+    <check_box
+     enabled="false"
+     height="16"
+     label="Email me IMs when I'm offline"
+     layout="topleft"
+     left_delta="0"
+     name="send_im_to_email"
+     top_pad="5"
+     width="400" />
+    <check_box
+     enabled="false"
+     height="16"
+     label="Enable plain text IM and chat history"
+     layout="topleft"
+     left_delta="0"
+     name="plain_text_chat_history"
+     top_pad="5"
+     width="400" />
+    <text
+     name="show_ims_in_label"
+     follows="left|top"
+     layout="topleft"
+     left="30"
+     height="20"
+     width="170"
+     top_pad="14">
+     Show IMs in:
+    </text>
+    <text
+     name="requires_restart_label"
+     follows="left|top"
+     layout="topleft"
+     top_delta="0" 
+     left="170" 
+  	 height="20"
+	   width="130"
+     text_color="White_25"
+	  >
+      (requires restart)
+      </text>
+    <radio_group
+     height="16"
+     layout="topleft"
+     left="40"
+     control_name="ChatWindow"
+     name="chat_window"
+     top_pad="0"
+     tool_tip="Show your Instant Messages in separate floaters, or in one floater with many tabs (Requires restart)"
+     width="331">
+     <radio_item
+      height="16"
+      label="Separate windows"
+      layout="topleft"
+      left="0"
+      name="radio"
+      value="0"
+      top="0"
+      width="150" />
+     <radio_item
+      height="16"
+      label="Tabs"
+      layout="topleft"
+      left_delta="160"
+      name="radio2"
+      value="1"
+      width="150" />
+    </radio_group>
+    <check_box
+     control_name="TranslateChat"
+     enabled="true"
+     height="16"
+     label="Use machine translation while chatting (powered by Google)"
+     layout="topleft"
+     left="30"
+     name="translate_chat_checkbox"
+     bottom_delta="30"
+     width="400" />
+    <text
+     bottom_delta="30"
+     name="translate_language_text"
+     follows="left|top"
+     layout="topleft"
+     left_delta="20"
+     height="20"
+     width="110">
+     Translate chat into: 
+    </text>
+    <combo_box
+     allow_text_entry="true"
+     bottom_delta="3"
+     control_name="TranslateLanguage"
+     enabled="true"
+     follows="left|top"
+     height="23"
+     left_delta="110"
+     max_chars="135"
+     mouse_opaque="true"
+     name="translate_language_combobox"
+     width="146">
+        <combo_box.item
+         label="System Default"
+         name="System Default Language"
+         value="default" />
+        <combo_box.item
+         label="English"
+         name="English"
+         value="en" />
+        <!-- After "System Default" and "English", please keep the rest of these combo_box.items in alphabetical order by the first character in the string. -->
+        <combo_box.item
+         label="Dansk (Danish)"
+         name="Danish"
+         value="da" />
+        <combo_box.item
+         label="Deutsch (German)"
+         name="German"
+         value="de" />
+        <combo_box.item
+         label="Español (Spanish)"
+         name="Spanish"
+         value="es" />
+        <combo_box.item
+         label="Français (French)"
+         name="French"
+         value="fr" />
+        <combo_box.item
+         label="Italiano (Italian)"
+         name="Italian"
+         value="it" />
+        <combo_box.item
+         label="Magyar (Hungarian)"
+         name="Hungarian"
+         value="hu" />
+        <combo_box.item
+         label="Nederlands (Dutch)"
+         name="Dutch"
+         value="nl" />
+        <combo_box.item
+         label="Polski (Polish)"
+         name="Polish"
+         value="pl" />
+        <combo_box.item
+         label="Português (Portuguese)"
+         name="Portugese"
+         value="pt" />
+        <combo_box.item
+         label="Русский (Russian)"
+         name="Russian"
+         value="ru" />
+        <combo_box.item
+         label="Türkçe (Turkish)"
+         name="Turkish"
+         value="tr" />
+        <combo_box.item
+         label="Українська (Ukrainian)"
+         name="Ukrainian"
+         value="uk" />
+        <combo_box.item
+         label="中文 (简体) (Chinese)"
+         name="Chinese"
+         value="zh" />
+        <combo_box.item
+         label="日本語 (Japanese)"
+         name="Japanese"
+         value="ja" />
+        <combo_box.item
+         label="한국어 (Korean)"
+         name="Korean"
+         value="ko" />
+    </combo_box>
+    </panel>
+
+    <panel
+     border="true"
+     follows="all"
+     label="Chat Notifications"
+     layout="topleft"
+     mouse_opaque="false"
+     name="Chat Notifications"
+     top="16"
+     width="280">
+    <text
+     name="disable_toast_label"
+     follows="left|top"
+     layout="topleft"
+     top_pad="10" 
+     left="5" 
+     height="10"
+     width="180">
+      Enable incoming chat popups:
+      </text>
+    <check_box
+     control_name="EnableGroupChatPopups"
+     name="EnableGroupChatPopups"
+     label="Group Chats" 
+     layout="topleft"
+     top_pad="8" 
+     left_delta="10" 
+     height="20"
+     tool_tip="Check to see popups when a Group Chat message arrives"
+     width="250" />
+    <check_box
+     control_name="EnableIMChatPopups"
+     name="EnableIMChatPopups"
+     label="IM Chats" 
+     layout="topleft"
+     top_pad="8"
+     height="16"
+     tool_tip="Check to see popups when an instant message arrives"
+     width="250" />
+		<text
+		type="string"
+            left="5"
+            top_pad="16"
+		length="1"
+		follows="left|top"
+		height="12"
+		layout="topleft"
+		name="ToastSettings"
+		width="330">
+			Notification Toast Settings (popups at bottom-right):
+		</text>
+		<text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="10"
+		layout="topleft"
+		left="15"
+		name="ToastSpaceText"
+		top_pad="7"
+		width="145">
+			Space between lowest
+		</text>
+		<slider
+		control_name="ChannelBottomPanelMargin"
+		decimal_digits="0"
+		follows="left|top"
+		height="10"
+		increment="1"
+		label="Toast and bottom:"
+            tool_tip="Space in pixels between the bottom of the UI and the bottom toast"
+		label_width="155"
+		layout="topleft"
+		left="15"
+            min_val="0"
+		max_val="250"
+		name="ToastSpace"
+		top_pad="1"
+		width="273" />
+		<text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="10"
+		layout="topleft"
+		left_delta="269"
+		name="ToastSpaceText"
+		top_delta="0"
+		width="50">
+			pixels
+		</text>    
+		<slider
+		control_name="NotificationToastLifeTime"
+		decimal_digits="0"
+		follows="left|top"
+		height="16"
+		increment="1"
+		initial_value="5"
+		label="Notification Toast life:"
+            tool_tip="Number of seconds that a notification toast is displayed before fading"
+		label_width="155"
+		layout="topleft"
+		left="15"
+		max_val="30"
+		name="ToastLifetime"
+		top_pad="10"
+		width="266" />
+		<text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="16"
+		layout="topleft"
+		left_delta="269"
+		name="ToastLifetimeText"
+		top_delta="0"
+		width="50">
+			seconds
+		</text>
+		<slider
+		control_name="NotificationTipToastLifeTime"
+		decimal_digits="0"
+		follows="left|top"
+		height="16"
+		increment="1"
+		initial_value="5"
+		label="Tip Toast life:"
+            tool_tip="Number of seconds that a tip toast is displayed before fading"
+		label_width="155"
+		layout="topleft"
+		left="15"
+		max_val="30"
+		name="TipToastLifetime"
+		top_pad="7"
+		width="266" />
+		<text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="16"
+		layout="topleft"
+		left_delta="269"
+		name="TipToastLifetimeText"
+		top_delta="0"
+		width="50">
+			seconds
+		</text>
+		<slider
+		control_name="NearbyToastLifeTime"
+		decimal_digits="0"
+		follows="left|top"
+		height="16"
+		increment="1"
+		initial_value="5"
+		label="Nearby Chat Toast life:"
+            tool_tip="Number of seconds that a nearby chat toast is displayed before fading"
+		label_width="155"
+		layout="topleft"
+		left="15"
+		max_val="30"
+		name="NearbyToastLifetime"
+		top_pad="7"
+		width="266" />
+		<text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="16"
+		layout="topleft"
+		left_delta="269"
+		name="NearbyToastLifetimeText"
+		top_delta="0"
+		width="50">
+			seconds
+		</text>
+		<slider
+		control_name="StartupToastLifeTime"
+		decimal_digits="0"
+		follows="left|top"
+		height="16"
+		increment="1"
+		initial_value="5"
+		label="Startup Toast life:"
+            tool_tip="Number of seconds that a toast is shown on startup before fading"
+		label_width="155"
+		layout="topleft"
+		left="15"
+		max_val="30"
+		name="StartupToastLifetime"
+		top_pad="7"
+		width="266" />
+	      <text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="16"
+		layout="topleft"
+		left_delta="269"
+		name="StartupToastLifetimeText"
+		top_delta="0"
+		width="50">
+			seconds
+		</text>
+		<slider
+		control_name="NearbyToastFadingTime"
+		decimal_digits="0"
+		follows="left|top"
+		height="16"
+		increment="1"
+		label="Nearby Chat Toast fade time:"
+            tool_tip="Number of seconds that a nearby chat toast is displayed before fading"
+		label_width="155"
+		layout="topleft"
+		left="15"
+		max_val="10"
+		name="NearbyToastFadingTime"
+		top_pad="7"
+		width="266" />
+	      <text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="16"
+		layout="topleft"
+		left_delta="269"
+		name="NearbyToastFadingTimeText"
+		top_delta="0"
+		width="50">
+			seconds
+		</text>
+		<slider
+		control_name="ToastFadingTime"
+		decimal_digits="0"
+		follows="left|top"
+		height="16"
+		increment="1"
+		label="Normal Toast fade time:"
+            tool_tip="Number of seconds that a normal toast is displayed before fading"
+		label_width="155"
+		layout="topleft"
+		left="15"
+		max_val="10"
+		name="ToastFadingTime"
+		top_pad="7"
+		width="266" />
+	      <text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="16"
+		layout="topleft"
+		left_delta="269"
+		name="ToastFadingTimeText"
+		top_delta="0"
+		width="50">
+			seconds
+		</text>
+		<slider
+		control_name="ToastGap"
+		decimal_digits="0"
+		follows="left|top"
+		height="16"
+		increment="1"
+		initial_value="5"
+		label="Gap between Toasts:"
+            tool_tip="Gap between adjacent toasts in pixels"
+		label_width="155"
+		layout="topleft"
+		left="15"
+		max_val="30"
+		name="ToastGap"
+		top_pad="7"
+		width="266" />
+		<text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="16"
+		layout="topleft"
+		left_delta="269"
+		name="ToastGapText"
+		top_delta="0"
+		width="50">
+			pixels
+		</text>
+		<slider
+		control_name="OverflowToastHeight"
+		decimal_digits="0"
+		follows="left|top"
+		height="16"
+		increment="1"
+		label="Height of Overflow Toast:"
+            tool_tip="Height of an overflow toast in pixels"
+		label_width="155"
+		layout="topleft"
+		left="15"
+		max_val="250"
+		name="OverflowToastHeight"
+		top_pad="7"
+		width="272" />
+		<text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="16"
+		layout="topleft"
+		left_delta="269"
+		name="OverflowToastHeightText"
+		top_delta="0"
+		width="50">
+			pixels
+		</text>
+
+		<text
+		type="string"
+            left="5"
+            top_pad="16"
+		length="1"
+		follows="left|top"
+		height="12"
+		layout="topleft"
+		name="ButtonFlashing"
+		width="128">
+			Flashing Buttons:
+		</text>    
+		<slider
+		control_name="ButtonFlashCount"
+		decimal_digits="0"
+		follows="left|top"
+		height="16"
+		increment="1"
+		label="Number of times IM buttons flash:"
+            tool_tip="Number of times buttons flash (used for IM notifications)"
+		label_width="300"
+		layout="topleft"
+            left="15"
+            min_val="0"
+		max_val="16"
+		name="ButtonsFlashCount"
+		top_pad="12"
+		width="471" />
+		<slider
+		control_name="ButtonFlashRate"
+		decimal_digits="0"
+		follows="left|top"
+		height="16"
+		increment="0.25"
+		label="Rate button flashes at:"
+            tool_tip="Rate buttons flash at (in Hz) - used for IM notifications"
+		label_width="300"
+		layout="topleft"
+            left="15"
+            min_val="0"
+		max_val="4"
+		name="ButtonFlashRate"
+		top_pad="5"
+		width="467" />
+		<text
+		type="string"
+		length="1"
+		follows="left|top"
+		height="16"
+		layout="topleft"
+		left="475"
+		name="ButtonFlashRateText"
+		top_delta="0"
+		width="50">
+			Hz
+		</text> 
+
+    </panel>
+  </tab_container>
+</panel>

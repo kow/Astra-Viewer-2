@@ -303,8 +303,10 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 	// have to transform to absolute coordinates.
 	num_objects = mesgsys->getNumberOfBlocksFast(_PREHASH_ObjectData);
 
+	// I don't think this case is ever hit.  TODO* Test this.
 	if (!cached && !compressed && update_type != OUT_FULL)
 	{
+		//llinfos << "TEST: !cached && !compressed && update_type != OUT_FULL" << llendl;
 		gTerseObjectUpdates += num_objects;
 		S32 size;
 		if (mesgsys->getReceiveCompressedSize())
@@ -315,7 +317,7 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 		{
 			size = mesgsys->getReceiveSize();
 		}
-		// llinfos << "Received terse " << num_objects << " in " << size << " byte (" << size/num_objects << ")" << llendl;
+		//llinfos << "Received terse " << num_objects << " in " << size << " byte (" << size/num_objects << ")" << llendl;
 	}
 	else
 	{
@@ -349,6 +351,7 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 	
 	for (i = 0; i < num_objects; i++)
 	{
+		// timer is unused?
 		LLTimer update_timer;
 		BOOL justCreated = FALSE;
 
@@ -364,6 +367,7 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			cached_dpp = regionp->getDP(id, crc, cache_miss_type);
 			if (cached_dpp)
 			{
+				// Cache Hit.
 				cached_dpp->reset();
 				cached_dpp->unpackUUID(fullid, "ID");
 				cached_dpp->unpackU32(local_id, "LocalID");
@@ -382,13 +386,15 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			compressed_dp.reset();
 
 			U32 flags = 0;
-			if (update_type != OUT_TERSE_IMPROVED)
+			if (update_type != OUT_TERSE_IMPROVED) // OUT_FULL_COMPRESSED only?
 			{
 				mesgsys->getU32Fast(_PREHASH_ObjectData, _PREHASH_UpdateFlags, flags, i);
 			}
 			
+			// I don't think we ever use this flag from the server.  DK 2010/12/09
 			if (flags & FLAGS_ZLIB_COMPRESSED)
 			{
+				//llinfos << "TEST: flags & FLAGS_ZLIB_COMPRESSED" << llendl;
 				compressed_length = mesgsys->getSizeFast(_PREHASH_ObjectData, i, _PREHASH_Data);
 				mesgsys->getBinaryDataFast(_PREHASH_ObjectData, _PREHASH_Data, compbuffer, 0, i);
 				uncompressed_length = 2048;
@@ -404,7 +410,7 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			}
 
 
-			if (update_type != OUT_TERSE_IMPROVED)
+			if (update_type != OUT_TERSE_IMPROVED) // OUT_FULL_COMPRESSED only?
 			{
 				compressed_dp.unpackUUID(fullid, "ID");
 				compressed_dp.unpackU32(local_id, "LocalID");
@@ -424,7 +430,7 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 				}
 			}
 		}
-		else if (update_type != OUT_FULL)
+		else if (update_type != OUT_FULL) // !compressed, !OUT_FULL ==> OUT_FULL_CACHED only?
 		{
 			mesgsys->getU32Fast(_PREHASH_ObjectData, _PREHASH_ID, local_id, i);
 			getUUIDFromLocal(fullid,
@@ -437,7 +443,7 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 				mNumUnknownUpdates++;
 			}
 		}
-		else
+		else // OUT_FULL only?
 		{
 			mesgsys->getUUIDFast(_PREHASH_ObjectData, _PREHASH_FullID, fullid, i);
 			mesgsys->getU32Fast(_PREHASH_ObjectData, _PREHASH_ID, local_id, i);
@@ -469,12 +475,12 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 							gMessageSystem->getSenderPort());
 			
 			if (objectp->mLocalID != local_id)
-			{    // Update local ID in object with the one sent from the region
+			{	// Update local ID in object with the one sent from the region
 				objectp->mLocalID = local_id;
 			}
 			
 			if (objectp->getRegion() != regionp)
-			{    // Object changed region, so update it
+			{	// Object changed region, so update it
 				objectp->updateRegion(regionp); // for LLVOAvatar
 			}
 		}
@@ -485,11 +491,11 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			{
 				if (update_type == OUT_TERSE_IMPROVED)
 				{
-					// llinfos << "terse update for an unknown object:" << fullid << llendl;
+					// llinfos << "terse update for an unknown object (compressed):" << fullid << llendl;
 					continue;
 				}
 			}
-			else if (cached)
+			else if (cached) // Cache hit only?
 			{
 			}
 			else
@@ -1377,7 +1383,7 @@ void LLViewerObjectList::updateObjectCost(const LLUUID& object_id, F32 object_co
 
 void LLViewerObjectList::onObjectCostFetchFailure(const LLUUID& object_id)
 {
-	llwarns << "Failed to fetch object cost for object: " << object_id << llendl;
+	//llwarns << "Failed to fetch object cost for object: " << object_id << llendl;
 	mPendingObjectCost.erase(object_id);
 }
 
@@ -1416,7 +1422,7 @@ void LLViewerObjectList::updatePhysicsProperties(const LLUUID& object_id,
 
 void LLViewerObjectList::onPhysicsFlagsFetchFailure(const LLUUID& object_id)
 {
-	llwarns << "Failed to fetch physics flags for object: " << object_id << llendl;
+	//llwarns << "Failed to fetch physics flags for object: " << object_id << llendl;
 	mPendingPhysicsFlags.erase(object_id);
 }
 

@@ -50,8 +50,6 @@ LLPngWrapper::LLPngWrapper()
 	  mCompressionType( 0 ),
 	  mFilterMethod( 0 ),
 	  mFinalSize( 0 ),
-	  mHasBKGD(false),
-	  mBackgroundColor(),
 	  mGamma(0.f)
 {
 }
@@ -229,12 +227,6 @@ void LLPngWrapper::normalizeImage()
 	{
 		png_set_strip_16(mReadPngPtr);
 	}
-	mHasBKGD = png_get_bKGD(mReadPngPtr, mReadInfoPtr, &mBackgroundColor);
-	if (mHasBKGD)
-	{
-		png_set_background(mReadPngPtr, mBackgroundColor,
-			PNG_BACKGROUND_GAMMA_FILE, 1, 1.0);
-	}
 
 #if LL_DARWIN
 	const F64 SCREEN_GAMMA = 1.8;
@@ -261,7 +253,6 @@ void LLPngWrapper::updateMetaData()
     mBitDepth = png_get_bit_depth(mReadPngPtr, mReadInfoPtr);
     mColorType = png_get_color_type(mReadPngPtr, mReadInfoPtr);
 	mChannels = png_get_channels(mReadPngPtr, mReadInfoPtr);
-	mHasBKGD = png_get_bKGD(mReadPngPtr, mReadInfoPtr, &mBackgroundColor);
 }
 
 // Method to write raw image into PNG at dest. The raw scanline begins

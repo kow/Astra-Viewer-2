@@ -2520,7 +2520,6 @@
             <menu_item_check.on_enable
                  function="Advanced.EnableRenderFBO" />
            </menu_item_check>
-
           <menu_item_separator />
 
           <menu_item_check
@@ -2959,6 +2958,21 @@
                  function="Floater.Toggle"
                  parameter="region_debug_console" />
             </menu_item_check>
+ 
+           <menu_item_separator />
+
+            <menu_item_check
+             label="Region Debug Console"
+             name="Region Debug Console"
+             shortcut="control|shift|`"
+             use_mac_ctrl="true">
+                <menu_item_check.on_check
+                 function="Floater.Visible"
+                 parameter="region_debug_console" />
+                <menu_item_check.on_click
+                 function="Floater.Toggle"
+                 parameter="region_debug_console" />
+            </menu_item_check>
 
             <menu_item_separator />
 
@@ -3366,6 +3380,7 @@
             <menu_item_call.on_click
              function="Advanced.LeaveAdminStatus" />
         </menu_item_call>
+	
     </menu>
     <menu
      create_jump_keys="true"
