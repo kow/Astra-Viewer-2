@@ -388,6 +388,7 @@ static bool handleRenderUseFBOChanged(const LLSD& newvalue)
 		gPipeline.updateRenderDeferred();
 		gPipeline.releaseGLBuffers();
 		gPipeline.createGLBuffers();
+		gPipeline.resetVertexBuffers(); // watch this KL
 		if (LLPipeline::sRenderDeferred && LLRenderTarget::sUseFBO)
 		{
 			LLViewerShaderMgr::instance()->setShaders();

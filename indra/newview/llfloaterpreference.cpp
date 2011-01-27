@@ -657,11 +657,11 @@ void LLFloaterPreference::onOpen(const LLSD& key)
 	}
 
 	bool enable_mesh = gSavedSettings.getBOOL("MeshEnabled");
-
-	getChildView("UseLightShaders")->setVisible(enable_mesh);
-	getChildView("UseSSAO")->setVisible(enable_mesh);
-	getChildView("shadows_label")->setVisible(enable_mesh);
-	getChildView("ShadowDetail")->setVisible(enable_mesh);
+    // KL the visibility of shadow controls should NOT rely on the Mesh being enabled or Not.
+	getChildView("UseLightShaders")->setVisible(true);
+	getChildView("UseSSAO")->setVisible(true);
+	getChildView("shadows_label")->setVisible(true);
+	getChildView("ShadowDetail")->setVisible(true);
 
 	if (LLStartUp::getStartupState() == STATE_STARTED)
 	{

@@ -196,19 +196,19 @@ NVIDIA G105M					.*NVIDIA.*GeForce G *105M.*			0		1
 NVIDIA G210M					.*NVIDIA.*GeForce G210M.*			0		1
 NVIDIA GT 120					.*NVIDIA.*GeForce GT 12.*			1		1
 NVIDIA GT 130					.*NVIDIA.*GeForce GT 13.*			1		1
-NVIDIA GeForce 210				.*NVIDIA.*GeForge 21.*				3		1
+NVIDIA GeForce 210				.*NVIDIA.*GeForce 21.*				3		1
 NVIDIA GT 220					.*NVIDIA.*GeForce GT 22.*			1		1
 NVIDIA GT 230					.*NVIDIA.*GeForce GT 23.*			1		1
 NVIDIA GT 240					.*NVIDIA.*GeForce GT 24.*			1		1
 NVIDIA GT 320					.*NVIDIA.*GeForce GT 32.*			0		1
-NVIDIA GT 330					.*NVIDIA.*GeForce GT 330.*			1		1
-NVIDIA GT 415					.*NVIDIA.*GeForge GT 41.*			3		1
+NVIDIA GT 330M					.*NVIDIA.*GeForce GT 330M.*			1		1
+NVIDIA GT 415					.*NVIDIA.*GeForce GT 41.*			3		1
 NVIDIA GT 420					.*NVIDIA.*GeForce GT 42.*			3		1
 NVIDIA GTS 205					.*NVIDIA.*GeForce GTS 20.*                      1               1
 NVIDIA GTS 240					.*NVIDIA.*GeForce GTS 24.*			1		1
 NVIDIA GTS 250					.*NVIDIA.*GeForce GTS 25.*			3		1
 NVIDIA GTS 320                                  .*NVIDIA.*GeForce GTS 32.*                      3               1
-NVIDIA GTS 360					.*NVIDIA.*GeForce GTS 360.*			3		1
+NVIDIA GTS 360M					.*NVIDIA.*GeForce GTS 360M.*		3		1
 NVIDIA GTS 450					.*NVIDIA.*GeForce GTS 45.*			3		1               
 NVIDIA GTX 260					.*NVIDIA.*GeForce GTX 26.*			3		1
 NVIDIA GTX 270					.*NVIDIA.*GeForce GTX 27.*			3		1
@@ -266,8 +266,8 @@ NVIDIA GeForce 9400				.*GeForce 94.*						1		1
 NVIDIA GeForce 9500				.*NVIDIA.*GeForce 95.*				2		1
 NVIDIA GeForce 9600				.*NVIDIA.*GeForce.*96.*				3		1
 NVIDIA GeForce 9800				.*NVIDIA.*GeForce.*98.*				3		1
-NVIDIA GeForce 305M				.*NVIDIA.*GeForge.*305M.*		2		1
-NVIDIA GeForce 315M				.*NVIDIA.*GeForge.*315M.*		2		1
+NVIDIA GeForce 305M				.*NVIDIA.*GeForce.*305M.*		2		1
+NVIDIA GeForce 315M				.*NVIDIA.*GeForce.*315M.*		2		1
 NVIDIA GeForce FX 5100			.*NVIDIA.*GeForce FX 51.*			0		1
 NVIDIA GeForce FX 5200			.*NVIDIA.*GeForce FX 52.*			0		1
 NVIDIA GeForce FX 5500			.*NVIDIA.*GeForce FX 55.*			0		1
@@ -315,12 +315,43 @@ NVIDIA NV43						.*NVIDIA.*NV43.*					1		1
 NVIDIA NV44						.*NVIDIA.*NV44.*					1		1
 NVIDIA nForce					.*NVIDIA.*nForce.*					0		0
 NVIDIA MCP78					.*NVIDIA.*MCP78.*					1		1
-NVIDIA Quadro2					.*Quadro2.*							0		1
-NVIDIA Quadro4					.*Quadro4.*							0		1
-NVIDIA Quadro DCC				.*Quadro DCC.*						0		1
-NVIDIA Quadro FX 4500			.*Quadro.*FX.*4500.*				3		1
-NVIDIA Quadro FX				.*Quadro FX.*						1		1
-NVIDIA Quadro NVS				.*Quadro NVS.*						0		1
+NVIDIA Quadro2					.*Quadro2.*				0		1
+NVIDIA Quadro4					.*Quadro4.*				0		1
+NVIDIA Quadro DCC				.*Quadro DCC.*				0		1
+NVIDIA Quadro FX 1400				.*Quadro.*FX.*1400.*			1		1
+NVIDIA Quadro FX 1500				.*Quadro.*FX.*1500.*			1		1
+NVIDIA Quadro FX 1700				.*Quadro.*FX.*1700.*			2		1
+NVIDIA Quadro FX 1800				.*Quadro.*FX.*1800.*			2		1
+NVIDIA Quadro FX 3400				.*Quadro.*FX.*3400.*			1		1
+NVIDIA Quadro FX 3450				.*Quadro.*FX.*3450.*			1		1
+NVIDIA Quadro FX 3500				.*Quadro.*FX.*3500.*			1		1
+NVIDIA Quadro FX 3700				.*Quadro.*FX.*3700.*			2		1
+NVIDIA Quadro FX 3800				.*Quadro.*FX.*3800.*			2		1
+NVIDIA Quadro FX 370				.*Quadro.*FX.*370.*			2		1
+NVIDIA Quadro FX 380				.*Quadro.*FX.*380.*			2		1
+NVIDIA Quadro FX 4000				.*Quadro.*FX.*4000.*			1		1
+NVIDIA Quadro FX 4500				.*Quadro.*FX.*4500.*			1		1
+NVIDIA Quadro FX 4600				.*Quadro.*FX.*4600.*			2		1
+NVIDIA Quadro FX 4700				.*Quadro.*FX.*4700.*			2		1
+NVIDIA Quadro FX 4800				.*Quadro.*FX.*4800.*			2		1
+NVIDIA Quadro FX 470				.*Quadro.*FX.*470.*			2		1
+NVIDIA Quadro FX 5500				.*Quadro.*FX.*5500.*			1		1
+NVIDIA Quadro FX 5600				.*Quadro.*FX.*5600.*			2		1
+NVIDIA Quadro FX 5700				.*Quadro.*FX.*5700.*			2		1
+NVIDIA Quadro FX 5800				.*Quadro.*FX.*5800.*			2		1
+NVIDIA Quadro FX 540				.*Quadro.*FX.*540.*			1		1
+NVIDIA Quadro FX 550				.*Quadro.*FX.*550.*			1		1
+NVIDIA Quadro FX 560				.*Quadro.*FX.*560.*			1		1
+NVIDIA Quadro FX 570				.*Quadro.*FX.*570.*			2		1
+NVIDIA Quadro FX 580				.*Quadro.*FX.*580.*			2		1
+NVIDIA Quadro FX				.*Quadro FX.*				0		1
+NVIDIA Quadro VX 200				.*Quadro VX.*200.*			2		1
+NVIDIA Quadro 2000				.*Quadro.*2000.*			2		1
+NVIDIA Quadro 4000				.*Quadro.*4000.*			2		1
+NVIDIA Quadro 5000				.*Quadro.*5000.*			2		1
+NVIDIA Quadro 6000				.*Quadro.*6000.*			2		1
+NVIDIA Quadro 600				.*Quadro.*600.*				2		1
+NVIDIA Quadro NVS				.*Quadro NVS.*				0		1
 NVIDIA RIVA TNT					.*RIVA TNT.*						0		0
 S3								.*S3 Graphics.*						0		0
 SiS								SiS.*								0		0

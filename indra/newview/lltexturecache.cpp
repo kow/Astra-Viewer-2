@@ -1413,16 +1413,22 @@ void LLTextureCache::readHeaderCache()
 					}
 				}
 			}
-			if (num_entries - empty_entries > sCacheMaxEntries)
+			if (num_entries > sCacheMaxEntries)
 			{
 				// Special case: cache size was reduced, need to remove entries
 				// Note: After we prune entries, we will call this again and create the LRU
-				U32 entries_to_purge = (num_entries - empty_entries) - sCacheMaxEntries;
+				U32 entries_to_purge = (num_entries-empty_entries) - sCacheMaxEntries;
 				llinfos << "Texture Cache Entries: " << num_entries << " Max: " << sCacheMaxEntries << " Empty: " << empty_entries << " Purging: " << entries_to_purge << llendl;
-					for (std::set<lru_data_t>::iterator iter = lru.begin(); purge_list.size() < entries_to_purge; ++iter)
+				if (entries_to_purge > 0)
+				{
+					for (std::set<lru_data_t>::iterator iter = lru.begin(); iter != lru.end(); ++iter)
 					{
 						purge_list.insert(iter->second);
+						if (purge_list.size() >= entries_to_purge)
+							break;
+					}
 				}
+				llassert_always(purge_list.size() >= entries_to_purge);
 			}
 			else
 			{
@@ -1586,7 +1592,7 @@ void LLTextureCache::purgeTextures(bool validate)
 	if (validate)
 	{
 		validate_idx = gSavedSettings.getU32("CacheValidateCounter");
-		U32 next_idx = (validate_idx+1) % 256;
+		U32 next_idx = (++validate_idx) % 256;
 		gSavedSettings.setU32("CacheValidateCounter", next_idx);
 		LL_DEBUGS("TextureCache") << "TEXTURE CACHE: Validating: " << validate_idx << LL_ENDL;
 	}
@@ -1852,20 +1858,22 @@ void LLTextureCache::removeCachedTexture(const LLUUID& id)
 //called after mHeaderMutex is locked.
 void LLTextureCache::removeEntry(S32 idx, Entry& entry, std::string& filename)
 {
-	bool fileexists = true;
+ 	bool file_maybe_exists = true;	// Always attempt to remove when idx is invalid.
+
 	if(idx >= 0) //valid entry
 	{
 		if (entry.mBodySize == 0)	// Always attempt to remove when mBodySize > 0.
 		{
 		  if (LLAPRFile::isExist(filename, getLocalAPRFilePool()))		// Sanity check. Shouldn't exist when body size is 0.
 		  {
-			  LL_WARNS("TextureCache") << "Entry has zero body size but existing " << filename << ". Deleting file too..." << LL_ENDL;
+			  LL_WARNS("TextureCache") << "Entry has body size of zero but file " << filename << " exists. Deleting this file, too." << LL_ENDL;
 		  }
 		  else
 		  {
-			  fileexists = false;
+			  file_maybe_exists = false;
 		  }
 		}
+
 		entry.mImageSize = -1;
 		entry.mBodySize = 0;
 		mHeaderIDMap.erase(entry.mID);
@@ -1874,11 +1882,11 @@ void LLTextureCache::removeEntry(S32 idx, Entry& entry, std::string& filename)
 		mTexturesSizeTotal -= entry.mBodySize;
 		mFreeList.insert(idx);	
 	}
-	
-	if (fileexists)
+
+	if (file_maybe_exists)
 	{
-	LLAPRFile::remove(filename, getLocalAPRFilePool());
-	}		
+		LLAPRFile::remove(filename, getLocalAPRFilePool());		
+	}
 }
 
 bool LLTextureCache::removeFromCache(const LLUUID& id)

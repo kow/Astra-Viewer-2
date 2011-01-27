@@ -178,7 +178,6 @@ LLObjectSelection *get_null_object_selection()
 
 // Build time optimization, generate this function once here
 template class LLSelectMgr* LLSingleton<class LLSelectMgr>::getInstance();
-
 //-----------------------------------------------------------------------------
 // LLSelectMgr()
 //-----------------------------------------------------------------------------
@@ -1904,6 +1903,103 @@ BOOL LLSelectMgr::selectionGetGlow(F32 *glow)
 	*glow = lglow;
 	return identical;
 }
+
+
+void LLSelectMgr::selectionSetPhysicsType(U8 type)
+{
+	struct f : public LLSelectedObjectFunctor
+	{
+		U8 mType;
+		f(const U8& t) : mType(t) {}
+		virtual bool apply(LLViewerObject* object)
+		{
+			if (object->permModify())
+			{
+				object->setPhysicsShapeType(mType);
+				object->updateFlags();
+			}
+			return true;
+		}
+	} sendfunc(type);
+	getSelection()->applyToObjects(&sendfunc);
+}
+
+void LLSelectMgr::selectionSetFriction(F32 friction)
+{
+	struct f : public LLSelectedObjectFunctor
+	{
+		F32 mFriction;
+		f(const F32& friction) : mFriction(friction) {}
+		virtual bool apply(LLViewerObject* object)
+		{
+			if (object->permModify())
+			{
+				object->setPhysicsFriction(mFriction);
+				object->updateFlags();
+			}
+			return true;
+		}
+	} sendfunc(friction);
+	getSelection()->applyToObjects(&sendfunc);
+}
+
+void LLSelectMgr::selectionSetGravity(F32 gravity )
+{
+	struct f : public LLSelectedObjectFunctor
+	{
+		F32 mGravity;
+		f(const F32& gravity) : mGravity(gravity) {}
+		virtual bool apply(LLViewerObject* object)
+		{
+			if (object->permModify())
+			{
+				object->setPhysicsGravity(mGravity);
+				object->updateFlags();
+			}
+			return true;
+		}
+	} sendfunc(gravity);
+	getSelection()->applyToObjects(&sendfunc);
+}
+
+void LLSelectMgr::selectionSetDensity(F32 density )
+{
+	struct f : public LLSelectedObjectFunctor
+	{
+		F32 mDensity;
+		f(const F32& density ) : mDensity(density) {}
+		virtual bool apply(LLViewerObject* object)
+		{
+			if (object->permModify())
+			{
+				object->setPhysicsDensity(mDensity);
+				object->updateFlags();
+			}
+			return true;
+		}
+	} sendfunc(density);
+	getSelection()->applyToObjects(&sendfunc);
+}
+
+void LLSelectMgr::selectionSetRestitution(F32 restitution)
+{
+	struct f : public LLSelectedObjectFunctor
+	{
+		F32 mRestitution;
+		f(const F32& restitution ) : mRestitution(restitution) {}
+		virtual bool apply(LLViewerObject* object)
+		{
+			if (object->permModify())
+			{
+				object->setPhysicsRestitution(mRestitution);
+				object->updateFlags();
+			}
+			return true;
+		}
+	} sendfunc(restitution);
+	getSelection()->applyToObjects(&sendfunc);
+}
+
 
 //-----------------------------------------------------------------------------
 // selectionSetMaterial()
@@ -3952,45 +4048,6 @@ void LLSelectMgr::selectionUpdateCastShadows(BOOL cast_shadows)
 	getSelection()->applyToObjects(&func);	
 }
 
-struct LLSelectMgrApplyPhysicsParam : public LLSelectedObjectFunctor
-{
-	LLSelectMgrApplyPhysicsParam(U8 type, F32 gravity, F32 friction, 
-									F32 density, F32 restitution) :
-		mType(type),
-		mGravity(gravity),
-		mFriction(friction),
-		mDensity(density),
-		mRestitution(restitution)
-	{}
-	U8 mType;
-	F32 mGravity;
-	F32 mFriction;
-	F32 mDensity;
-	F32 mRestitution;
-	virtual bool apply(LLViewerObject* object)
-	{
-		if ( object->permModify() ) 	// preemptive permissions check
-		{
-			object->setPhysicsShapeType( mType );
-			object->setPhysicsGravity(mGravity);
-			object->setPhysicsFriction(mFriction);
-			object->setPhysicsDensity(mDensity);
-			object->setPhysicsRestitution(mRestitution);
-			object->updateFlags();
-		}
-		return true;
-	}
-};
-
-
-void LLSelectMgr::selectionUpdatePhysicsParam(U8 type, F32 gravity, F32 friction, 
-											  F32 density, F32 restitution)
-{
-	llwarns << "physics shape type ->" << (U32)type << llendl;
-	LLSelectMgrApplyPhysicsParam func(type, gravity, friction, density, restitution);
-	getSelection()->applyToObjects(&func);	
-}
-
 //----------------------------------------------------------------------
 // Helpful packing functions for sendObjectMessage()
 //----------------------------------------------------------------------
@@ -4678,7 +4735,6 @@ void LLSelectMgr::processForceObjectSelect(LLMessageSystem* msg, void**)
 	// Don't select, just highlight
 	LLSelectMgr::getInstance()->highlightObjectAndFamily(objects);
 }
-
 
 extern LLGLdouble	gGLModelView[16];
 
@@ -6226,6 +6282,7 @@ S32 LLObjectSelection::getObjectCount(BOOL mesh_adjust)
 {
 	cleanupNodes();
 	S32 count = mList.size();
+
 	return count;
 }
 

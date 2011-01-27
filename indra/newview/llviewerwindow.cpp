@@ -497,6 +497,12 @@ public:
 			
 			ypos += y_inc;
 
+			if (!LLSpatialGroup::sPendingQueries.empty())
+			{
+				addText(xpos,ypos, llformat("%d Queries pending", LLSpatialGroup::sPendingQueries.size()));
+				ypos += y_inc;
+			}
+
 
 			addText(xpos,ypos, llformat("%d Avatars visible", LLVOAvatar::sNumVisibleAvatars));
 			
@@ -1726,7 +1732,6 @@ void LLViewerWindow::initWorldUI()
 	LLPanel* nav_bar_container = getRootView()->getChild<LLPanel>("nav_bar_container");
 
 	LLNavigationBar* navbar = LLNavigationBar::getInstance();
-	//navbar->setFollows(FOLLOWS_TOP|FOLLOWS_LEFT|FOLLOWS_RIGHT); // S21 is this needed now lee?
 	navbar->setShape(nav_bar_container->getLocalRect());
 	navbar->setBackgroundColor(gMenuBarView->getBackgroundColor().get());
 	nav_bar_container->addChild(navbar);

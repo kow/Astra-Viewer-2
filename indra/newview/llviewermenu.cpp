@@ -913,6 +913,10 @@ U32 info_display_from_string(std::string info_display)
 	{
 		return LLPipeline::RENDER_DEBUG_BATCH_SIZE;
 	}
+	else if ("update type" == info_display)
+	{
+		return LLPipeline::RENDER_DEBUG_UPDATE_TYPE;
+	}
 	else if ("texture anim" == info_display)
 	{
 		return LLPipeline::RENDER_DEBUG_TEXTURE_ANIM;
@@ -932,6 +936,10 @@ U32 info_display_from_string(std::string info_display)
 	else if ("face area" == info_display)
 	{
 		return LLPipeline::RENDER_DEBUG_FACE_AREA;
+	}
+	else if ("build queue" == info_display)
+	{
+		return LLPipeline::RENDER_DEBUG_BUILD_QUEUE;
 	}
 	else if ("lights" == info_display)
 	{

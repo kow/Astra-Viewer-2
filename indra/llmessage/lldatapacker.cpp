@@ -629,7 +629,7 @@ BOOL LLDataPackerAsciiBuffer::packString(const std::string& value, const char *n
 	// to detect truncation, and if there is any, only account for the
 	// actual number of bytes written..and not what could have been
 	// written.
-	if ((numCopied < 0) || (numCopied > (getBufferSize() - getCurrentSize())))
+	if (numCopied < 0 || numCopied > getBufferSize()-getCurrentSize())
 	{
 		// *NOTE: I believe we need to mark a failure bit at this point.
 	    numCopied = getBufferSize()-getCurrentSize();
@@ -1341,7 +1341,7 @@ void LLDataPackerAsciiBuffer::writeIndentedName(const char *name)
 		// to detect truncation, and if there is any, only account for the
 		// actual number of bytes written..and not what could have been
 		// written.
-		if ((numCopied < 0) || (numCopied > (getBufferSize() - getCurrentSize())))
+		if (numCopied < 0 || numCopied > getBufferSize()-getCurrentSize())
 		{
 			numCopied = getBufferSize()-getCurrentSize();
 			llwarns << "LLDataPackerAsciiBuffer::writeIndentedName: truncated: " << llendl;
@@ -1374,7 +1374,7 @@ BOOL LLDataPackerAsciiBuffer::getValueStr(const char *name, char *out_value, S32
 		if (strcmp(keyword, name))
 		{
 			llwarns << "Data packer expecting keyword of type " << name << ", got " << keyword << " instead!" << llendl;
-			success = FALSE;
+			return FALSE;
 		}
 	}
 	else
@@ -1385,13 +1385,10 @@ BOOL LLDataPackerAsciiBuffer::getValueStr(const char *name, char *out_value, S32
 		mCurBufferp += (S32)strlen(value) + 1;	/* Flawfinder: ignore */
 	}
 
-	if (success)
-	{
-		S32 in_value_len = (S32)strlen(value)+1;	/* Flawfinder: ignore */
-		S32 min_len = llmin(in_value_len, value_len);
-		memcpy(out_value, value, min_len);	/* Flawfinder: ignore */
-		out_value[min_len-1] = '\0';
-	}
+	S32 in_value_len = (S32)strlen(value)+1;	/* Flawfinder: ignore */
+	S32 min_len = llmin(in_value_len, value_len);
+	memcpy(out_value, value, min_len);	/* Flawfinder: ignore */
+	out_value[min_len-1] = 0;
 
 	return success;
 }
