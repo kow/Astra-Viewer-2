@@ -8172,12 +8172,16 @@ BOOL LLVOAvatar::updateLOD()
 		mNeedsSkin = TRUE;
 		mDrawable->clearState(LLDrawable::REBUILD_GEOMETRY);
 	}
-	
 	updateVisibility();
 
 	return res;
 }
 
+void LLVOAvatar::updateLODRiggedAttachments( void )
+{
+	updateLOD();
+	rebuildRiggedAttachments();
+}
 U32 LLVOAvatar::getPartitionType() const
 { 
 	// Avatars merely exist as drawables in the bridge partition
