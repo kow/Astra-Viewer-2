@@ -3,33 +3,26 @@
 * @brief Support for filtering your inventory to only display a subset of the
 * available items.
 *
-* $LicenseInfo:firstyear=2005&license=viewergpl$
-* 
-* Copyright (c) 2005-2010, Linden Research, Inc.
-* 
+* $LicenseInfo:firstyear=2005&license=viewerlgpl$
 * Second Life Viewer Source Code
-* The source code in this file ("Source Code") is provided by Linden Lab
-* to you under the terms of the GNU General Public License, version 2.0
-* ("GPL"), unless you have obtained a separate licensing agreement
-* ("Other License"), formally executed by you and Linden Lab.  Terms of
-* the GPL can be found in doc/GPL-license.txt in this distribution, or
-* online at http://secondlife.com/developers/opensource/gplv2
+* Copyright (C) 2010, Linden Research, Inc.
 * 
-* There are special exceptions to the terms and conditions of the GPL as
-* it is applied to this Source Code. View the full text of the exception
-* in the file doc/FLOSS-exception.txt in this software distribution, or
-* online at
-* http://secondlife.com/developers/opensource/flossexception
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Lesser General Public
+* License as published by the Free Software Foundation;
+* version 2.1 of the License only.
 * 
-* By copying, modifying or distributing this software, you acknowledge
-* that you have read and understood your obligations described above,
-* and agree to abide by those obligations.
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* Lesser General Public License for more details.
 * 
-* ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
-* WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
-* COMPLETENESS OR PERFORMANCE.
+* You should have received a copy of the GNU Lesser General Public
+* License along with this library; if not, write to the Free Software
+* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+* 
+* Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
 * $/LicenseInfo$
-* 
 */
 #include "llviewerprecompiledheaders.h"
 
@@ -400,18 +393,22 @@ void LLInventoryFilter::setFilterUUID(const LLUUID& object_id)
 
 void LLInventoryFilter::setFilterSubString(const std::string& string)
 {
-	if (mFilterSubString != string)
+	std::string filter_sub_string_new = string;
+	mFilterSubStringOrig = string;
+	LLStringUtil::trimHead(filter_sub_string_new);
+	LLStringUtil::toUpper(filter_sub_string_new);
+
+	if (mFilterSubString != filter_sub_string_new)
 	{
 		// hitting BACKSPACE, for example
-		const BOOL less_restrictive = mFilterSubString.size() >= string.size() && !mFilterSubString.substr(0, string.size()).compare(string);
+		const BOOL less_restrictive = mFilterSubString.size() >= filter_sub_string_new.size()
+			&& !mFilterSubString.substr(0, filter_sub_string_new.size()).compare(filter_sub_string_new);
 
 		// appending new characters
-		const BOOL more_restrictive = mFilterSubString.size() < string.size() && !string.substr(0, mFilterSubString.size()).compare(mFilterSubString);
+		const BOOL more_restrictive = mFilterSubString.size() < filter_sub_string_new.size()
+			&& !filter_sub_string_new.substr(0, mFilterSubString.size()).compare(mFilterSubString);
 
-		mFilterSubStringOrig = string;
-		LLStringUtil::trimHead(mFilterSubStringOrig);
-		mFilterSubString = mFilterSubStringOrig;
-		LLStringUtil::toUpper(mFilterSubString);
+		mFilterSubString = filter_sub_string_new;
 		if (less_restrictive)
 		{
 			setModified(FILTER_LESS_RESTRICTIVE);

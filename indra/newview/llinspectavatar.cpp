@@ -707,7 +707,7 @@ void LLInspectAvatar::onClickShare()
 
 void LLInspectAvatar::onToggleMute()
 {
-	LLMute mute(mAvatarID, mAvatarName.getLegacyName(), LLMute::AGENT);
+	LLMute mute(mAvatarID, mAvatarName.mDisplayName, LLMute::AGENT); // STORM 547
 
 	if (LLMuteList::getInstance()->isMuted(mute.mID, mute.mName))
 	{
