@@ -237,6 +237,7 @@ void LLAssetUploadResponder::result(const LLSD& content)
 	lldebugs << "LLAssetUploadResponder::result from capabilities" << llendl;
 
 	std::string state = content["state"];
+
 	if (state == "upload")
 	{
 		uploadUpload(content);

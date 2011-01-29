@@ -193,7 +193,6 @@ void LLVolumeImplFlexible::remapSections(LLFlexibleObjectSection *source, S32 so
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 void LLVolumeImplFlexible::setAttributesOfAllSections(LLVector3* inScale)
 {

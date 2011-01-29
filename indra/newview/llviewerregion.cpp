@@ -1470,6 +1470,7 @@ std::string LLViewerRegion::getCapability(const std::string& name) const
 	{
 		return "";
 	}
+
 	return iter->second;
 }
 

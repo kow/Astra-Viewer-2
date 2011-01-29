@@ -1542,7 +1542,6 @@ void LLBottomTray::initButtonsVisibility()
 
 void LLBottomTray::setButtonsControlsAndListeners()
 {
-	//gSavedSettings.declareBOOL("ShowInventoryButton", TRUE, "Shows/Hides Inventory button in the bottom tray. (Declared in code)"); // S21
 	gSavedSettings.getControl("ShowGestureButton")->getSignal()->connect(boost::bind(&LLBottomTray::toggleShowButton, RS_BUTTON_GESTURES, _2));
 	gSavedSettings.getControl("ShowMoveButton")->getSignal()->connect(boost::bind(&LLBottomTray::toggleShowButton, RS_BUTTON_MOVEMENT, _2));
 	gSavedSettings.getControl("ShowCameraButton")->getSignal()->connect(boost::bind(&LLBottomTray::toggleShowButton, RS_BUTTON_CAMERA, _2));

@@ -82,7 +82,7 @@ void LLFloaterBuyCurrencyHTML::navigateToFinalURL()
 	LLStringUtil::format( buy_currency_url, replace );
 
 	// write final URL to debug console
-	llinfos << "Buy currency HTML parsed URL is " << buy_currency_url << llendl; // S21 typo fix in LL merge.
+	llinfos << "Buy currency HTML parsed URL is " << buy_currency_url << llendl;
 
 	// kick off the navigation
 	mBrowser->navigateTo( buy_currency_url, "text/html" );
@@ -105,7 +105,7 @@ void LLFloaterBuyCurrencyHTML::handleMediaEvent( LLPluginClassMedia* self, EMedi
 //
 void LLFloaterBuyCurrencyHTML::onClose( bool app_quitting )
 {
-	// update L$ balanace one more time
+	// Update L$ balance one more time
 	LLStatusBar::sendMoneyBalanceRequest();
 
 	destroy();

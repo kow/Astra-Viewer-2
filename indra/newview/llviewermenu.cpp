@@ -453,7 +453,7 @@ void init_menus()
 	gMenuHolder->childSetLabelArg("Upload Sound", "[COST]", upload_cost);
 	gMenuHolder->childSetLabelArg("Upload Animation", "[COST]", upload_cost);
 	gMenuHolder->childSetLabelArg("Bulk Upload", "[COST]", upload_cost);
-
+	
 	gAFKMenu = gMenuBarView->getChild<LLMenuItemCallGL>("Set Away", TRUE);
 	gBusyMenu = gMenuBarView->getChild<LLMenuItemCallGL>("Set Busy", TRUE);
 	gAttachSubMenu = gMenuBarView->findChildMenuByName("Attach Object", TRUE);
@@ -556,7 +556,7 @@ class LLAdvancedCheckConsole : public view_listener_t
 			new_value = get_visibility( (void*)gDebugView->mMemoryView );
 		}
 #endif
-
+		
 		return new_value;
 	}
 };

@@ -293,7 +293,7 @@ BOOL LLFeatureManager::parseFeatureTable(std::string filename)
 	while (file >> name)
 	{
 		char buffer[MAX_STRING];		 /*Flawfinder: ignore*/
-
+		
 		if (name.substr(0,2) == "//")
 		{
 			// This is a comment.

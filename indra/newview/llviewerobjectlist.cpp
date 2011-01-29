@@ -532,19 +532,21 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			llwarns << "Dead object " << objectp->mID << " in UUID map 1!" << llendl;
 		}
 
+		bool bCached = false;
 		if (compressed)
 		{
-			if (update_type != OUT_TERSE_IMPROVED)
+			if (update_type != OUT_TERSE_IMPROVED) // OUT_FULL_COMPRESSED only?
 			{
 				objectp->mLocalID = local_id;
 			}
 			processUpdateCore(objectp, user_data, i, update_type, &compressed_dp, justCreated);
-			if (update_type != OUT_TERSE_IMPROVED)
+			if (update_type != OUT_TERSE_IMPROVED) // OUT_FULL_COMPRESSED only?
 			{
+				bCached = true;
 				objectp->mRegionp->cacheFullUpdate(objectp, compressed_dp);
 			}
 		}
-		else if (cached)
+		else if (cached) // Cache hit only?
 		{
 			objectp->mLocalID = local_id;
 			processUpdateCore(objectp, user_data, i, update_type, cached_dpp, justCreated);
@@ -557,7 +559,10 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			}
 			processUpdateCore(objectp, user_data, i, update_type, NULL, justCreated);
 		}
+		objectp->setLastUpdateType(update_type);
+		objectp->setLastUpdateCached(bCached);
 	}
+
 
 	LLVOAvatar::cullAvatarsByPixelArea();
 }
@@ -872,12 +877,12 @@ void LLViewerObjectList::update(LLAgent &agent, LLWorld &world)
 
 	// update global timer
 	F32 last_time = gFrameTimeSeconds;
-	U64 time = totalTime();                 // this will become the new gFrameTime when the update is done
+	U64 time = totalTime();				 // this will become the new gFrameTime when the update is done
 	// Time _can_ go backwards, for example if the user changes the system clock.
 	// It doesn't cause any fatal problems (just some oddness with stats), so we shouldn't assert here.
 //	llassert(time > gFrameTime);
 	F64 time_diff = U64_to_F64(time - gFrameTime)/(F64)SEC_TO_MICROSEC;
-	gFrameTime    = time;
+	gFrameTime	= time;
 	F64 time_since_start = U64_to_F64(gFrameTime - gStartTime)/(F64)SEC_TO_MICROSEC;
 	gFrameTimeSeconds = (F32)time_since_start;
 
@@ -982,7 +987,7 @@ void LLViewerObjectList::update(LLAgent &agent, LLWorld &world)
 		{
 			std::string id_str;
 			objectp->mID.toString(id_str);
-			std::string tmpstr = std::string("Par:    ") + id_str;
+			std::string tmpstr = std::string("Par:	") + id_str;
 			addDebugBeacon(objectp->getPositionAgent(),
 							tmpstr,
 							LLColor4(1.f,0.f,0.f,1.f),
@@ -1002,12 +1007,12 @@ void LLViewerObjectList::update(LLAgent &agent, LLWorld &world)
 			std::string tmpstr;
 			if (objectp->getParent())
 			{
-				tmpstr = std::string("ChP:    ") + id_str;
+				tmpstr = std::string("ChP:	") + id_str;
 				text_color = LLColor4(0.f, 1.f, 0.f, 1.f);
 			}
 			else
 			{
-				tmpstr = std::string("ChNoP:    ") + id_str;
+				tmpstr = std::string("ChNoP:	") + id_str;
 				text_color = LLColor4(1.f, 0.f, 0.f, 1.f);
 			}
 			id = sIndexAndLocalIDToUUID[oi.mParentInfo];
