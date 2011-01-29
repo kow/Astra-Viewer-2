@@ -840,6 +840,7 @@ bool LLAppViewer::init()
 	gGLActive = TRUE;
 	initWindow();
 
+	// initWindow also initializes the Feature List, so now we can initialize this global.
 	LLCubeMap::sUseCubeMaps = LLFeatureManager::getInstance()->isFeatureAvailable("RenderCubeMap");
 
 	// call all self-registered classes
@@ -874,6 +875,18 @@ bool LLAppViewer::init()
 		// all hell breaks lose.
 		OSMessageBox(
 			LLNotifications::instance().getGlobalString("UnsupportedGLRequirements"),
+			LLStringUtil::null,
+			OSMB_OK);
+		return 0;
+	}
+
+	// Without SSE2 support we will crash almost immediately, warn here.
+	if (!gSysCPU.hasSSE2())
+	{	
+		// can't use an alert here since we're exiting and
+		// all hell breaks lose.
+		OSMessageBox(
+			LLNotifications::instance().getGlobalString("UnsupportedCPUSSE2"),
 			LLStringUtil::null,
 			OSMB_OK);
 		return 0;
@@ -982,6 +995,8 @@ bool LLAppViewer::init()
 	}
 
 	LLAgentLanguage::init();
+
+
 
 	return true;
 }
