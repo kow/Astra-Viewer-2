@@ -270,6 +270,7 @@ public:
     
 	void mediaNavigated(LLViewerMediaImpl *impl, LLPluginClassMedia* plugin, std::string new_location);
 	void mediaEvent(LLViewerMediaImpl *impl, LLPluginClassMedia* plugin, LLViewerMediaObserver::EMediaEvent event);
+			
 
 	// Sync the given media data with the impl and the given te
 	void syncMediaData(S32 te, const LLSD &media_data, bool merge, bool ignore_agent);
@@ -289,7 +290,7 @@ public:
 	
 	// Returns 'true' iff the media data for this object is in flight
 	bool isMediaDataBeingFetched() const;
-	
+
 	// Returns the "last fetched" media version, or -1 if not fetched yet
 	S32 getLastFetchedMediaVersion() const { return mLastFetchedMediaVersion; }
 

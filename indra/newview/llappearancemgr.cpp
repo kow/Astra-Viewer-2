@@ -1300,7 +1300,7 @@ bool LLAppearanceMgr::getCanReplaceCOF(const LLUUID& outfit_cat_id)
 		return false;
 	}
 
-	// Check whether the outfit contains the full set of body parts (shape+skin+hair+eyes).
+	// Check whether the outfit contains any wearables we aren't wearing already (STORM-702).
 	LLInventoryModel::cat_array_t cats;
 	LLInventoryModel::item_array_t items;
 	LLFindWearablesEx is_worn(/*is_worn=*/ false, /*include_body_parts=*/ true);

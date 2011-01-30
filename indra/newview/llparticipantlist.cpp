@@ -396,15 +396,15 @@ void LLParticipantList::onAvatarListRefreshed(LLUICtrl* ctrl, const LLSD& param)
 }
 
 /*
-Seems this method is not necessary after onAvalineCallerRemoved was implemented;
+  Seems this method is not necessary after onAvalineCallerRemoved was implemented;
 
-It does nothing because list item is always created with correct class type for Avaline caller.
-For now Avaline Caller is removed from the LLSpeakerMgr List when it is removed from the Voice Client
-session.
-This happens in two cases: if Avaline Caller ends call itself or if Resident ends group call.
+  It does nothing because list item is always created with correct class type for Avaline caller.
+  For now Avaline Caller is removed from the LLSpeakerMgr List when it is removed from the Voice Client
+  session.
+  This happens in two cases: if Avaline Caller ends call itself or if Resident ends group call.
 
-Probably Avaline caller should be removed from the LLSpeakerMgr list ONLY if it ends call itself.
-Asked in EXT-4301.
+  Probably Avaline caller should be removed from the LLSpeakerMgr list ONLY if it ends call itself.
+  Asked in EXT-4301.
 */
 void LLParticipantList::onAvalineCallerFound(const LLUUID& participant_id)
 {
@@ -652,7 +652,7 @@ bool LLParticipantList::SpeakerClearListener::handleEvent(LLPointer<LLOldEvents:
 //
 bool LLParticipantList::SpeakerModeratorUpdateListener::handleEvent(LLPointer<LLOldEvents::LLEvent> event, const LLSD& userdata)
 {
-		return mParent.onModeratorUpdateEvent(event, userdata);
+	return mParent.onModeratorUpdateEvent(event, userdata);
 }
 
 bool LLParticipantList::SpeakerMuteListener::handleEvent(LLPointer<LLOldEvents::LLEvent> event, const LLSD& userdata)
@@ -877,7 +877,7 @@ void LLParticipantList::LLParticipantListMenu::confirmMuteAllCallback(const LLSD
 	const LLUUID& session_id = payload["session_id"];
 
 	LLIMSpeakerMgr * speaker_manager = dynamic_cast<LLIMSpeakerMgr*> (
-			LLIMModel::getInstance()->getSpeakerManager(session_id));
+		LLIMModel::getInstance()->getSpeakerManager(session_id));
 	if (speaker_manager)
 	{
 		speaker_manager->moderateVoiceAllParticipants(false);
@@ -935,9 +935,9 @@ bool LLParticipantList::LLParticipantListMenu::enableContextMenuItem(const LLSD&
 }
 
 /*
-Processed menu items with such parameters:
-	can_allow_text_chat
-	can_moderate_voice
+  Processed menu items with such parameters:
+  can_allow_text_chat
+  can_moderate_voice
 */
 bool LLParticipantList::LLParticipantListMenu::enableModerateContextMenuItem(const LLSD& userdata)
 {

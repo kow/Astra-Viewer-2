@@ -121,8 +121,6 @@ public:
 		);
 
 	void    generateSilhouette(LLSelectNode* nodep, const LLVector3& view_point); // S21 KL - Qarl
-	
-
 	static S32 sMaxTreeSpecies;
 
 	struct TreeSpeciesData

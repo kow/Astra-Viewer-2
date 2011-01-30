@@ -222,6 +222,7 @@ std::string LLLogChat::makeLogFileName(std::string filename)
 	filename = cleanFileName(filename);
 	filename = gDirUtilp->getExpandedFilename(LL_PATH_PER_ACCOUNT_CHAT_LOGS,filename);
 	filename += ".txt";
+	//LL_INFOS("") << "Full:" << filename << LL_ENDL;/* uncomment if you want to verify step, delete on commit */
 	return filename;
 }
 
@@ -383,6 +384,7 @@ void append_to_last_message(std::list<LLSD>& messages, const std::string& line)
 	messages.back()[IM_TEXT] = im_text;
 }
 
+// static
 void LLLogChat::loadAllHistory(const std::string& file_name, std::list<LLSD>& messages)
 {
 	if (file_name.empty())
@@ -390,8 +392,9 @@ void LLLogChat::loadAllHistory(const std::string& file_name, std::list<LLSD>& me
 		llwarns << "Session name is Empty!" << llendl;
 		return ;
 	}
-
-	LLFILE* fptr = LLFile::fopen(makeLogFileName(file_name), "r");		/*Flawfinder: ignore*/
+	//LL_INFOS("") << "Loading:" << file_name << LL_ENDL;/* uncomment if you want to verify step, delete on commit */
+	//LL_INFOS("") << "Current:" << makeLogFileName(file_name) << LL_ENDL;/* uncomment if you want to verify step, delete on commit */
+	LLFILE* fptr = LLFile::fopen(makeLogFileName(file_name), "r");/*Flawfinder: ignore*/
 	if (!fptr)
     {
 		fptr = LLFile::fopen(oldLogFileName(file_name), "r");/*Flawfinder: ignore*/
@@ -400,6 +403,8 @@ void LLLogChat::loadAllHistory(const std::string& file_name, std::list<LLSD>& me
 			if (!fptr) return;      //No previous conversation with this name.
         }
 	}
+ 
+    //LL_INFOS("") << "Reading:" << file_name << LL_ENDL;
 	char buffer[LOG_RECALL_SIZE];		/*Flawfinder: ignore*/
 	char *bptr;
 	S32 len;
@@ -464,12 +469,12 @@ void LLChatLogFormatter::format(const LLSD& im, std::ostream& ostr) const
 	}
 
 	if (im[IM_TIME].isDefined())
-	{
+{
 		std::string timestamp = im[IM_TIME].asString();
 		boost::trim(timestamp);
 		ostr << '[' << timestamp << ']' << TWO_SPACES;
 	}
-
+	
 	//*TODO mark object's names in a special way so that they will be distinguishable form avatar name 
 	//which are more strict by its nature (only firstname and secondname)
 	//Example, an object's name can be writen like "Object <actual_object's_name>"
@@ -482,7 +487,7 @@ void LLChatLogFormatter::format(const LLSD& im, std::ostream& ostr) const
 			ostr << from << IM_SEPARATOR;
 		}
 	}
-	
+
 	if (im[IM_TEXT].isDefined())
 	{
 		std::string im_text = im[IM_TEXT].asString();
@@ -491,7 +496,7 @@ void LLChatLogFormatter::format(const LLSD& im, std::ostream& ostr) const
 		boost::replace_all(im_text, NEW_LINE, NEW_LINE_SPACE_PREFIX);
 		ostr << im_text;
 	}
-}
+	}
 
 bool LLChatLogParser::parse(std::string& raw, LLSD& im)
 {

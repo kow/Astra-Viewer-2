@@ -43,7 +43,7 @@ public:
 		for(int i = 0; i < numEntries; i++)
 			entries[i] = -1;
 	}
-    // canonical values are 16 for GF2 MX, 24 for higher..		however there may be more to this than meets the eye ugghh
+    // canonical values are 16 for GF2 MX, 24 for higher..		however there may be more to this than meets the eye 
 	VertexCache() { VertexCache(16); }
 	~VertexCache() { delete[] entries; entries = 0; }
 	

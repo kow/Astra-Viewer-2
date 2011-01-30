@@ -5520,7 +5520,7 @@ void LLSelectNode::renderOneWireframe(const LLColor4& color)
 	{
 		glLoadIdentity();
 		glMultMatrixd(gGLModelView);
-		LLVector3 trans = objectp->getRegion()->getOriginAgent();		// KL watch this
+		LLVector3 trans = objectp->getRegion()->getOriginAgent();		
 		glTranslatef(trans.mV[0], trans.mV[1], trans.mV[2]);		
 	}
 	

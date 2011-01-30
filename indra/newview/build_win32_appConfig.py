@@ -56,7 +56,7 @@ def main():
         src_config_name = src_dir + '/SecondLifeDebug.exe.config'
     else:
         src_manifest_name = dst_dir + '/Microsoft.VC80.CRT.manifest'
-        src_config_name = src_dir + '/Kirstens-S20.exe.config'
+        src_config_name = src_dir + '/Kirstens-S21.exe.config'
 
     dst_config_name = dst_dir + '/' + dst_name
         

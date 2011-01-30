@@ -43,6 +43,7 @@ class LLMenuButton;
 class LLTeleportHistoryPanel : public LLPanelPlacesTab
 {
 public:
+	// *TODO: derive from LLListContextMenu?
 	class ContextMenu
 	{
 	public:

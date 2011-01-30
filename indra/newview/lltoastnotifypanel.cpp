@@ -268,7 +268,7 @@ LLButton* LLToastNotifyPanel::createButton(const LLSD& form_element, BOOL is_opt
 	}
 	else if (mIsScriptDialog && is_ignore_btn)
 	{
-		// this is ignore button,make it smaller
+		// this is ignore button, make it smaller
 		p.rect.height = BTN_HEIGHT_SMALL;
 		p.rect.width = 1;
 		p.auto_resize = true;
