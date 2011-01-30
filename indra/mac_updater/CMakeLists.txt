@@ -3,8 +3,8 @@
 project(mac_updater)
 
 include(00-Common)
-include(CURL)
 include(OpenSSL)
+include(CURL)
 include(LLCommon)
 include(LLVFS)
 include(Linking)

@@ -451,6 +451,8 @@ private:
 class LLFlatListViewEx : public LLFlatListView
 {
 public:
+	// LOG_CLASS(LLFlatListViewEx); // KL no no no
+
 	struct Params : public LLInitParam::Block<Params, LLFlatListView::Params>
 	{
 		/**

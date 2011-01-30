@@ -160,7 +160,7 @@ set(llui_HEADER_FILES
     llnotificationslistener.h
     llnotificationsutil.h
     llnotificationtemplate.h
-    llnotificationvisibilityrule.h
+	llnotificationvisibilityrule.h
     llpanel.h
     llprogressbar.h
     llradiogroup.h

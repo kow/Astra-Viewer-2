@@ -39,48 +39,48 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 class MediaPluginExample :
-		public MediaPluginBase
+        public MediaPluginBase
 {
-	public:
-		MediaPluginExample( LLPluginInstance::sendMessageFunction host_send_func, void *host_user_data );
-		~MediaPluginExample();
+    public:
+        MediaPluginExample( LLPluginInstance::sendMessageFunction host_send_func, void *host_user_data );
+        ~MediaPluginExample();
 
-		/*virtual*/ void receiveMessage( const char* message_string );
+        /*virtual*/ void receiveMessage( const char* message_string );
 
-	private:
-		bool init();
-		void update( F64 milliseconds );
-		void write_pixel( int x, int y, unsigned char r, unsigned char g, unsigned char b );
-		bool mFirstTime;
+    private:
+        bool init();
+        void update( F64 milliseconds );
+        void write_pixel( int x, int y, unsigned char r, unsigned char g, unsigned char b );
+        bool mFirstTime;
 
-		time_t mLastUpdateTime;
-		enum Constants { ENumObjects = 10 };
-		unsigned char* mBackgroundPixels;
-		int mColorR[ ENumObjects ];
-		int mColorG[ ENumObjects ];
-		int mColorB[ ENumObjects ];
-		int mXpos[ ENumObjects ];
-		int mYpos[ ENumObjects ];
-		int mXInc[ ENumObjects ];
-		int mYInc[ ENumObjects ];
-		int mBlockSize[ ENumObjects ];
-		bool mMouseButtonDown;
-		bool mStopAction;
+        time_t mLastUpdateTime;
+        enum Constants { ENumObjects = 10 };
+        unsigned char* mBackgroundPixels;
+        int mColorR[ ENumObjects ];
+        int mColorG[ ENumObjects ];
+        int mColorB[ ENumObjects ];
+        int mXpos[ ENumObjects ];
+        int mYpos[ ENumObjects ];
+        int mXInc[ ENumObjects ];
+        int mYInc[ ENumObjects ];
+        int mBlockSize[ ENumObjects ];
+        bool mMouseButtonDown;
+        bool mStopAction;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 MediaPluginExample::MediaPluginExample( LLPluginInstance::sendMessageFunction host_send_func, void *host_user_data ) :
-	MediaPluginBase( host_send_func, host_user_data )
+    MediaPluginBase( host_send_func, host_user_data )
 {
-	mFirstTime = true;
-	mWidth = 0;
-	mHeight = 0;
-	mDepth = 4;
-	mPixels = 0;
-	mMouseButtonDown = false;
-	mStopAction = false;
-	mLastUpdateTime = 0;
+    mFirstTime = true;
+    mWidth = 0;
+    mHeight = 0;
+    mDepth = 4;
+    mPixels = 0;
+    mMouseButtonDown = false;
+    mStopAction = false;
+    mLastUpdateTime = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -256,156 +256,157 @@ void MediaPluginExample::write_pixel( int x, int y, unsigned char r, unsigned ch
         pixel[ 1 ] = g;
         pixel[ 2 ] = r;
 
-		setDirty( x, y, x + 1, y + 1 );
-	};
+        setDirty( x, y, x + 1, y + 1 );
+    };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 void MediaPluginExample::update( F64 milliseconds )
 {
-	if ( mWidth < 1 || mWidth > 2048 || mHeight < 1 || mHeight > 2048 )
-		return;
+    if ( mWidth < 1 || mWidth > 2048 || mHeight < 1 || mHeight > 2048 )
+        return;
 
-	if ( mPixels == 0 )
-			return;
+    if ( mPixels == 0 )
+            return;
 
-	if ( mFirstTime )
-	{
-		for( int n = 0; n < ENumObjects; ++n )
-		{
-			mXpos[ n ] = ( mWidth / 2 ) + rand() % ( mWidth / 16 ) - ( mWidth / 32 );
-			mYpos[ n ] = ( mHeight / 2 ) + rand() % ( mHeight / 16 ) - ( mHeight / 32 );
+    if ( mFirstTime )
+    {
+        for( int n = 0; n < ENumObjects; ++n )
+        {
+            mXpos[ n ] = ( mWidth / 2 ) + rand() % ( mWidth / 16 ) - ( mWidth / 32 );
+            mYpos[ n ] = ( mHeight / 2 ) + rand() % ( mHeight / 16 ) - ( mHeight / 32 );
 
-			mColorR[ n ] = rand() % 0x60 + 0x60;
-			mColorG[ n ] = rand() % 0x60 + 0x60;
-			mColorB[ n ] = rand() % 0x60 + 0x60;
+            mColorR[ n ] = rand() % 0x60 + 0x60;
+            mColorG[ n ] = rand() % 0x60 + 0x60;
+            mColorB[ n ] = rand() % 0x60 + 0x60;
 
-			mXInc[ n ] = 0;
-			while ( mXInc[ n ] == 0 )
-				mXInc[ n ] = rand() % 7 - 3;
+            mXInc[ n ] = 0;
+            while ( mXInc[ n ] == 0 )
+                mXInc[ n ] = rand() % 7 - 3;
 
-			mYInc[ n ] = 0;
-			while ( mYInc[ n ] == 0 )
-				mYInc[ n ] = rand() % 9 - 4;
+            mYInc[ n ] = 0;
+            while ( mYInc[ n ] == 0 )
+                mYInc[ n ] = rand() % 9 - 4;
 
-			mBlockSize[ n ] = rand() % 0x30 + 0x10;
-		};
+            mBlockSize[ n ] = rand() % 0x30 + 0x10;
+        };
 
-		delete [] mBackgroundPixels;
-				
-		mBackgroundPixels = new unsigned char[ mWidth * mHeight * mDepth ];
+        delete [] mBackgroundPixels;
 
-		mFirstTime = false;
-	};
+        mBackgroundPixels = new unsigned char[ mWidth * mHeight * mDepth ];
 
-	if ( mStopAction )
-		return;
+        mFirstTime = false;
+    };
 
-	if ( time( NULL ) > mLastUpdateTime + 3 )
-	{
-		const int num_squares = rand() % 20 + 4;
-		int sqr1_r = rand() % 0x80 + 0x20;
-		int sqr1_g = rand() % 0x80 + 0x20;
-		int sqr1_b = rand() % 0x80 + 0x20;
-		int sqr2_r = rand() % 0x80 + 0x20;
-		int sqr2_g = rand() % 0x80 + 0x20;
-		int sqr2_b = rand() % 0x80 + 0x20;
+    if ( mStopAction )
+        return;
 
-		for ( int y1 = 0; y1 < num_squares; ++y1 )
-		{
-			for ( int x1 = 0; x1 < num_squares; ++x1 )
-			{
-				int px_start = mWidth * x1 / num_squares;
-				int px_end = ( mWidth * ( x1 + 1 ) ) / num_squares;
-				int py_start = mHeight * y1 / num_squares;
-				int py_end = ( mHeight * ( y1 + 1 ) ) / num_squares;
+    if ( time( NULL ) > mLastUpdateTime + 3 )
+    {
+        const int num_squares = rand() % 20 + 4;
+        int sqr1_r = rand() % 0x80 + 0x20;
+        int sqr1_g = rand() % 0x80 + 0x20;
+        int sqr1_b = rand() % 0x80 + 0x20;
+        int sqr2_r = rand() % 0x80 + 0x20;
+        int sqr2_g = rand() % 0x80 + 0x20;
+        int sqr2_b = rand() % 0x80 + 0x20;
 
-				for( int y2 = py_start; y2 < py_end; ++y2 )
-				{
-					for( int x2 = px_start; x2 < px_end; ++x2 )
-					{
-						int rowspan = mWidth * mDepth;
+        for ( int y1 = 0; y1 < num_squares; ++y1 )
+        {
+            for ( int x1 = 0; x1 < num_squares; ++x1 )
+            {
+                int px_start = mWidth * x1 / num_squares;
+                int px_end = ( mWidth * ( x1 + 1 ) ) / num_squares;
+                int py_start = mHeight * y1 / num_squares;
+                int py_end = ( mHeight * ( y1 + 1 ) ) / num_squares;
 
-						if ( ( y1 % 2 ) ^ ( x1 % 2 ) )
-						{
-							mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 0 ] = sqr1_r;
-							mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 1 ] = sqr1_g;
-							mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 2 ] = sqr1_b;
-						}
-						else
-						{
-							mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 0 ] = sqr2_r;
-							mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 1 ] = sqr2_g;
-							mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 2 ] = sqr2_b;
-						};
-					};
-				};
-			};
-		};
+                for( int y2 = py_start; y2 < py_end; ++y2 )
+                {
+                    for( int x2 = px_start; x2 < px_end; ++x2 )
+                    {
+                        int rowspan = mWidth * mDepth;
 
-		time( &mLastUpdateTime );
-	};
+                        if ( ( y1 % 2 ) ^ ( x1 % 2 ) )
+                        {
+                            mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 0 ] = sqr1_r;
+                            mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 1 ] = sqr1_g;
+                            mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 2 ] = sqr1_b;
+                        }
+                        else
+                        {
+                            mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 0 ] = sqr2_r;
+                            mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 1 ] = sqr2_g;
+                            mBackgroundPixels[ y2 * rowspan + x2 * mDepth + 2 ] = sqr2_b;
+                        };
+                    };
+                };
+            };
+        };
 
-	memcpy( mPixels, mBackgroundPixels, mWidth * mHeight * mDepth );
+        time( &mLastUpdateTime );
+    };
 
-	for( int n = 0; n < ENumObjects; ++n )
-	{
-		if ( rand() % 50 == 0 )
-		{
-				mXInc[ n ] = 0;
-				while ( mXInc[ n ] == 0 )
-					mXInc[ n ] = rand() % 7 - 3;
+    memcpy( mPixels, mBackgroundPixels, mWidth * mHeight * mDepth );
 
-				mYInc[ n ] = 0;
-				while ( mYInc[ n ] == 0 )
-					mYInc[ n ] = rand() % 9 - 4;
-		};
+    for( int n = 0; n < ENumObjects; ++n )
+    {
+        if ( rand() % 50 == 0 )
+        {
+                mXInc[ n ] = 0;
+                while ( mXInc[ n ] == 0 )
+                    mXInc[ n ] = rand() % 7 - 3;
 
-		if ( mXpos[ n ] + mXInc[ n ] < 0 || mXpos[ n ] + mXInc[ n ] >= mWidth - mBlockSize[ n ] )
-			mXInc[ n ] =- mXInc[ n ];
+                mYInc[ n ] = 0;
+                while ( mYInc[ n ] == 0 )
+                    mYInc[ n ] = rand() % 9 - 4;
+        };
 
-		if ( mYpos[ n ] + mYInc[ n ] < 0 || mYpos[ n ] + mYInc[ n ] >= mHeight - mBlockSize[ n ] )
-			mYInc[ n ] =- mYInc[ n ];
+        if ( mXpos[ n ] + mXInc[ n ] < 0 || mXpos[ n ] + mXInc[ n ] >= mWidth - mBlockSize[ n ] )
+            mXInc[ n ] =- mXInc[ n ];
 
-		mXpos[ n ] += mXInc[ n ];
-		mYpos[ n ] += mYInc[ n ];
+        if ( mYpos[ n ] + mYInc[ n ] < 0 || mYpos[ n ] + mYInc[ n ] >= mHeight - mBlockSize[ n ] )
+            mYInc[ n ] =- mYInc[ n ];
 
-		for( int y = 0; y < mBlockSize[ n ]; ++y )
-		{
-			for( int x = 0; x < mBlockSize[ n ]; ++x )
-			{
-				mPixels[ ( mXpos[ n ] + x ) * mDepth + ( mYpos[ n ] + y ) * mDepth * mWidth + 0 ] = mColorR[ n ];
-				mPixels[ ( mXpos[ n ] + x ) * mDepth + ( mYpos[ n ] + y ) * mDepth * mWidth + 1 ] = mColorG[ n ];
-				mPixels[ ( mXpos[ n ] + x ) * mDepth + ( mYpos[ n ] + y ) * mDepth * mWidth + 2 ] = mColorB[ n ];
-			};
-		};
-	};
+        mXpos[ n ] += mXInc[ n ];
+        mYpos[ n ] += mYInc[ n ];
 
-	setDirty( 0, 0, mWidth, mHeight );
+        for( int y = 0; y < mBlockSize[ n ]; ++y )
+        {
+            for( int x = 0; x < mBlockSize[ n ]; ++x )
+            {
+                mPixels[ ( mXpos[ n ] + x ) * mDepth + ( mYpos[ n ] + y ) * mDepth * mWidth + 0 ] = mColorR[ n ];
+                mPixels[ ( mXpos[ n ] + x ) * mDepth + ( mYpos[ n ] + y ) * mDepth * mWidth + 1 ] = mColorG[ n ];
+                mPixels[ ( mXpos[ n ] + x ) * mDepth + ( mYpos[ n ] + y ) * mDepth * mWidth + 2 ] = mColorB[ n ];
+            };
+        };
+    };
+
+    setDirty( 0, 0, mWidth, mHeight );
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 bool MediaPluginExample::init()
 {
-	LLPluginMessage message( LLPLUGIN_MESSAGE_CLASS_MEDIA, "name_text" );
-	message.setValue( "name", "Example Plugin" );
-	sendMessage( message );
+    LLPluginMessage message( LLPLUGIN_MESSAGE_CLASS_MEDIA, "name_text" );
+    message.setValue( "name", "Example Plugin" );
+    sendMessage( message );
 
-	return true;
+    return true;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 int init_media_plugin( LLPluginInstance::sendMessageFunction host_send_func,
-						void* host_user_data,
-						LLPluginInstance::sendMessageFunction *plugin_send_func,
-						void **plugin_user_data )
+                        void* host_user_data,
+                        LLPluginInstance::sendMessageFunction *plugin_send_func,
+                        void **plugin_user_data )
 {
-	MediaPluginExample* self = new MediaPluginExample( host_send_func, host_user_data );
-	*plugin_send_func = MediaPluginExample::staticReceiveMessage;
-	*plugin_user_data = ( void* )self;
+    MediaPluginExample* self = new MediaPluginExample( host_send_func, host_user_data );
+    *plugin_send_func = MediaPluginExample::staticReceiveMessage;
+    *plugin_user_data = ( void* )self;
 
-	return 0;
+    return 0;
 }
+

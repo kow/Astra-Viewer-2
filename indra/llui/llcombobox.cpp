@@ -708,10 +708,10 @@ void LLComboBox::onItemSelected(const LLSD& data)
 		setLabel(getSelectedItemLabel());
 
 		if (mAllowTextEntry)
-		{
-			gFocusMgr.setKeyboardFocus(mTextEntry);
-			mTextEntry->selectAll();
-		}
+	{
+		gFocusMgr.setKeyboardFocus(mTextEntry);
+		mTextEntry->selectAll();
+	}
 	}
 	// hiding the list reasserts the old value stored in the text editor/dropdown button
 	hideList();

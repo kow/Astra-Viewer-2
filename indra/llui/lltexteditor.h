@@ -315,7 +315,8 @@ private:
 
 	BOOL			mAllowEmbeddedItems;
 	bool			mShowContextMenu;
-    bool			mParseOnTheFly; // S21
+	bool			mParseOnTheFly;
+
 	LLUUID			mSourceID;
 
 	LLCoordGL		mLastIMEPosition;		// Last position of the IME editor
