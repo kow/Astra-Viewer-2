@@ -368,7 +368,7 @@ signed char F_CALLBACKAPI LLAudioStreamManagerFMOD::metadataCallback(char *name,
 	if(!strcmp("ARTIST", name))
 	{
 		self->mArtist = std::string(value);
-		LL_INFOS("StreamTitles") << "Got new artist; waiting on new title." << LL_ENDL;
+		//LL_INFOS("StreamTitles") << "Got new artist; waiting on new title." << LL_ENDL;
 		return true;
 	}
 
@@ -376,7 +376,7 @@ signed char F_CALLBACKAPI LLAudioStreamManagerFMOD::metadataCallback(char *name,
 	{
 		self->mTitle = std::string(value);
 		self->mStreamingInterface->mMetadataSignal(self->mArtist, self->mTitle);
-		LL_INFOS("StreamTitles") << "Sent metadata signal." << LL_ENDL;
+		//LL_INFOS("StreamTitles") << "Sent metadata signal." << LL_ENDL;
 		return true;
 	}
 	return true;
