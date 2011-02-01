@@ -1934,7 +1934,7 @@ void LLPanelObject::refresh()
 	getChildView("Physics Density")->setVisible(enable_mesh);
 	getChildView("Physics Restitution")->setVisible(enable_mesh);
 
-	F32 max_scale = get_default_max_prim_scale(); // See Xform.h for defaults set in llmanipscale.cpp
+	F32 max_scale = DEFAULT_MAX_PRIM_SCALE_NO_MESH; // The default is 10m without mesh enabled
 	getChild<LLSpinCtrl>("Scale X")->setMaxValue(max_scale);
 	getChild<LLSpinCtrl>("Scale Y")->setMaxValue(max_scale);
 	getChild<LLSpinCtrl>("Scale Z")->setMaxValue(max_scale);

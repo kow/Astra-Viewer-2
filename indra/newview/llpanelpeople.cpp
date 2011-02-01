@@ -54,6 +54,7 @@
 #include "llgroupactions.h"
 #include "llgrouplist.h"
 #include "llinventoryobserver.h"
+#include "llnetmap.h"
 #include "llpanelpeoplemenus.h"
 #include "llsidetray.h"
 #include "llsidetraypanelcontainer.h"
@@ -482,7 +483,8 @@ LLPanelPeople::LLPanelPeople()
 		mNearbyGearButton(NULL),
 		mFriendsGearButton(NULL),
 		mGroupsGearButton(NULL),
-		mRecentGearButton(NULL)
+		mRecentGearButton(NULL),
+		mMiniMap(NULL)
 {
 	mFriendListUpdater = new LLFriendListUpdater(boost::bind(&LLPanelPeople::updateFriendList,	this));
 	mNearbyListUpdater = new LLNearbyListUpdater(boost::bind(&LLPanelPeople::updateNearbyList,	this));
@@ -556,6 +558,9 @@ BOOL LLPanelPeople::postBuild()
 	mNearbyList->setNoFilteredItemsMsg(getString("no_one_filtered_near"));
 	mNearbyList->setShowIcons("NearbyListShowIcons");
 	mNearbyList->setShowExtraInformation(true); // S21
+	mMiniMap = (LLNetMap*)getChildView("Net Map",true);
+	mMiniMap->setToolTipMsg(gSavedSettings.getBOOL("DoubleClickTeleport") ? 
+		getString("AltMiniMapToolTipMsg") :	getString("MiniMapToolTipMsg"));
 
 	mRecentList = getChild<LLPanel>(RECENT_TAB_NAME)->getChild<LLAvatarList>("avatar_list");
 	mRecentList->setNoItemsCommentText(getString("no_recent_people"));
@@ -1113,6 +1118,12 @@ void LLPanelPeople::onAvatarListDoubleClicked(LLUICtrl* ctrl)
 
 void LLPanelPeople::onAvatarListCommitted(LLAvatarList* list)
 {
+	if (getActiveTabName() == NEARBY_TAB_NAME)
+	{
+		uuid_vec_t selected_uuids;
+		getCurrentItemIDs(selected_uuids);
+		mMiniMap->setSelected(selected_uuids);
+	} else
 	// Make sure only one of the friends lists (online/all) has selection.
 	if (getActiveTabName() == FRIENDS_TAB_NAME)
 	{
