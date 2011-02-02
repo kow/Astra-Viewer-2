@@ -85,6 +85,7 @@ if(WINDOWS)
 if (MSVC80)
     FIND_PATH(debug_msvc8_redist_path msvcr80d.dll
         PATHS
+		${MSVC_DEBUG_REDIST_PATH}
          [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\8.0\\Setup\\VC;ProductDir]/redist/Debug_NonRedist/x86/Microsoft.VC80.DebugCRT
         NO_DEFAULT_PATH
         NO_DEFAULT_PATH
@@ -109,6 +110,7 @@ if (MSVC80)
 
     FIND_PATH(release_msvc8_redist_path msvcr80.dll
         PATHS
+		${MSVC_REDIST_PATH}
          [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\8.0\\Setup\\VC;ProductDir]/redist/x86/Microsoft.VC80.CRT
         NO_DEFAULT_PATH
         NO_DEFAULT_PATH

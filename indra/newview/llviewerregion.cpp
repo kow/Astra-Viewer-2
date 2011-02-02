@@ -321,6 +321,12 @@ LLViewerRegion::~LLViewerRegion()
 	std::for_each(mObjectPartition.begin(), mObjectPartition.end(), DeletePointer());
 }
 
+/*virtual*/ 
+const LLHost&	LLViewerRegion::getHost() const				
+{ 
+	return mHost; 
+}
+
 void LLViewerRegion::loadObjectCache()
 {
 	if (mCacheLoaded)
@@ -1077,32 +1083,33 @@ LLViewerRegion::eCacheUpdateResult LLViewerRegion::cacheFullUpdate(LLViewerObjec
 // AND the CRC matches. JC
 LLDataPacker *LLViewerRegion::getDP(U32 local_id, U32 crc, U8 &cache_miss_type)
 {
-	//llassert(mCacheLoaded);
-
-	LLVOCacheEntry* entry = get_if_there(mCacheMap, local_id, (LLVOCacheEntry*)NULL);
-
-	if (entry)
+	if (mCacheLoaded)
 	{
-		// we've seen this object before
-		if (entry->getCRC() == crc)
+		LLVOCacheEntry* entry = get_if_there(mCacheMap, local_id, (LLVOCacheEntry*)NULL);
+
+		if (entry)
 		{
-			// Record a hit
-			entry->recordHit();
+			// we've seen this object before
+			if (entry->getCRC() == crc)
+			{
+				// Record a hit
+				entry->recordHit();
 			cache_miss_type = CACHE_MISS_TYPE_NONE;
-			return entry->getDP(crc);
+				return entry->getDP(crc);
+			}
+			else
+			{
+				// llinfos << "CRC miss for " << local_id << llendl;
+			cache_miss_type = CACHE_MISS_TYPE_CRC;
+				mCacheMissCRC.put(local_id);
+			}
 		}
 		else
 		{
-			// llinfos << "CRC miss for " << local_id << llendl;
-			cache_miss_type = CACHE_MISS_TYPE_CRC;
-			mCacheMissCRC.put(local_id);
-		}
-	}
-	else
-	{
-		// llinfos << "Cache miss for " << local_id << llendl;
+			// llinfos << "Cache miss for " << local_id << llendl;
 		cache_miss_type = CACHE_MISS_TYPE_FULL;
-		mCacheMissFull.put(local_id);
+			mCacheMissFull.put(local_id);
+		}
 	}
 	return NULL;
 }
@@ -1409,7 +1416,6 @@ void LLViewerRegion::setSeedCapability(const std::string& url)
 	capabilityNames.append("SimConsole");
 	capabilityNames.append("SimulatorFeatures");
 	capabilityNames.append("SetDisplayName");
-	capabilityNames.append("SimConsole");
 	capabilityNames.append("SimConsoleAsync");
 	capabilityNames.append("StartGroupProposal");
 	capabilityNames.append("TextureStats");

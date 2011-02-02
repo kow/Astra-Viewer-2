@@ -298,13 +298,14 @@
 		value="true"
 		follows="left|bottom|right"
 		height="15"
-		tool_tip="Enables Title/Atrist Information to be Shown on Screen when Music Stream is active"
+		tool_tip="Enables Title/Artist Information to be Shown on Screen when Music Stream is active"
 		label="Show Title/Artist Information when Songs change"
 		top="258"
 		left="25"/>
 	<check_box
 		name="media_auto_play_btn"
 		control_name="ParcelMediaAutoPlayEnable"
+		enabled_control="AudioStreamingMedia"
 		value="true"
 		follows="left|bottom|right"
 		height="15"
@@ -312,7 +313,7 @@
 		label="Allow Media to auto-play"
 		top_pad="5"
 		left="25"/>
-	<check_box
+ 	<check_box
 		name="media_show_on_others_btn"
 		control_name="MediaShowOnOthers"
 		value="true"

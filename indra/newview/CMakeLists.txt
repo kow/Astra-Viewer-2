@@ -218,6 +218,7 @@ set(viewer_SOURCE_FILES
     llfloatersearch.cpp
     llfloatersellland.cpp
     llfloatersettingsdebug.cpp
+    llfloatersidebarctrl.cpp
     llfloatersidetraytab.cpp
     llfloatersnapshot.cpp
     llfloatertelehub.cpp
@@ -767,6 +768,7 @@ set(viewer_HEADER_FILES
     llfloatersearch.h
     llfloatersellland.h
     llfloatersettingsdebug.h
+    llfloatersidebarctrl.h
     llfloatersidetraytab.h
     llfloatersnapshot.h
     llfloatertelehub.h

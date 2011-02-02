@@ -39,6 +39,7 @@
 #include "lldrawable.h"
 #include "llface.h"
 #include "llsky.h"
+#include "llviewercamera.h" // to get OGL_TO_CFR_ROTATION
 #include "llviewertexturelist.h"
 #include "llviewerregion.h"
 #include "llvosky.h"
@@ -74,10 +75,8 @@ LLDrawPoolWater::LLDrawPoolWater() :
 
 
 	mWaterImagep = LLViewerTextureManager::getFetchedTexture(TRANSPARENT_WATER_TEXTURE);
-	llassert(mWaterImagep);
 	mWaterImagep->setNoDelete();
 	mOpaqueWaterImagep = LLViewerTextureManager::getFetchedTexture(OPAQUE_WATER_TEXTURE);
-	llassert(mOpaqueWaterImagep);
 	mWaterNormp = LLViewerTextureManager::getFetchedTexture(DEFAULT_WATER_NORMAL);
 	mWaterNormp->setNoDelete();
 
@@ -96,7 +95,7 @@ void LLDrawPoolWater::restoreGL()
 
 LLDrawPool *LLDrawPoolWater::instancePool()
 {
-	llerrs << "Should never be calling instancePool on a water pool!" << llendl;
+	llwarns << "Should never be calling instancePool on a water pool!" << llendl;
 	return NULL;
 }
 

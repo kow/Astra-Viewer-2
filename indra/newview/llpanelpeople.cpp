@@ -960,7 +960,7 @@ void LLPanelPeople::showGroupMenu(LLMenuGL* menu)
 
 	// Calculate its coordinates.
 	// (assumes that groups panel is the current tab)
-	LLPanel* bottom_panel = mTabContainer->getCurrentPanel()->getChild<LLPanel>("bottom_panel"); 
+	LLPanel* bottom_panel = mTabContainer->getCurrentPanel()->getChild<LLPanel>("bottom_panel");
 	LLPanel* parent_panel = mTabContainer->getCurrentPanel();
 	menu->arrangeAndClear();
 	S32 menu_height = menu->getRect().getHeight();

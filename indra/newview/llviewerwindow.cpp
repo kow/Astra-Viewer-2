@@ -101,6 +101,7 @@
 #include "llfloaterbuildoptions.h"
 #include "llfloaterbuyland.h"
 #include "llfloatercamera.h"
+#include "llfloatersidebarctrl.h" // S21
 #include "llfloaterland.h"
 #include "llfloaterinspect.h"
 #include "llfloatermap.h"
@@ -298,13 +299,15 @@ private:
 	line_list_t mLineList;
 	LLColor4 mTextColor;
 	
-public:
-	LLDebugText(LLViewerWindow* window) : mWindow(window) {}
-	
 	void addText(S32 x, S32 y, const std::string &text) 
 	{
 		mLineList.push_back(Line(text, x, y));
 	}
+	
+	void clearText() { mLineList.clear(); }
+	
+public:
+	LLDebugText(LLViewerWindow* window) : mWindow(window) {}
 
 	void update()
 	{
@@ -325,6 +328,8 @@ public:
 		U32 ypos = 64;
 		const U32 y_inc = 20;
 
+		clearText();
+		
 		if (gSavedSettings.getBOOL("DebugShowTime"))
 		{
 			const U32 y_inc2 = 15;
@@ -349,6 +354,14 @@ public:
 			addText(xpos, ypos, llformat("Time: %d:%02d:%02d", hours,mins,secs)); ypos += y_inc;
 		}
 		
+#if LL_WINDOWS
+		if (gSavedSettings.getBOOL("DebugShowMemory"))
+		{
+			addText(xpos, ypos, llformat("Memory: %d (KB)", LLMemory::getWorkingSetSize() / 1024)); 
+			ypos += y_inc;
+		}
+#endif
+
 		if (gDisplayCameraPos)
 		{
 			std::string camera_view_text;
@@ -675,6 +688,50 @@ public:
 												LLMeshRepoThread::sActiveLODRequests, lod));
 
 			ypos += y_inc;
+		}
+		
+		if (gSavedSettings.getBOOL("DebugShowTextureInfo"))
+		{
+			LLViewerObject* objectp = NULL ;
+			//objectp = = gAgentCamera.getFocusObject();
+			
+			LLSelectNode* nodep = LLSelectMgr::instance().getHoverNode();
+			if (nodep)
+			{
+				objectp = nodep->getObject();			
+			}
+			if (objectp && !objectp->isDead())
+			{
+				S32 num_faces = objectp->mDrawable->getNumFaces() ;
+				
+				for(S32 i = 0 ; i < num_faces; i++)
+				{
+					LLFace* facep = objectp->mDrawable->getFace(i) ;
+					if(facep)
+					{
+						//addText(xpos, ypos, llformat("ts_min: %.3f ts_max: %.3f tt_min: %.3f tt_max: %.3f", facep->mTexExtents[0].mV[0], facep->mTexExtents[1].mV[0],
+						//		facep->mTexExtents[0].mV[1], facep->mTexExtents[1].mV[1]));
+						//ypos += y_inc;
+						
+						addText(xpos, ypos, llformat("v_size: %.3f:  p_size: %.3f", facep->getVirtualSize(), facep->getPixelArea()));
+						ypos += y_inc;
+						
+						//const LLTextureEntry *tep = facep->getTextureEntry();
+						//if(tep)
+						//{
+						//	addText(xpos, ypos, llformat("scale_s: %.3f:  scale_t: %.3f", tep->mScaleS, tep->mScaleT)) ;
+						//	ypos += y_inc;
+						//}
+						
+						LLViewerTexture* tex = facep->getTexture() ;
+						if(tex)
+						{
+							addText(xpos, ypos, llformat("ID: %s v_size: %.3f", tex->getID().asString().c_str(), tex->getMaxVirtualSize()));
+							ypos += y_inc;
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -1732,6 +1789,7 @@ void LLViewerWindow::initWorldUI()
 	LLPanel* nav_bar_container = getRootView()->getChild<LLPanel>("nav_bar_container");
 
 	LLNavigationBar* navbar = LLNavigationBar::getInstance();
+	//navbar->setFollows(FOLLOWS_TOP|FOLLOWS_LEFT|FOLLOWS_RIGHT); // S21
 	navbar->setShape(nav_bar_container->getLocalRect());
 	navbar->setBackgroundColor(gMenuBarView->getBackgroundColor().get());
 	nav_bar_container->addChild(navbar);

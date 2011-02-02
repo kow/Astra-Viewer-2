@@ -993,7 +993,6 @@ public:
 	{
 		// upcast T to the base type to restrict T derivation from LLPostponedNotification
 		LLPostponedNotification* thiz = new T();
-
 		thiz->mParams = params;
 
 		// Avoid header file dependency on llcachename.h

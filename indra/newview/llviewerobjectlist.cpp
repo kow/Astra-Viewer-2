@@ -160,19 +160,13 @@ U64 LLViewerObjectList::getIndex(const U32 local_id,
 	return (((U64)index) << 32) | (U64)local_id;
 }
 
-BOOL LLViewerObjectList::removeFromLocalIDTable(const LLViewerObject &object)
+BOOL LLViewerObjectList::removeFromLocalIDTable(const LLViewerObject* objectp)
 {
-	if(object.getRegion())
+	if(objectp && objectp->getRegion())
 	{
-		U32 local_id = object.mLocalID;
-		LLHost region_host = object.getRegion()->getHost();
-		if(!region_host.isOk())
-		{
-			return FALSE ;
-		}
-
-		U32 ip = region_host.getAddress();
-		U32 port = region_host.getPort();
+		U32 local_id = objectp->mLocalID;		
+		U32 ip = objectp->getRegion()->getHost().getAddress();
+		U32 port = objectp->getRegion()->getHost().getPort();
 		U64 ipport = (((U64)ip) << 32) | (U64)port;
 		U32 index = sIPAndPortToIndex[ipport];
 		
@@ -187,7 +181,7 @@ BOOL LLViewerObjectList::removeFromLocalIDTable(const LLViewerObject &object)
 		}
 		
 		// Found existing entry
-		if (iter->second == object.getID())
+		if (iter->second == objectp->getID())
 		{   // Full UUIDs match, so remove the entry
 			sIndexAndLocalIDToUUID.erase(iter);
 			return TRUE;
@@ -348,7 +342,8 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 	U8 compressed_dpbuffer[2048];
 	LLDataPackerBinaryBuffer compressed_dp(compressed_dpbuffer, 2048);
 	LLDataPacker *cached_dpp = NULL;
-	
+
+
 	for (i = 0; i < num_objects; i++)
 	{
 		// timer is unused?
@@ -375,6 +370,8 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			}
 			else
 			{
+				// Cache Miss.
+
 				continue; // no data packer, skip this object
 			}
 		}
@@ -468,7 +465,7 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			//			<< ", regionp " << (U32) regionp << ", object region " << (U32) objectp->getRegion()
 			//			<< llendl;
 			//}
-			removeFromLocalIDTable(*objectp);
+			removeFromLocalIDTable(objectp);
 			setUUIDAndLocal(fullid,
 							local_id,
 							gMessageSystem->getSenderIP(),
@@ -502,7 +499,7 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			{
 				if (update_type != OUT_FULL)
 				{
-					// llinfos << "terse update for an unknown object:" << fullid << llendl;
+					//llinfos << "terse update for an unknown object:" << fullid << llendl;
 					continue;
 				}
 
@@ -512,7 +509,7 @@ void LLViewerObjectList::processObjectUpdate(LLMessageSystem *mesgsys,
 			if (mDeadObjects.find(fullid) != mDeadObjects.end())
 			{
 				mNumDeadObjectUpdates++;
-				// llinfos << "update for a dead object:" << fullid << llendl;
+				//llinfos << "update for a dead object:" << fullid << llendl;
 				continue;
 			}
 #endif
@@ -1176,7 +1173,7 @@ void LLViewerObjectList::cleanupReferences(LLViewerObject *objectp)
 	//				<< objectp->getRegion()->getHost().getPort() << llendl;
 	//}	
 	
-	removeFromLocalIDTable(*objectp);
+	removeFromLocalIDTable(objectp);
 
 	if (objectp->onActiveList())
 	{
@@ -1897,8 +1894,8 @@ void LLViewerObjectList::findOrphans(LLViewerObject* objectp, U32 ip, U32 port)
 			llinfos << "Agent: " << objectp->getPositionAgent() << llendl;
 			addDebugBeacon(objectp->getPositionAgent(),"");
 #endif
-            gPipeline.markMoved(objectp->mDrawable);                
-            objectp->setChanged(LLXform::MOVED | LLXform::SILHOUETTE);
+			gPipeline.markMoved(objectp->mDrawable);				
+			objectp->setChanged(LLXform::MOVED | LLXform::SILHOUETTE);
 
 			// Flag the object as no longer orphaned
 			childp->mOrphaned = FALSE;
