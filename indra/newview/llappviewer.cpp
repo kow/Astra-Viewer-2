@@ -1796,6 +1796,8 @@ bool LLAppViewer::cleanup()
 
 	ll_close_fail_log();
 
+	MEM_TRACK_RELEASE
+
     llinfos << "Goodbye!" << llendflush;
 
 	// return 0;
