@@ -29,12 +29,6 @@
 #include "llimagejpeg.h"
 
 #include "llimagedimensionsinfo.h"
-#include <stdio.h>
-
-typedef unsigned long DWORD;
-typedef unsigned short WORD;
-#define LOWORD(a) ((WORD)(a))
-#define HIWORD(a) ((WORD)(((DWORD)(a) >> 16) & 0xFFFF))
 // Value is true if one of Libjpeg's functions has encountered an error while working.
 static bool sJpegErrorEncountered = false;
 
