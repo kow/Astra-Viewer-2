@@ -90,6 +90,8 @@ bool LLImageDimensionsInfo::getImageDimensionsTga()
 	unsigned KVTgaNFO = read_s32();
 	mWidth = KVTgaNFO & 0x00ff;
 	mHeight = KVTgaNFO >> 16 & 0x00ff;	
+    llinfos << "Tga header reads width: " << mWidth << " and height: " << mHeight << llendl;
+
 	return true;
 }
 
