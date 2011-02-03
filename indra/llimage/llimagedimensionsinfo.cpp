@@ -89,23 +89,13 @@ bool LLImageDimensionsInfo::getImageDimensionsBmp()
 
 bool LLImageDimensionsInfo::getImageDimensionsTga()
 {
-	unsigned char	header[12] = { 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	unsigned char	bpp = 32;
-	unsigned char	id = 8;
-	unsigned short	width;
-	unsigned short	height;
-	FILE	*fp = NULL;
-	fp = fopen(TGA,"r");
-	fread(header,sizeof(unsigned char),12,fp);
-	fread(&width,sizeof(unsigned short),1,fp);
-	fread(&height,sizeof(unsigned short),1,fp);
-	fread(&bpp,sizeof(unsigned char),1,fp);
-	fread(&id,sizeof(unsigned char),1,fp);
-	mWidth = width;
-	mHeight = height;	
-    llinfos << "Tga header reads width: " << mWidth << " and height: " << mHeight << llendl;
+        const S32 TGA_FILE_HEADER_SIZE = 12;
 
-	return true;
+        mInfile.seek(APR_CUR,TGA_FILE_HEADER_SIZE);
+        mWidth = read_byte() | read_byte() << 8;
+        mHeight = read_byte() | read_byte() << 8;
+
+        return true;
 }
 
 bool LLImageDimensionsInfo::getImageDimensionsPng()
