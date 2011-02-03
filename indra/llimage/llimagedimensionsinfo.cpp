@@ -87,9 +87,9 @@ bool LLImageDimensionsInfo::getImageDimensionsTga()
 	const S32 TGA_FILE_HEADER_SIZE = 12;
 
 	mInfile.seek(APR_CUR,TGA_FILE_HEADER_SIZE);
-	mWidth = read_byte() | read_byte() << 8;
-	mHeight = read_byte() | read_byte() << 8;
-
+	unsigned KVTgaNFO = read_s32();
+	mWidth = KVTgaNFO & 0x00ff;
+	mHeight = KVTgaNFO >> 16 & 0x00ff;	
 	return true;
 }
 
