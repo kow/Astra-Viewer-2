@@ -4023,7 +4023,7 @@
     <key>Type</key>
     <string>F32</string>
     <key>Value</key>
-    <integer>4.5</integer>
+    <real>4.5</real>
   </map>
   <key>HoverTextFadeDistance</key>
   <map>
@@ -4034,7 +4034,7 @@
     <key>Type</key>
     <string>F32</string>
     <key>Value</key>
-    <integer>1.5</integer>
+    <real>1.5</real>
     </map>
     <key>HtmlHelpLastPage</key>
     <map>
@@ -11812,6 +11812,7 @@
       <key>Type</key>
       <string>LLSD</string>
       <key>Value</key>
+      <string />
     </map>
     <key>VFSOldSize</key>
     <map>
@@ -12653,7 +12654,7 @@
       <key>Type</key>
       <string>S32</string>
       <key>Value</key>
-      <integer>2048</integer>
+      <integer>4096</integer>
     </map>
     <key>max_texture_dimension_Y</key>
     <map>
@@ -12664,7 +12665,7 @@
       <key>Type</key>
       <string>S32</string>
       <key>Value</key>
-      <integer>2048</integer>
+      <integer>4096</integer>
     </map>
     <!-- End of back compatibility settings -->
     <key>teleport_offer_invitation_max_length</key>

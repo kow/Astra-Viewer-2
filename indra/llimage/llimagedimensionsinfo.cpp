@@ -29,6 +29,7 @@
 #include "llimagejpeg.h"
 
 #include "llimagedimensionsinfo.h"
+
 // Value is true if one of Libjpeg's functions has encountered an error while working.
 static bool sJpegErrorEncountered = false;
 
@@ -83,13 +84,15 @@ bool LLImageDimensionsInfo::getImageDimensionsBmp()
 
 bool LLImageDimensionsInfo::getImageDimensionsTga()
 {
-        const S32 TGA_FILE_HEADER_SIZE = 12;
+	const S32 TGA_FILE_HEADER_SIZE = 12;
 
-        mInfile.seek(APR_CUR,TGA_FILE_HEADER_SIZE);
-        mWidth = read_byte() | read_byte() << 8;
-        mHeight = read_byte() | read_byte() << 8;
+	mInfile.seek(APR_CUR,TGA_FILE_HEADER_SIZE);
+	unsigned KVTgaNFO = read_s32();
+	mWidth = KVTgaNFO & 0x00ff;
+	mHeight = KVTgaNFO >> 16 & 0xffff;	
+    llinfos << "Tga header reads width: " << mWidth << " and height: " << mHeight << llendl;
 
-        return true;
+	return true;
 }
 
 bool LLImageDimensionsInfo::getImageDimensionsPng()

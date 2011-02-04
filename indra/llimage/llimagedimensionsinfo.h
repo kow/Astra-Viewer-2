@@ -116,7 +116,20 @@ protected:
 
 	U16 read_short()
 	{
-		return read_byte() << 8 | read_byte();
+		char p[2];
+		mInfile.read(&p[0],2);
+		U16 temp = (((U16)p[0]) & 0x00FF) |
+				   (((U16)p[1] << 8) & 0xFF00);
+		return temp;
+	}
+
+	U16 read_reversed_short()
+	{
+		char p[2];
+		mInfile.read(&p[0],2);
+		U16 temp = (((U16)p[1]) & 0x00FF) |
+				   (((U16)p[0] << 8) & 0xFF00);
+		return temp;
 	}
 
 protected:

@@ -563,9 +563,8 @@ void LLPipeline::allocateScreenBuffer(U32 resX, U32 resY)
 	//never use more than 4 samples for render targets
 	U32 samples = llmin(gSavedSettings.getU32("RenderFSAASamples"), (U32) 4);
 	if (gGLManager.mIsATI)
-	{ //disable multisampling of render targets where ATI is involved 
+	{ //disable multisampling of render targets where ATI is involved
 		samples = 0;
-	  // Is this temporary dave or are ATI cards really just screwed?	
 	}
 
 	U32 res_mod = gSavedSettings.getU32("RenderResolutionDivisor");
@@ -984,7 +983,7 @@ BOOL LLPipeline::canUseWindLightShadersOnObjects() const
 
 BOOL LLPipeline::canUseAntiAliasing() const
 {
-	return TRUE; //(gSavedSettings.getBOOL("RenderUseFBO"));
+	return TRUE;
 }
 
 void LLPipeline::unloadShaders()
