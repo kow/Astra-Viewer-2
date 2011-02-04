@@ -138,16 +138,16 @@
 	     image_unselected="Icon_Close_Foreground"
              image_selected="Icon_Close_Press"
              follows="left|right"
-             height="23"
+             height="16"
              use_ellipses="true"
              is_toggle="false"
              label=" "
              layout="topleft"
              left="160"
              tool_tip="Close The Sidebar"
-             top="5"
+             top="10"
              name="sidebar_close_btn"
-             width="23">
+             width="16">
 	     <commit_callback
                 function="sidebar_close_btn" />
             </button>

@@ -697,4 +697,12 @@ with the same filename but different name
   <!-- Kats Viewer Art -->
   <texture name="Inv_WindLight" file_name="icons/Inv_WindLight.png" preload="false" />
   <texture name="Inv_WaterLight" file_name="icons/Inv_WaterLight.png" preload="false" />
+  <!-- KL viewer Art -->
+  <texture name="Inventory_btn" file_name="icons/icn_toolbar_inventory.tga" preload="false" />
+  <texture name="Minimap_btn" file_name="icons/icn_toolbar_minimap.tga" preload="false" />
+  <texture name="Search_btn" file_name="icons/icn_toolbar_search.tga" preload="false" />
+    <texture name="Map_btn" file_name="icons/icn_toolbar_map.tga" preload="false" />
+    <texture name="Move_btn" file_name="bottomtray/Move_Walk_Press.png" preload="false" />
+    <texture name="Camera_btn" file_name="bottomtray/Cam_FreeCam_Press.png" preload="false" />
+    <texture name="Gesture_btn" file_name="icons/Toolbar_Gesture_btn.png" preload="false" />
 </textures>

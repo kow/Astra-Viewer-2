@@ -118,18 +118,18 @@
          name="gesture_panel"
          top_delta="0"
          user_resize="false"
-         width="85">
+         width="45">
             <gesture_combo_list
              follows="left|right"
              height="23"
-             label="Gesture"
              layout="topleft"
              left="0"
              name="Gesture"
              tool_tip="Shows/hides gestures"
              top="5"
-             width="82">
+             width="42">
                 <combo_button
+		image_overlay="Gesture_btn"
                  pad_right="10"
                  use_ellipses="true" />
                 <combo_list
@@ -146,21 +146,22 @@
          mouse_opaque="false"
          name="movement_panel"
          user_resize="false"
-         width="83">
+         width="43">
             <bottomtray_button
              follows="left|right"
              height="23"
+	     image_overlay="Move_btn"
              image_pressed="PushButton_Press"
              image_pressed_selected="PushButton_Selected_Press"
              image_selected="PushButton_Selected_Press"
              is_toggle="true"
-             label="Move"
+             
              layout="topleft"
              name="movement_btn"
              tool_tip="Shows/hides movement controls"
              top="5"
              use_ellipses="true"
-             width="80">
+             width="40">
                 <init_callback
                  function="Button.SetDockableFloaterToggle"
                  parameter="moveview" />
@@ -177,22 +178,22 @@
          mouse_opaque="false"
          name="cam_panel"
          user_resize="false"
-         width="83">
+         width="43">
             <bottomtray_button
              follows="left|right"
              height="23"
+	     image_overlay="Camera_btn"
              image_pressed="PushButton_Press"
              image_pressed_selected="PushButton_Selected_Press"
              image_selected="PushButton_Selected_Press"
              is_toggle="true"
-             label="View"
              layout="topleft"
              left="0"
              name="camera_btn"
              tool_tip="Shows/hides camera controls"
              top="5"
              use_ellipses="true"
-             width="80">
+             width="40">
                 <init_callback
                  function="Button.SetDockableFloaterToggle"
                  parameter="camera" />
@@ -275,22 +276,23 @@ Disabled for now.
          mouse_opaque="false"
          name="search_btn_panel"
          user_resize="false"
-         width="83">
+         width="43">
             <bottomtray_button
              follows="left|right"
              height="23"
+	     image_overlay="Search_btn"
              image_pressed="PushButton_Press"
              image_pressed_selected="PushButton_Selected_Press"
              image_selected="PushButton_Selected_Press"
              is_toggle="true"
-             label="Search"
+             
              layout="topleft"
              left="0"
              name="search_btn"
              tool_tip="Shows/hides Search"
              top="5"
              use_ellipses="true"
-             width="80">
+             width="40">
                 <init_callback
                  function="Button.SetFloaterToggle"
                  parameter="search" />
@@ -306,22 +308,23 @@ Disabled for now.
          mouse_opaque="false"
          name="world_map_btn_panel"
          user_resize="false"
-         width="83">
+         width="43">
             <bottomtray_button
              follows="left|right"
              height="23"
+	     image_overlay="Map_btn"
              image_pressed="PushButton_Press"
              image_pressed_selected="PushButton_Selected_Press"
              image_selected="PushButton_Selected_Press"
              is_toggle="true"
-             label="Map"
+            
              layout="topleft"
              left="0"
              name="world_map_btn"
              tool_tip="Shows/hides World Map"
              top="5"
              use_ellipses="true"
-             width="80">
+             width="40">
                 <init_callback
                  function="Button.SetFloaterToggle"
                  parameter="world_map" />
@@ -337,22 +340,23 @@ Disabled for now.
          mouse_opaque="false"
          name="mini_map_btn_panel"
          user_resize="false"
-         width="83">
+         width="43">
             <bottomtray_button
              follows="left|right"
              height="23"
+	     image_overlay="Minimap_btn"
              image_pressed="PushButton_Press"
              image_pressed_selected="PushButton_Selected_Press"
              image_selected="PushButton_Selected_Press"
              is_toggle="true"
-             label="Mini-Map"
+           
              layout="topleft"
              left="0"
              name="mini_map_btn"
              tool_tip="Shows/hides Mini-Map"
              top="5"
              use_ellipses="true"
-             width="80">
+             width="40">
                 <init_callback
                  function="Button.SetFloaterToggle"
                  parameter="mini_map" />
@@ -368,22 +372,23 @@ Disabled for now.
          mouse_opaque="false"
          name="inventory_btn_panel"
          user_resize="false"
-         width="83">
+         width="43">
             <bottomtray_button
              follows="left|right"
              height="23"
+	     image_overlay="Inventory_btn"
              image_pressed="PushButton_Press"
              image_pressed_selected="PushButton_Selected_Press"
              image_selected="PushButton_Selected_Press"
              is_toggle="true"
-             label="Inventory"
+             
              layout="topleft"
              left="0"
              name="inventory_btn"
              tool_tip="Shows/hides Seperate Inventory Floater"
              top="5"
              use_ellipses="true"
-             width="80">
+             width="40">
                 <init_callback
                  function="Button.SetFloaterToggle"
                  parameter="inventory" />
