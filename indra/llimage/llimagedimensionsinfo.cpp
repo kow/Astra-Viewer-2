@@ -89,6 +89,7 @@ bool LLImageDimensionsInfo::getImageDimensionsTga()
 	mInfile.seek(APR_CUR,TGA_FILE_HEADER_SIZE);
 	mWidth = read_short();
 	mHeight = read_short();	
+
     llinfos << "Tga header reads width: " << mWidth << " and height: " << mHeight << llendl;
 
 	return true;
