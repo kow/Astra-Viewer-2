@@ -87,9 +87,8 @@ bool LLImageDimensionsInfo::getImageDimensionsTga()
 	const S32 TGA_FILE_HEADER_SIZE = 12;
 
 	mInfile.seek(APR_CUR,TGA_FILE_HEADER_SIZE);
-	unsigned KVTgaNFO = read_s32();
-	mWidth = KVTgaNFO & 0x00ff;
-	mHeight = KVTgaNFO >> 16 & 0xffff;	
+	mWidth = read_short();
+	mHeight = read_short();	
     llinfos << "Tga header reads width: " << mWidth << " and height: " << mHeight << llendl;
 
 	return true;
