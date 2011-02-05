@@ -164,6 +164,8 @@ public:
 	
 	void		reshape			(S32 width, S32 height, BOOL called_from_parent = TRUE);
 
+	static void		setSidetabsVisibility();
+
 
 	/**
 	 * @return side tray width if it's visible and expanded, 0 otherwise.

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<floater
+ legacy_header_height="18"
+ auto_tile="true"
+ can_resize="true"
+ height="563"
+ layout="topleft"
+ min_height="150"
+ min_width="240"
+ name="Home"
+ help_topic="sidetray_home"
+ save_rect="true"
+ save_visibility="true"
+ single_instance="false"
+ title="HOME"
+ width="467">
+    <panel
+     bottom="560"
+	 class="panel_sidetray_home"
+	 filename="panel_sidetray_home_tab.xml"
+	 follows="all"
+	 layout="topleft"
+	 left="0"
+	 label="Inventory Panel"
+	 name="home_tab"
+	 top="15"
+	 width="333" />
+</floater>

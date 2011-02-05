@@ -99,8 +99,7 @@
                  & pad_right is default value for long label which can be right aligned. See EXT-6318 -->
                 <speak_button
                  halign="center"
-                 label="Speak"
-                 label_selected="Speak"
+                 image_overlay="Speaking_btn"
                  name="speak_btn"
                  pad_right="22"
                  tab_stop="true"
@@ -210,22 +209,23 @@
          mouse_opaque="false"
          name="sidebar_btn_panel"
          user_resize="false"
-         width="83">
+         width="43">
             <bottomtray_button
              control_name="SidebarWithButtonsVisibility"
              follows="left|right"
              height="23"
+	     image_overlay="Sidebar_btn"
              image_pressed="PushButton_Press"
              image_pressed_selected="PushButton_Selected_Press"
              image_selected="PushButton_Selected_Press"
              is_toggle="true"
-             label="Sidebar"
+            
              layout="topleft"
              left="0"
              name="sidebar_btn"
              tool_tip="Shows/hides Sidebar"
              top="5"
-             width="80">
+             width="40">
                 <init_callback
                  function="Button.SetDockableFloaterToggle"
                  parameter="sidebarctrl" />
@@ -242,25 +242,26 @@
          mouse_opaque="false"
          name="build_btn_panel"
          user_resize="false"
-         width="83">
+         width="43">
 <!--*FIX: Build Floater is not opened with default registration. Will be fixed soon.
 Disabled for now.
 -->
             <bottomtray_button
              follows="left|right"
              height="23"
+	     image_overlay="Build_btn"
              image_pressed="PushButton_Press"
              image_pressed_selected="PushButton_Selected_Press"
              image_selected="PushButton_Selected_Press"
              is_toggle="true"
-             label="Build"
+           
              layout="topleft"
              left="0"
              name="build_btn"
              tool_tip="Shows/hides Build Tools"
              top="5"
              use_ellipses="true"
-             width="80">
+             width="40">
                 <commit_callback
                  function="Build.Toggle"
                  parameter="build" />

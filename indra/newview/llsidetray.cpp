@@ -35,6 +35,7 @@
 #include "llfirstuse.h"
 #include "llhints.h"
 #include "llsidetray.h"
+#include "llviewercontrol.h"
 #include "llviewerwindow.h"
 #include "llaccordionctrl.h"
 #include "llfocusmgr.h"
@@ -205,7 +206,6 @@ void LLSideTrayTab::reshape		(S32 width, S32 height, BOOL called_from_parent )
 		// not fully constructed yet
 		return;
 	}
-
 	S32 title_height = title_panel->getRect().getHeight();
 	title_panel->setOrigin( 0, height - title_height );
 	title_panel->reshape(width,title_height);
@@ -538,7 +538,6 @@ LLSideTray::LLSideTray(const Params& params)
 	{
 		LLTransientFloaterMgr::getInstance()->addControlView(side_bar_tabs);
 	}
-
 	LLPanel::Params p;
 	p.name = "buttons_panel";
 	p.mouse_opaque = false;
@@ -1297,4 +1296,22 @@ S32 LLSideTray::getVisibleWidth()
 void LLSideTray::setVisibleWidthChangeCallback(const commit_signal_t::slot_type& cb)
 {
 	mVisibleWidthChangeSignal.connect(cb);
+}
+
+void LLSideTray::setSidetabsVisibility() // KL S21
+{
+	// Sets the sidebar tabs visible depending on IF the alternate sidebar button is used.
+	if (gSavedSettings.getBOOL("ShowSidebarButton") == TRUE)
+	{
+		LLView* side_bar_tabs = gViewerWindow->getRootView()->getChildView("side_bar_tabs");
+		side_bar_tabs->setVisible(false);
+	}
+	else
+	{
+		LLView* side_bar_tabs = gViewerWindow->getRootView()->getChildView("side_bar_tabs");
+		side_bar_tabs->setVisible(true);
+	}
+
+   gFloaterView->refresh();
+   // Refresh the view? brushie brushie!
 }

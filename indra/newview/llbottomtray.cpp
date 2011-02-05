@@ -53,6 +53,7 @@
 #include "llviewerwindow.h"
 #include "llsdserialize.h"
 #include "llfloatersidebarctrl.h" // S21 KL test
+#include "llsidetray.h" // S21
 // Distance from mouse down on which drag'n'drop should be started.
 #define DRAG_START_DISTANCE 3
 
@@ -1584,6 +1585,10 @@ void LLBottomTray::setTrayButtonVisible(EResizeState shown_object_type, bool vis
 	}
 
 	panel->setVisible(visible);
+
+	
+	LLSideTray::setSidetabsVisibility(); // KL S21 each time we mess with the buttons we do a check on sidetabs visible or not.
+	
 }
 
 void LLBottomTray::setTrayButtonVisibleIfPossible(EResizeState shown_object_type, bool visible, bool raise_notification)

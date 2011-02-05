@@ -3248,7 +3248,10 @@ BOOL LLFolderBridge::dragItemIntoFolder(LLInventoryItem* inv_item,
 	}
 	else if(LLToolDragAndDrop::SOURCE_NOTECARD == source)
 	{
-		accept = TRUE;
+		// Don't allow placing an original item from a notecard to Current Outfit or an outfit folder
+		// because they must contain only links to wearable items.
+		accept = !(move_is_into_current_outfit || move_is_into_outfit);
+
 		if(drop)
 		{
 			copy_inventory_from_notecard(LLToolDragAndDrop::getInstance()->getObjectID(),
@@ -5527,11 +5530,11 @@ void LLRecentItemsFolderBridge::buildContextMenu(LLMenuGL& menu, U32 flags)
 
 	menuentry_vec_t disabled_items, items = getMenuItems();
 
-	items.erase(std::remove(items.begin(), items.end(), std::string("New Body Parts")), items.end());
+/*	items.erase(std::remove(items.begin(), items.end(), std::string("New Body Parts")), items.end());
 	items.erase(std::remove(items.begin(), items.end(), std::string("New Clothes")), items.end());
 	items.erase(std::remove(items.begin(), items.end(), std::string("New Note")), items.end());
 	items.erase(std::remove(items.begin(), items.end(), std::string("New Gesture")), items.end());
-	items.erase(std::remove(items.begin(), items.end(), std::string("New Script")), items.end());
+	items.erase(std::remove(items.begin(), items.end(), std::string("New Script")), items.end()); */
 	items.erase(std::remove(items.begin(), items.end(), std::string("New Folder")), items.end());
 
 	hide_context_entries(menu, items, disabled_items);
