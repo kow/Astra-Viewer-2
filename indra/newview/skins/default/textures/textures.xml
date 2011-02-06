@@ -709,4 +709,5 @@ with the same filename but different name
   <texture name="Speaking_btn" file_name="icons/icn_toolbar_speak.png" preload="false" />
   <texture name="Build_btn" file_name="icons/icn_toolbar_build.tga" preload="false" />
   <texture name="Windlight_btn" file_name="icons/Inv_WindLight.png" preload="false" />
+  <texture name="Prefs_btn" file_name="icons/Edit_Wrench.png" preload="false" />
 </textures>

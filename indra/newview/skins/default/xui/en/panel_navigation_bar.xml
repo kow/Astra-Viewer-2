@@ -93,7 +93,7 @@
 	     layout="topleft"
 	     left_pad="7"
 	     name="About_Land"
-	     label="Land" 
+	     image_overlay="Info_Over"
 	     tool_tip="About Land"
 	     top_delta="0"
 	     width="43">
@@ -128,7 +128,7 @@
 	     layout="topleft"
 	     left_pad="7"
 	     name="Prefs"
-		 label="Prefs" 
+	     image_overlay="Prefs_btn"	
 	     tool_tip="Open preferences window"
 	     top_delta="0"
 	     width="35">
