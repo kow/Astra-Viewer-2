@@ -6217,15 +6217,6 @@ An error has occurred while trying to connect to voice chat for [VOICE_CHANNEL_N
   </notification>
 
   <notification
-   duration="10"
-   icon="notifytip.tga"
-   name="ServerVersionChanged"
-   priority="high"
-   type="notifytip">
-You just entered a region using a different server version, which may affect performance. [[URL] View the release notes.]
-  </notification>
-
-  <notification
    icon="notifytip.tga"
    name="UnsupportedCommandSLURL"
    priority="high"
@@ -6363,7 +6354,7 @@ Select residents to share with.
    type="alertmodal">
 Are you sure you want to share the following items:
 
-[ITEMS]
+&lt;nolink&gt;[ITEMS]&lt;/nolink&gt;
 
 With the following Residents:
 
@@ -6636,7 +6627,8 @@ Mute everyone?
               text="Open pop-up window"/>
     </form>
   </notification>
-<notification
+
+  <notification
   name="AuthRequest"
   type="browser">
 The site at &apos;&lt;nolink&gt;[HOST_NAME]&lt;/nolink&gt;&apos; in realm &apos;[REALM]&apos; requires a user name and password.
@@ -6696,6 +6688,12 @@ Do you wish to overwrite the saved preset?
   
   <global name="UnsupportedCPU">
 - Your CPU speed does not meet the minimum requirements.
+  </global>
+
+  <global name="UnsupportedCPUSSE2">
+Your CPU does not seem to have the required support for SSE2 operations.
+
+Please see http://www.secondlife.com/corporate/sysreqs.php for information about system requirements.
   </global>
 
   <global name="UnsupportedGLRequirements">

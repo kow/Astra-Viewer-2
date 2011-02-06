@@ -8,6 +8,21 @@
  top="624"
  visible="false"
  width="128">
+    <!-->Added selction for showing the Speak Button and this will also toggle
+	the Voice being on or off. If Voice is enabled(default) then the Speak Button
+	will be visable.<-->
+    <menu_item_check
+         label="Speak button(Voice Enabled)"
+         layout="topleft"
+		 name="EnableVoiceChat">
+           <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="EnableVoiceChat" /> 
+             <menu_item_check.on_check
+             function="CheckControl"
+             parameter="EnableVoiceChat" />
+    </menu_item_check>
+	<menu_item_separator/>
     <menu_item_check
          label="Gesture button"
          layout="topleft"
@@ -53,6 +68,17 @@
              parameter="ShowSnapshotButton" />
     </menu_item_check>        
     <menu_item_check
+     label="Sidebar button"
+     layout="topleft"
+     name="ShowSidebarButton">
+        <menu_item_check.on_click
+         function="ToggleControl"
+         parameter="ShowSidebarButton" />
+        <menu_item_check.on_check
+         function="CheckControl"
+         parameter="ShowSidebarButton" />
+    </menu_item_check>
+    <menu_item_check
      label="Build button"
      layout="topleft"
      name="ShowBuildButton">
@@ -85,7 +111,7 @@
          function="CheckControl"
          parameter="ShowWorldMapButton" />
     </menu_item_check>
-     <menu_item_check
+    <menu_item_check
      label="Inventory button"
      layout="topleft"
      name="ShowInventoryButton">

@@ -33,12 +33,12 @@
             parameter="WebLaunchExternalTarget,http://status.secondlifegrid.net/" />
       </menu_item_call>
       <menu_item_call
-            label="Xstreet Marketplace"
-            name="Xstreet Marketplace">
+            label="Marketplace"
+            name="Marketplace">
             <menu_item_call.on_click
             function="PromptShowURL"
             name="Xstreet_url"
-            parameter="WebLaunchExternalTarget,http://www.xstreetsl.com/" />
+            parameter="WebLaunchExternalTarget,https://marketplace.secondlife.com/" />
       </menu_item_call>
         <menu_item_call
          label="Buy L$"
@@ -1144,7 +1144,7 @@
             <menu_item_call.on_enable
              function="File.EnableUploadModel" />
             <menu_item_call.on_visible
-            function="File.MeshEnabled"/>
+            function="File.VisibleUploadModel"/>
             </menu_item_call>
 			<menu_item_call
            label="Model Wizard..."
@@ -1156,7 +1156,7 @@
 				<menu_item_call.on_enable
 				 function="File.EnableUploadModel" />
 				<menu_item_call.on_visible
-				function="File.MeshEnabled"/>
+				function="File.VisibleUploadModel"/>
 			</menu_item_call>
             <menu_item_call
              label="Bulk (L$[COST] per file)..."
@@ -1198,6 +1198,258 @@
              function="Edit.EnableRedo" />
         </menu_item_call>        
     </menu>
+
+<menu
+     create_jump_keys="true"
+     label="Film"
+     name="Quick toggles for machinima"
+     tear_off="true">
+        <menu_item_check
+         label="Show selection beam"
+         name="Enable avatar selection beam">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="ShowSelectionBeam" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="ShowSelectionBeam" />
+         </menu_item_check>
+        <menu_item_check
+         label="Play typing anim"
+         name="Enable typing anim for avatar">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="PlayTypingAnim" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="PlayTypingAnim" />
+         </menu_item_check>
+        <menu_item_check
+         label="Lipsync anim on"
+         name="Enable babble loop anim">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="LipSyncEnabled" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="LipSyncEnabled" />
+         </menu_item_check>
+        <menu_item_check
+         label="Attached Lights on"
+         name="Render Attached Lights">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderAttachedLights" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderAttachedLights" />
+         </menu_item_check>
+        <menu_item_check
+         label="Avatar backlight rim"
+         name="Render avatar backlight">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="AvatarBacklight" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="AvatarBacklight" />
+         </menu_item_check>
+        <menu_item_check
+         label="Spacenavigator moves avatar"
+         name="3D joystick moves own avatar">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="JoystickAvatarEnabled" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="JoystickAvatarEnabled" />
+         </menu_item_check>
+<menu_item_separator/>
+        <menu_item_check
+         label="No script particles"
+         name="Disable script say particles">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="MachinimaCamNoScriptLights" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="MachinimaCamNoScriptLights" />
+         </menu_item_check>
+         <menu_item_check
+         label="Avatar impostors on"
+         name="Render impostors for distant avatars">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderUseImpostors" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderUseImpostors" />
+         </menu_item_check>
+        <menu_item_check
+         label="Dynamic LOD on"
+         name="Render dynamic LOD for distant objects">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderDynamicLOD" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderDynamicLOD" />
+         </menu_item_check>
+        <menu_item_check
+         label="S21 water flicker obj-obj occ"
+         name="Object-object occlusion on water flicker in S21">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="UseOcclusion" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="UseOcclusion" />
+         </menu_item_check>
+<menu_item_separator/>
+        <menu_item_check
+         label="Metadata Lights"
+         name="Metadata Lights">
+          <menu_item_check.on_check
+           function="Advanced.CheckInfoDisplay"
+           parameter="lights" />
+          <menu_item_check.on_click
+           function="Advanced.ToggleInfoDisplay"
+           parameter="lights" />
+        </menu_item_check>
+<menu_item_separator/>
+        <menu_item_check
+         label="Transparent Water"
+         name="Enable transparent water">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderTransparentWater" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderTransparentWater" />
+         </menu_item_check>
+         <menu_item_check
+         label="Bump and Shiny"
+         name="Enable bump mapping and shiny textures">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderObjectBump" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderObjectBump" />
+        </menu_item_check>
+         <menu_item_check
+         label="Basic shaders"
+         name="Enable basic shaders">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="VertexShaderEnable" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="VertexShaderEnable" />
+        </menu_item_check>
+         <menu_item_check
+         label="Atmospheric shaders"
+         name="Enable Windlight shaders">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="WindLightUseAtmosShaders" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="WindLightUseAtmosShaders" />
+        </menu_item_check>     
+         <menu_item_check
+         label="Lighting and shadows"
+         name="Enable enhanced lighting and shadowcasting">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderDeferred" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderDeferred" />
+        </menu_item_check>     
+         <menu_item_check
+         label="Atmospheric in deferred"
+         name="Atmospheric in deferred, headlight off for flycam">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderDeferredAtmospheric" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderDeferredAtmospheric" />
+        </menu_item_check>
+         <menu_item_check
+         label="Amb occ and soft shadows"
+         name="Ambient occlusion and shadow softening">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderDeferredSSAO" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderDeferredSSAO" />
+        </menu_item_check>
+<menu_item_separator/>
+         <menu_item_check
+         label="Mute Ambient"
+         name="Mute ambient sounds">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="MuteAmbient" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="MuteAmbient" />
+        </menu_item_check>
+         <menu_item_check
+         label="Mute Media"
+         name="Mute media sound">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="MuteMedia" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="MuteMedia" />
+        </menu_item_check>
+         <menu_item_check
+         label="Mute Music"
+         name="Mute music sound">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="MuteMusic" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="MuteMusic" />
+        </menu_item_check>
+         <menu_item_check
+         label="Mute Sound effects"
+         name="Mute sound effects">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="MuteSounds" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="MuteSounds" />
+        </menu_item_check>
+         <menu_item_check
+         label="Mute UI"
+         name="Mute user interface sounds">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="MuteUI" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="MuteUI" />
+        </menu_item_check>
+         <menu_item_check
+         label="Mute Voice"
+         name="Mute voice sounds">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="MuteVoice" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="MuteVoice" />
+        </menu_item_check>
+</menu>
+
     <menu
      create_jump_keys="true"
      label="Help"
@@ -2170,6 +2422,16 @@
                  function="ToggleControl"
                  parameter="DebugShowRenderInfo" />
             </menu_item_check>
+			<menu_item_check
+             label="Show Texture Info"
+             name="Show Texture Info">
+                <menu_item_check.on_check
+                 function="CheckControl"
+                 parameter="DebugShowTextureInfo" />
+                <menu_item_check.on_click
+                 function="ToggleControl"
+                 parameter="DebugShowTextureInfo" />
+            </menu_item_check>
             <menu_item_check
              label="Show Matrices"
              name="Show Matrices">
@@ -2189,6 +2451,16 @@
                 <menu_item_check.on_click
                  function="ToggleControl"
                  parameter="DebugShowColor" />
+            </menu_item_check>
+            <menu_item_check
+               label="Show Memory"
+               name="Show Memory">
+              <menu_item_check.on_check
+               function="CheckControl"
+               parameter="DebugShowMemory" />
+              <menu_item_check.on_click
+               function="ToggleControl"
+               parameter="DebugShowMemory" />
             </menu_item_check>
 
             <menu_item_separator/>
@@ -2383,6 +2655,16 @@
            parameter="render batches" />
         </menu_item_check>
         <menu_item_check
+         label="Update Type"
+         name="Update Type">
+          <menu_item_check.on_check
+           function="Advanced.CheckInfoDisplay"
+           parameter="update type" />
+          <menu_item_check.on_click
+           function="Advanced.ToggleInfoDisplay"
+           parameter="update type" />
+        </menu_item_check>
+        <menu_item_check
          label="Texture Anim"
          name="Texture Anim">
           <menu_item_check.on_check
@@ -2421,6 +2703,16 @@
           <menu_item_check.on_click
            function="Advanced.ToggleInfoDisplay"
            parameter="face area" />
+        </menu_item_check>
+        <menu_item_check
+         label="Build Queue"
+         name="Build Queue">
+          <menu_item_check.on_check
+           function="Advanced.CheckInfoDisplay"
+           parameter="build queue" />
+          <menu_item_check.on_click
+           function="Advanced.ToggleInfoDisplay"
+           parameter="build queue" />
         </menu_item_check>
         <menu_item_check
          label="Lights"
@@ -2958,22 +3250,6 @@
                  function="Floater.Toggle"
                  parameter="region_debug_console" />
             </menu_item_check>
- 
-           <menu_item_separator />
-
-            <menu_item_check
-             label="Region Debug Console"
-             name="Region Debug Console"
-             shortcut="control|shift|`"
-             use_mac_ctrl="true">
-                <menu_item_check.on_check
-                 function="Floater.Visible"
-                 parameter="region_debug_console" />
-                <menu_item_check.on_click
-                 function="Floater.Toggle"
-                 parameter="region_debug_console" />
-            </menu_item_check>
-
             <menu_item_separator />
 
             <menu_item_check

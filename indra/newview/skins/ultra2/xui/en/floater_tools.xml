@@ -938,7 +938,8 @@
              name="Creator Name"
              top_delta="0"
              width="190"
-             word_wrap="true">
+             word_wrap="true"
+             use_ellipses="true">
                 Mrs. Esbee Linden (esbee.linden)
             </text>
             <text
@@ -964,7 +965,8 @@
              left_pad="0"
              top_delta="0"
              width="190"
-             word_wrap="true">
+             word_wrap="true"
+             use_ellipses="true">
                 Mrs. Erica "Moose" Linden (erica.linden)
             </text>
            <text
