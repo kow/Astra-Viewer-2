@@ -111,7 +111,7 @@
 	     layout="topleft"
 	     left_pad="7"
 	     name="Sky"
-	     label="Sky" 
+	     image_overlay="Windlight_btn"
 	     tool_tip="Pops up Sky Editor window"
 	     top_delta="0"
 	     width="30">

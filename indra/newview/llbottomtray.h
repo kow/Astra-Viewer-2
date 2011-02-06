@@ -171,10 +171,11 @@ private:
 		/**
 		 * Specifies buttons which can be hidden when bottom tray is shrunk.
 		 * They are: Gestures, Movement (Move), Camera (View), Snapshot
-		 *		new: Build, Search, Map, World Map, Mini-Map.
+		 *		new: Build, Search, Map, World Map, Mini-Map
+		 *    added: Speak(this auto-hides if Voice is disabled)
 		 */
 		, RS_BUTTONS_CAN_BE_HIDDEN = RS_BUTTON_SNAPSHOT | RS_BUTTON_CAMERA | RS_BUTTON_MOVEMENT | RS_BUTTON_GESTURES
-									| RS_BUTTON_BUILD | RS_BUTTON_SEARCH | RS_BUTTON_WORLD_MAP | RS_BUTTON_MINI_MAP
+									| RS_BUTTON_SPEAK | RS_BUTTON_BUILD | RS_BUTTON_SEARCH | RS_BUTTON_WORLD_MAP | RS_BUTTON_MINI_MAP
 									| RS_BUTTON_SIDEBAR | RS_BUTTON_INVENTORY
 	}EResizeState;
 

@@ -1481,6 +1481,8 @@ bool LLBottomTray::canButtonBeShown(EResizeState processed_object_type) const
 void LLBottomTray::initResizeStateContainers()
 {
 	// init map with objects should be processed for each type
+	//Added Speak button to enable button auto-hide if voice is disabled
+	mStateProcessedObjectMap.insert(std::make_pair(RS_BUTTON_SPEAK, getChild<LLPanel>("speak_panel")));
 	mStateProcessedObjectMap.insert(std::make_pair(RS_BUTTON_GESTURES, getChild<LLPanel>("gesture_panel")));
 	mStateProcessedObjectMap.insert(std::make_pair(RS_BUTTON_MOVEMENT, getChild<LLPanel>("movement_panel")));
 	mStateProcessedObjectMap.insert(std::make_pair(RS_BUTTON_CAMERA, getChild<LLPanel>("cam_panel")));
@@ -1493,6 +1495,8 @@ void LLBottomTray::initResizeStateContainers()
 	mStateProcessedObjectMap.insert(std::make_pair(RS_BUTTON_INVENTORY, getChild<LLPanel>("inventory_btn_panel"))); // S21
 
 	// init an order of processed buttons
+	//Added Speak button to enable button auto-hide if voice is disabled
+	mButtonsProcessOrder.push_back(RS_BUTTON_SPEAK);
 	mButtonsProcessOrder.push_back(RS_BUTTON_GESTURES);
 	mButtonsProcessOrder.push_back(RS_BUTTON_MOVEMENT);
 	mButtonsProcessOrder.push_back(RS_BUTTON_CAMERA);
@@ -1522,16 +1526,15 @@ void LLBottomTray::initResizeStateContainers()
 		// set default width for it.
 		mObjectDefaultWidthMap[button_type] = mStateProcessedObjectMap[button_type]->getRect().getWidth();
 	}
-
-	// ... and add Speak button because it also can be shrunk.
-	mObjectDefaultWidthMap[RS_BUTTON_SPEAK]	   = mSpeakPanel->getRect().getWidth();
-
+    //Speak Button now part of main process map so do not need to process seperatly
 }
 
 // this method must be called before restoring of the chat entry field on startup
 // because it resets chatbar's width according to resize logic.
 void LLBottomTray::initButtonsVisibility()
 {
+	//Added Ability to remove Speak Button if Voice is not enabled and have it follow the Voice setting.
+	setVisibleAndFitWidths(RS_BUTTON_SPEAK, gSavedSettings.getBOOL("EnableVoiceChat"));
 	setVisibleAndFitWidths(RS_BUTTON_GESTURES, gSavedSettings.getBOOL("ShowGestureButton"));
 	setVisibleAndFitWidths(RS_BUTTON_MOVEMENT, gSavedSettings.getBOOL("ShowMoveButton"));
 	setVisibleAndFitWidths(RS_BUTTON_CAMERA, gSavedSettings.getBOOL("ShowCameraButton"));
@@ -1546,7 +1549,8 @@ void LLBottomTray::initButtonsVisibility()
 
 void LLBottomTray::setButtonsControlsAndListeners()
 {
-
+	//Added Ability to remove Speak Button if Voice is not enabled and have it follow the Voice setting.
+	gSavedSettings.getControl("EnableVoiceChat")->getSignal()->connect(boost::bind(&LLBottomTray::toggleShowButton, RS_BUTTON_SPEAK, _2));
 	gSavedSettings.getControl("ShowGestureButton")->getSignal()->connect(boost::bind(&LLBottomTray::toggleShowButton, RS_BUTTON_GESTURES, _2));
 	gSavedSettings.getControl("ShowMoveButton")->getSignal()->connect(boost::bind(&LLBottomTray::toggleShowButton, RS_BUTTON_MOVEMENT, _2));
 	gSavedSettings.getControl("ShowCameraButton")->getSignal()->connect(boost::bind(&LLBottomTray::toggleShowButton, RS_BUTTON_CAMERA, _2));
