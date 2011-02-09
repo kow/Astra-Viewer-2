@@ -6205,7 +6205,7 @@ void LLPipeline::renderBloom(BOOL for_snapshot, F32 zoom_factor, int subfield)
 		F32 fov = LLViewerCamera::getInstance()->getView();
 		
 		const F32 default_fov = gSavedSettings.getF32("CameraFieldOfView") * F_PI/180.f;
-		//const F32 default_aspect_ratio = gSavedSettings.getF32("CameraAspectRatio");
+		const F32 default_aspect_ratio = gSavedSettings.getF32("CameraAspectRatio");
 		
 		//F32 aspect_ratio = (F32) mScreen.getWidth()/(F32)mScreen.getHeight();
 		
@@ -6229,7 +6229,7 @@ void LLPipeline::renderBloom(BOOL for_snapshot, F32 zoom_factor, int subfield)
 
 		shader->uniform1f("focal_distance", -subject_distance/1000.f);
 		shader->uniform1f("blur_constant", blur_constant);
-		shader->uniform1f("tan_pixel_angle", tanf(1.f/LLDrawable::sCurPixelAngle));
+		shader->uniform1f("tan_pixel_angle", tanf(default_aspect_ratio/LLDrawable::sCurPixelAngle)); // S21 this may not be right but it sure is fun !
 		shader->uniform1f("magnification", magnification);
 
 		S32 channel = shader->enableTexture(LLViewerShaderMgr::DEFERRED_DIFFUSE, LLTexUnit::TT_RECT_TEXTURE);

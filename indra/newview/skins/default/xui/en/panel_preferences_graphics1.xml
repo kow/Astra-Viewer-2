@@ -1651,7 +1651,7 @@
         label_width="160"
         layout="topleft"
         left="10"
-        max_val="100"
+        max_val="200"
         min_val="0"
         name="Camera FOV"
 	tool_tip="Vertical camera field of view for DoF effect (in degrees)"
@@ -1687,30 +1687,30 @@
         label_width="160"
         layout="topleft"
         left="10"
-        max_val="300"
+        max_val="1000"
         min_val="0"
         name="CameraFocal"
 	tool_tip="Camera focal length for DoF effect (in millimeters)"
         top_pad="5"
         width="324" />
-<!--	<slider
+	<slider
         control_name="CameraAspectRatio"
         can_edit_text="true"
         decimal_digits="2"
         follows="left|top"
         height="16"
-        increment="0.1"
+        increment="0.01"
         initial_value="1.5"
         label="Camera Aspect Ratio:"
         label_width="160"
         layout="topleft"
         left="10"
-        max_val="10"
+        max_val="5"
         min_val="0"
         name="CameraFocal"
 	tool_tip="Camera aspect ratio for DoF effect"
         top_pad="5"
-        width="324" /> -->
+        width="324" />
 	</panel>
       </tab_container>
      </panel>
