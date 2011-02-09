@@ -6164,8 +6164,9 @@ void LLPipeline::renderBloom(BOOL for_snapshot, F32 zoom_factor, int subfield)
 	gGL.flush();
 	
 	LLVertexBuffer::unbind();
+	BOOL renderDOF = gSavedSettings.getBOOL("RenderUseDOF"); // S21
 
-	if (LLPipeline::sRenderDeferred)
+	if (LLPipeline::sRenderDeferred && renderDOF) // S21
 	{
 		LLGLSLShader* shader = &gDeferredPostProgram;
 		if (LLViewerShaderMgr::instance()->getVertexShaderLevel(LLViewerShaderMgr::SHADER_DEFERRED) > 2)

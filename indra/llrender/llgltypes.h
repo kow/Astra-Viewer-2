@@ -27,7 +27,7 @@
 #ifndef LLGLTYPES_H
 #define LLGLTYPES_H
 //KL was 16 (experiment)
-#define MAX_GL_TEXTURE_UNITS 32 
+#define MAX_GL_TEXTURE_UNITS 16
 
 typedef U32 LLGLenum;
 typedef U32 LLGLuint;
