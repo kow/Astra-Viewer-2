@@ -1448,6 +1448,50 @@
              function="ToggleControl"
              parameter="MuteVoice" />
         </menu_item_check>
+<menu_item_separator/>	
+	<menu
+         create_jump_keys="true"
+         label="Agent Recorder"
+         name="Recorder"
+         tear_off="true">
+            <menu_item_call
+             label="Start Playback"
+             name="Start Playback">
+                <menu_item_call.on_click
+                 function="Advanced.AgentPilot"
+                 parameter="start playback" />
+            </menu_item_call>
+            <menu_item_call
+             label="Stop Playback"
+             name="Stop Playback">
+                <menu_item_call.on_click
+                 function="Advanced.AgentPilot"
+                 parameter="stop playback" />
+            </menu_item_call>
+            <menu_item_check
+             label="Loop Playback"
+             name="Loop Playback">
+                <menu_item_check.on_check
+                 function="Advanced.CheckAgentPilotLoop"
+                 parameter="loopPlayback" />
+                <menu_item_check.on_click
+                 function="Advanced.ToggleAgentPilotLoop" />
+            </menu_item_check>
+            <menu_item_call
+             label="Start Record"
+             name="Start Record">
+                <menu_item_call.on_click
+                 function="Advanced.AgentPilot"
+                 parameter="start record" />
+            </menu_item_call>
+            <menu_item_call
+             label="Stop Record"
+             name="Stop Record">
+                <menu_item_call.on_click
+                 function="Advanced.AgentPilot"
+                 parameter="stop record" />
+            </menu_item_call>
+        </menu>
 </menu>
 
     <menu
