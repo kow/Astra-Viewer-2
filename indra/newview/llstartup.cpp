@@ -425,7 +425,7 @@ bool idle_startup()
 		//
 
 		// Load autopilot and stats stuff
-		gAgentPilot.load(gSavedSettings.getString("StatsPilotFile"));
+		gAgentPilot.load();
 
 		//gErrorStream.setTime(gSavedSettings.getBOOL("LogTimestamps"));
 
@@ -1959,7 +1959,7 @@ bool idle_startup()
 		}
 		
 		// Start automatic replay if the flag is set.
-		if (gSavedSettings.getBOOL("StatsAutoRun") || LLAgentPilot::sReplaySession)
+		if (gSavedSettings.getBOOL("StatsAutoRun") || gAgentPilot.getReplaySession())
 		{
 			LLUUID id;
 			LL_DEBUGS("AppInit") << "Starting automatic playback" << LL_ENDL;

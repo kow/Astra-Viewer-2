@@ -656,13 +656,6 @@ void LLFloaterPreference::onOpen(const LLSD& key)
 		getChildView("maturity_desired_combobox")->setVisible( false);
 	}
 
-	bool enable_mesh = gSavedSettings.getBOOL("MeshEnabled");
-    // KL the visibility of shadow controls should NOT rely on the Mesh being enabled or Not.
-	getChildView("UseLightShaders")->setVisible(true);
-	getChildView("UseSSAO")->setVisible(true);
-	getChildView("shadows_label")->setVisible(true);
-	getChildView("ShadowDetail")->setVisible(true);
-
 	if (LLStartUp::getStartupState() == STATE_STARTED)
 	{
 		mFavoritesRecordMayExist = gSavedPerAccountSettings.getBOOL("ShowFavoritesOnLogin");

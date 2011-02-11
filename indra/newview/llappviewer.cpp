@@ -307,7 +307,7 @@ BOOL gLogoutInProgress = FALSE;
 
 ////////////////////////////////////////////////////////////
 // Internal globals... that should be removed.
-static std::string gArgs = "Build 4 RC1";
+static std::string gArgs = "Build 4 RC2";
 
 const std::string MARKER_FILE_NAME("SecondLife.exec_marker");
 const std::string ERROR_MARKER_FILE_NAME("SecondLife.error_marker");
@@ -466,8 +466,8 @@ static void settings_to_globals()
 	LLSelectMgr::sRenderHiddenSelections = gSavedSettings.getBOOL("RenderHiddenSelections");
 	LLSelectMgr::sRenderLightRadius = gSavedSettings.getBOOL("RenderLightRadius");
 
-	gAgentPilot.mNumRuns		= gSavedSettings.getS32("StatsNumRuns");
-	gAgentPilot.mQuitAfterRuns	= gSavedSettings.getBOOL("StatsQuitAfterRuns");
+	gAgentPilot.setNumRuns(gSavedSettings.getS32("StatsNumRuns"));
+	gAgentPilot.setQuitAfterRuns(gSavedSettings.getBOOL("StatsQuitAfterRuns"));
 	gAgent.setHideGroupTitle(gSavedSettings.getBOOL("RenderHideGroupTitle"));
 
 	gDebugWindowProc = gSavedSettings.getBOOL("DebugWindowProc");
@@ -1297,7 +1297,7 @@ bool LLAppViewer::mainLoop()
 				resumeMainloopTimeout();
 	
 				pingMainloopTimeout("Main:End");
-			}			
+			}	
 		}
 		catch(std::bad_alloc)
 		{			
@@ -2268,7 +2268,7 @@ bool LLAppViewer::initConfiguration()
 
 	if (clp.hasOption("replaysession"))
 	{
-		LLAgentPilot::sReplaySession = TRUE;
+		gAgentPilot.setReplaySession(TRUE);
 	}
 
 	if (clp.hasOption("nonotifications"))
@@ -4042,8 +4042,15 @@ void LLAppViewer::idle()
 	}
 
 	if (LLViewerJoystick::getInstance()->getOverrideCamera())
-	{
-		LLViewerJoystick::getInstance()->moveFlycam();
+	{ 
+		if (gAgentPilot.isPlaying() && gAgentPilot.getOverrideCamera())
+		{
+			gAgentPilot.moveCamera();
+		}
+		else
+		{
+			LLViewerJoystick::getInstance()->moveFlycam();
+		}
 	}
 	else
 	{

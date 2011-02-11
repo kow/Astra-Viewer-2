@@ -86,8 +86,6 @@
 #include "llviewerregion.h"
 #include "llviewerstats.h"
 #include "llvoavatarself.h"
-#include "llvograss.h" // S21
-#include "llvotree.h"  // S21
 #include "llvovolume.h"
 #include "pipeline.h"
 
@@ -853,11 +851,8 @@ void LLSelectMgr::highlightObjectOnly(LLViewerObject* objectp)
 	{
 		return;
 	}
-    // KL - qarl
-	if ((objectp->getPCode() != LL_PCODE_VOLUME) &&
-		(objectp->getPCode() != LL_PCODE_LEGACY_TREE) &&
-		(objectp->getPCode() != LL_PCODE_LEGACY_GRASS))
-		
+
+	if (objectp->getPCode() != LL_PCODE_VOLUME)
 	{
 		return;
 	}
@@ -905,10 +900,7 @@ void LLSelectMgr::highlightObjectAndFamily(const std::vector<LLViewerObject*>& o
 		{
 			continue;
 		}
-		// KL - Qarl
-		if ((object->getPCode() != LL_PCODE_VOLUME) &&
-			(object->getPCode() != LL_PCODE_LEGACY_TREE) &&
-			(object->getPCode() != LL_PCODE_LEGACY_GRASS))
+		if (object->getPCode() != LL_PCODE_VOLUME)
 		{
 			continue;
 		}
@@ -927,15 +919,8 @@ void LLSelectMgr::highlightObjectAndFamily(const std::vector<LLViewerObject*>& o
 }
 
 void LLSelectMgr::unhighlightObjectOnly(LLViewerObject* objectp)
-{ // KL Qarl
-	if (!objectp)
-	{
-		return;
-	}
-
-	if ((objectp->getPCode() != LL_PCODE_VOLUME) &&
-		(objectp->getPCode() != LL_PCODE_LEGACY_TREE) &&
-		(objectp->getPCode() != LL_PCODE_LEGACY_GRASS))
+{
+	if (!objectp || (objectp->getPCode() != LL_PCODE_VOLUME))
 	{
 		return;
 	}
@@ -5159,14 +5144,6 @@ void LLSelectMgr::generateSilhouette(LLSelectNode* nodep, const LLVector3& view_
 	if (objectp && objectp->getPCode() == LL_PCODE_VOLUME)
 	{
 		((LLVOVolume*)objectp)->generateSilhouette(nodep, view_point);
-	} // KL - qarl
-	else if (objectp && objectp->getPCode() == LL_PCODE_LEGACY_GRASS)
-	{
-		((LLVOGrass*)objectp)->generateSilhouette(nodep, view_point);
-	}
-	else if (objectp && objectp->getPCode() == LL_PCODE_LEGACY_TREE)
-	{
-		((LLVOTree*)objectp)->generateSilhouette(nodep, view_point);
 	}
 }
 
@@ -5227,7 +5204,6 @@ LLSelectNode::LLSelectNode(const LLSelectNode& nodep)
 
 	mSilhouetteVertices = nodep.mSilhouetteVertices;
 	mSilhouetteNormals = nodep.mSilhouetteNormals;
-	mSilhouetteSegments = nodep.mSilhouetteSegments;
 	mSilhouetteExists = nodep.mSilhouetteExists;
 	mObject = nodep.mObject;
 
@@ -5616,8 +5592,8 @@ void LLSelectNode::renderOneSilhouette(const LLColor4 &color)
 		glMultMatrixf((F32*) objectp->getRenderMatrix().mMatrix);
 	}
 
-	//LLVolume *volume = objectp->getVolume(); // S21 KL - qarl
-	if (1)
+	LLVolume *volume = objectp->getVolume();
+	if (volume)
 	{
 		F32 silhouette_thickness;
 		if (isAgentAvatarValid() && is_hud_object)
@@ -5651,17 +5627,15 @@ void LLSelectNode::renderOneSilhouette(const LLColor4 &color)
 			gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT);
 			gGL.begin(LLRender::LINES);
 			{
-				S32 i = 0;
-				for (S32 seg_num = 0; seg_num < (S32)mSilhouetteSegments.size(); seg_num++)
+				for(S32 i = 0; i < mSilhouetteVertices.size(); i += 2)
 				{
-					for(; i < mSilhouetteSegments[seg_num]; i++)
-					{
-						u_coord += u_divisor * LLSelectMgr::sHighlightUScale;
-
-						gGL.color4f(color.mV[VRED], color.mV[VGREEN], color.mV[VBLUE], 0.4f);
-						gGL.texCoord2f( u_coord, v_coord );
-						gGL.vertex3fv( mSilhouetteVertices[i].mV );
-					}
+					u_coord += u_divisor * LLSelectMgr::sHighlightUScale;
+					gGL.color4f(color.mV[VRED], color.mV[VGREEN], color.mV[VBLUE], 0.4f);
+					gGL.texCoord2f( u_coord, v_coord );
+					gGL.vertex3fv( mSilhouetteVertices[i].mV);
+					u_coord += u_divisor * LLSelectMgr::sHighlightUScale;
+					gGL.texCoord2f( u_coord, v_coord );
+					gGL.vertex3fv(mSilhouetteVertices[i+1].mV);
 				}
 			}
             gGL.end();
@@ -5672,51 +5646,50 @@ void LLSelectNode::renderOneSilhouette(const LLColor4 &color)
 		gGL.setSceneBlendType(LLRender::BT_ALPHA);
 		gGL.begin(LLRender::TRIANGLES);
 		{
-			S32 i = 0;
-			for (S32 seg_num = 0; seg_num < (S32)mSilhouetteSegments.size(); seg_num++)
+			for(S32 i = 0; i < mSilhouetteVertices.size(); i+=2)
 			{
-				S32 first_i = i;
-				LLVector3 v;
-				LLVector2 t;
-
-				for(; i < mSilhouetteSegments[seg_num]; i++)
-				{
-
-					if (i == first_i) {
-					    LLVector3 vert = (mSilhouetteNormals[i]) * silhouette_thickness;
-						vert += mSilhouetteVertices[i];
-
-						gGL.color4f(color.mV[VRED], color.mV[VGREEN], color.mV[VBLUE], 0.0f); //LLSelectMgr::sHighlightAlpha);
-						gGL.texCoord2f( u_coord, v_coord + LLSelectMgr::sHighlightVScale );
-						gGL.vertex3fv( vert.mV ); 
-						
-						u_coord += u_divisor * LLSelectMgr::sHighlightUScale;
-
-						gGL.color4f(color.mV[VRED]*2, color.mV[VGREEN]*2, color.mV[VBLUE]*2, LLSelectMgr::sHighlightAlpha*2);
-						gGL.texCoord2f( u_coord, v_coord );
-						gGL.vertex3fv( mSilhouetteVertices[i].mV );
-
-						v = mSilhouetteVertices[i];
-						t = LLVector2(u_coord, v_coord);
-					}
-					else {
-                        LLVector3 vert = (mSilhouetteNormals[i]) * silhouette_thickness;
-						vert += mSilhouetteVertices[i];
-
-						gGL.color4f(color.mV[VRED], color.mV[VGREEN], color.mV[VBLUE], 0.0f); //LLSelectMgr::sHighlightAlpha);
-						gGL.texCoord2f( u_coord, v_coord + LLSelectMgr::sHighlightVScale );
-						gGL.vertex3fv( vert.mV ); 
-						gGL.vertex3fv( vert.mV ); 
-						
-						gGL.texCoord2fv(t.mV);
-						u_coord += u_divisor * LLSelectMgr::sHighlightUScale;
-						gGL.color4f(color.mV[VRED]*2, color.mV[VGREEN]*2, color.mV[VBLUE]*2, LLSelectMgr::sHighlightAlpha*2);
-						gGL.vertex3fv(v.mV);
-						gGL.texCoord2f( u_coord, v_coord );
-						gGL.vertex3fv( mSilhouetteVertices[i].mV );
-
-					}
+				if (!mSilhouetteNormals[i].isFinite() ||
+					!mSilhouetteNormals[i+1].isFinite())
+				{ //skip skewed segments
+					continue;
 				}
+
+				LLVector3 v[4];
+				LLVector2 tc[4];
+				v[0] = mSilhouetteVertices[i] + (mSilhouetteNormals[i] * silhouette_thickness);
+				tc[0].set(u_coord, v_coord + LLSelectMgr::sHighlightVScale);
+
+				v[1] = mSilhouetteVertices[i];
+				tc[1].set(u_coord, v_coord);
+
+				u_coord += u_divisor * LLSelectMgr::sHighlightUScale;
+
+				v[2] = mSilhouetteVertices[i+1] + (mSilhouetteNormals[i+1] * silhouette_thickness);
+				tc[2].set(u_coord, v_coord + LLSelectMgr::sHighlightVScale);
+				
+				v[3] = mSilhouetteVertices[i+1];
+				tc[3].set(u_coord,v_coord);
+
+				gGL.color4f(color.mV[VRED], color.mV[VGREEN], color.mV[VBLUE], 0.0f); //LLSelectMgr::sHighlightAlpha);
+				gGL.texCoord2fv(tc[0].mV);
+				gGL.vertex3fv( v[0].mV ); 
+				
+				gGL.color4f(color.mV[VRED]*2, color.mV[VGREEN]*2, color.mV[VBLUE]*2, LLSelectMgr::sHighlightAlpha*2);
+				gGL.texCoord2fv( tc[1].mV );
+				gGL.vertex3fv( v[1].mV );
+
+				gGL.color4f(color.mV[VRED], color.mV[VGREEN], color.mV[VBLUE], 0.0f); //LLSelectMgr::sHighlightAlpha);
+				gGL.texCoord2fv( tc[2].mV );
+				gGL.vertex3fv( v[2].mV );
+
+				gGL.vertex3fv( v[2].mV );
+
+				gGL.color4f(color.mV[VRED]*2, color.mV[VGREEN]*2, color.mV[VBLUE]*2, LLSelectMgr::sHighlightAlpha*2);
+				gGL.texCoord2fv( tc[1].mV );
+				gGL.vertex3fv( v[1].mV );
+
+				gGL.texCoord2fv( tc[3].mV );
+				gGL.vertex3fv( v[3].mV );			
 			}
 		}
 		gGL.end();
@@ -6418,7 +6391,7 @@ U32 LLObjectSelection::getSelectedObjectTriangleCount()
 	return count;
 }
 
-S32 LLObjectSelection::getSelectedObjectRenderCost()
+/*S32 LLObjectSelection::getSelectedObjectRenderCost()
 {
        S32 cost = 0;
        LLVOVolume::texture_cost_t textures;
@@ -6442,7 +6415,7 @@ S32 LLObjectSelection::getSelectedObjectRenderCost()
 
 
        return cost;
-}
+}*/
 
 
 //-----------------------------------------------------------------------------
