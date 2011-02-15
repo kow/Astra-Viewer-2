@@ -1205,7 +1205,7 @@
      name="Quick toggles for machinima"
      tear_off="true">
         <menu_item_check
-         label="Show selection beam"
+         label="Show Selection Beam"
          name="Enable avatar selection beam">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1215,7 +1215,7 @@
              parameter="ShowSelectionBeam" />
          </menu_item_check>
         <menu_item_check
-         label="Play typing anim"
+         label="Play Typing Anim"
          name="Enable typing anim for avatar">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1225,7 +1225,7 @@
              parameter="PlayTypingAnim" />
          </menu_item_check>
         <menu_item_check
-         label="Lipsync anim on"
+         label="Lipsync Animation"
          name="Enable babble loop anim">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1234,28 +1234,19 @@
              function="ToggleControl"
              parameter="LipSyncEnabled" />
          </menu_item_check>
-        <menu_item_check
-         label="Attached Lights on"
-         name="Render Attached Lights">
+<menu_item_separator/>
+         <menu_item_check
+         label="SpaceNavigator AutoLevel"
+         name="3D joystick autolevel">
             <menu_item_check.on_check
              function="CheckControl"
-             parameter="RenderAttachedLights" />
+             parameter="AutoLeveling" />
             <menu_item_check.on_click
              function="ToggleControl"
-             parameter="RenderAttachedLights" />
+             parameter="AutoLeveling" />
          </menu_item_check>
         <menu_item_check
-         label="Avatar backlight rim"
-         name="Render avatar backlight">
-            <menu_item_check.on_check
-             function="CheckControl"
-             parameter="AvatarBacklight" />
-            <menu_item_check.on_click
-             function="ToggleControl"
-             parameter="AvatarBacklight" />
-         </menu_item_check>
-        <menu_item_check
-         label="Spacenavigator moves avatar"
+         label="SpaceNavigator Moves Avatar"
          name="3D joystick moves own avatar">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1266,7 +1257,7 @@
          </menu_item_check>
 <menu_item_separator/>
         <menu_item_check
-         label="No script particles"
+         label="No Script Particles"
          name="Disable script say particles">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1276,7 +1267,7 @@
              parameter="MachinimaCamNoScriptLights" />
          </menu_item_check>
          <menu_item_check
-         label="Avatar impostors on"
+         label="Render Avatar Impostors"
          name="Render impostors for distant avatars">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1286,7 +1277,7 @@
              parameter="RenderUseImpostors" />
          </menu_item_check>
         <menu_item_check
-         label="Dynamic LOD on"
+         label="Dynamic LOD On"
          name="Render dynamic LOD for distant objects">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1296,7 +1287,7 @@
              parameter="RenderDynamicLOD" />
          </menu_item_check>
         <menu_item_check
-         label="S21 water flicker obj-obj occ"
+         label="S21 Water Flicker Obj-Obj Occ"
          name="Object-object occlusion on water flicker in S21">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1316,6 +1307,26 @@
            function="Advanced.ToggleInfoDisplay"
            parameter="lights" />
         </menu_item_check>
+        <menu_item_check
+         label="Render Local Lights"
+         name="Show local lights">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderLocalLights" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderLocalLights" />
+         </menu_item_check>
+        <menu_item_check
+         label="Render Attached Lights"
+         name="Render Attached Lights">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderAttachedLights" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderAttachedLights" />
+         </menu_item_check>
 <menu_item_separator/>
         <menu_item_check
          label="Transparent Water"
@@ -1338,7 +1349,7 @@
              parameter="RenderObjectBump" />
         </menu_item_check>
          <menu_item_check
-         label="Basic shaders"
+         label="Basic Shaders"
          name="Enable basic shaders">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1348,7 +1359,7 @@
              parameter="VertexShaderEnable" />
         </menu_item_check>
          <menu_item_check
-         label="Atmospheric shaders"
+         label="Atmospheric Shaders"
          name="Enable Windlight shaders">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1358,7 +1369,7 @@
              parameter="WindLightUseAtmosShaders" />
         </menu_item_check>     
          <menu_item_check
-         label="Lighting and shadows"
+         label="Lighting and Shadows (Deff)"
          name="Enable enhanced lighting and shadowcasting">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1368,7 +1379,7 @@
              parameter="RenderDeferred" />
         </menu_item_check>     
          <menu_item_check
-         label="Atmospheric in deferred"
+         label="Atmospheric in Deferred"
          name="Atmospheric in deferred, headlight off for flycam">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1378,7 +1389,7 @@
              parameter="RenderDeferredAtmospheric" />
         </menu_item_check>
          <menu_item_check
-         label="Amb occ and soft shadows"
+         label="Amb Occ and Soft Shadows"
          name="Ambient occlusion and shadow softening">
             <menu_item_check.on_check
              function="CheckControl"
@@ -1386,6 +1397,16 @@
             <menu_item_check.on_click
              function="ToggleControl"
              parameter="RenderDeferredSSAO" />
+        </menu_item_check>
+         <menu_item_check
+         label="Render DOF in Deferred"
+         name="DOF in deferred, blurring of fore/background">
+            <menu_item_check.on_check
+             function="CheckControl"
+             parameter="RenderUseDOF" />
+            <menu_item_check.on_click
+             function="ToggleControl"
+             parameter="RenderUseDOF" />
         </menu_item_check>
 <menu_item_separator/>
          <menu_item_check

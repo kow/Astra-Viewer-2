@@ -341,19 +341,4 @@
    name="web_proxy_port"
    top_delta="0"
    width="145" />
-
-  <check_box
-    top_delta="4"
-    enabled="true"
-    follows="left|top"
-    height="14"
-    initial_value="true"
-    control_name="NoInventoryLibrary"
-    label="Disable Library in Inventory"
-    left_delta="0"
-    mouse_opaque="true"
-    name="no_library"
-    radio_style="false"
-    width="400"
-    top_pad="5"/>
-  </panel>
+</panel>
