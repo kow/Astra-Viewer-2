@@ -144,6 +144,8 @@ public:
 	
 	void			toggleTabDocked();
 
+	void			toggleTabClose();
+
 	BOOL			handleScrollWheel(S32 x, S32 y, S32 clicks);
 
 	LLPanel *getPanel();
@@ -191,6 +193,7 @@ BOOL LLSideTrayTab::postBuild()
 
 	getChild<LLButton>("undock")->setCommitCallback(boost::bind(&LLSideTrayTab::toggleTabDocked, this));
 	getChild<LLButton>("dock")->setCommitCallback(boost::bind(&LLSideTrayTab::toggleTabDocked, this));
+	getChild<LLButton>("closetray")->setCommitCallback(boost::bind(&LLSideTrayTab::toggleTabClose, this)); // S21 test
 
 	return true;
 }
@@ -243,6 +246,36 @@ LLSideTray* LLSideTrayTab::getSideTray()
 	}
 
 	return side_tray;
+}
+
+void LLSideTrayTab::toggleTabClose()
+{
+	LLSideTray* side_tray = getSideTray();
+	
+	// Ok its a docked sidetray lets collapse it :)
+	if (!side_tray->getCollapsed())
+	{
+		side_tray->collapseSideBar();
+	}
+	else
+	{
+    // KL pretty BIG fucking assumptions here, we ASSUME its an undocked tab! 
+	// TODO: clean this up and sort it out!
+    std::string tab_name = getName();
+
+	LLFloater* floater_tab = LLFloaterReg::getInstance("side_bar_tab", tab_name);
+	if (!floater_tab) return; // WTF !
+
+	getChild<LLButton>("undock")->setVisible(true); // make sure to show the correct button for next time
+	getChild<LLButton>("dock")->setVisible(false);
+    dock(floater_tab); // Dock the damn thing
+
+	// Open/close the floater *after* we reparent the tab panel,
+	// so that it doesn't receive redundant visibility change notifications.
+	LLFloaterReg::toggleInstance("side_bar_tab", tab_name);
+
+	side_tray->collapseSideBar(); // And finally collapse it!
+	}
 }
 
 void LLSideTrayTab::toggleTabDocked()
