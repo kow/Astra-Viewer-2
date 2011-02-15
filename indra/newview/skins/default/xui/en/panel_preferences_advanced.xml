@@ -119,6 +119,16 @@
      top_pad="5"
      width="237"/>
     <check_box
+     control_name="NoInventoryLibrary"
+     follows="top|left"
+     height="15"
+     label="Disable Library Folder in Inventory"
+     layout="topleft"
+     left="30"
+     name="no_library"
+     top_pad="5"
+     width="400"/>
+    <check_box
      control_name="MiniMapRotate"
      height="16"
      initial_value="true"
@@ -146,18 +156,5 @@
      top_pad="5"
      width="235" />
      
-     <check_box
-    top_pad="20"
-    enabled="true"
-    follows="left|top"
-    height="14"
-    initial_value="true"
-    control_name="NoInventoryLibrary"
-    label="Disable Library Folder in Inventory"
-    left="30"
-    mouse_opaque="true"
-    name="no_library"
-    radio_style="false"
-    width="400"
-    />
+
 </panel>
