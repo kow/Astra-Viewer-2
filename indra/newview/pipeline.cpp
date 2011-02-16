@@ -3374,6 +3374,13 @@ void LLPipeline::renderGeom(LLCamera& camera, BOOL forceVBOUpdate)
 		}
 	}
 
+	S32 stack_depth = 0;
+
+	if (gDebugGL)
+	{
+		glGetIntegerv(GL_MODELVIEW_STACK_DEPTH, &stack_depth);
+	}
+
 	///////////////////////////////////////////
 	//
 	// Sync and verify GL state
@@ -3498,18 +3505,9 @@ void LLPipeline::renderGeom(LLCamera& camera, BOOL forceVBOUpdate)
 					}
 					poolp->endRenderPass(i);
 					LLVertexBuffer::unbind();
-					if (gDebugGL || gDebugPipeline)
+					if (gDebugGL)
 					{
-						GLint depth;
-						glGetIntegerv(GL_MODELVIEW_STACK_DEPTH, &depth);
-						if (depth > 3)
-						{
-							if (gDebugSession)
-							{
-								ll_fail("GL matrix stack corrupted.");
-							}
-							llwarns << "GL matrix stack corrupted!" << llendl;
-						}
+						check_stack_depth(stack_depth);
 						std::string msg = llformat("%s pass %d", gPoolNames[cur_type].c_str(), i);
 						LLGLState::checkStates(msg);
 						LLGLState::checkTextureChannels(msg);
@@ -3532,11 +3530,11 @@ void LLPipeline::renderGeom(LLCamera& camera, BOOL forceVBOUpdate)
 			iter1 = iter2;
 			stop_glerror();
 		}
-	
-	LLAppViewer::instance()->pingMainloopTimeout("Pipeline:RenderDrawPoolsEnd");
-
-	LLVertexBuffer::unbind();
 		
+		LLAppViewer::instance()->pingMainloopTimeout("Pipeline:RenderDrawPoolsEnd");
+
+		LLVertexBuffer::unbind();
+			
 		gGLLastMatrix = NULL;
 		glLoadMatrixd(gGLModelView);
 
@@ -4289,9 +4287,10 @@ void LLPipeline::renderDebug()
 				gGL.popMatrix();
 			}
 		}
+
+		gGL.popMatrix();
 	}
 
-	gGL.popMatrix();
 	gGL.flush();
 
 	gPipeline.renderPhysicsDisplay();
@@ -7804,7 +7803,9 @@ void LLPipeline::generateWaterReflection(LLCamera& camera_in)
 						LLPipeline::RENDER_TYPE_WL_SKY,
 						LLPipeline::END_RENDER_TYPES);
 
+					//bad pop here 
 					renderGeom(camera, TRUE);
+
 					gPipeline.popRenderTypeMask();
 				}
 

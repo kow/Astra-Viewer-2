@@ -31,7 +31,7 @@
      layout="topleft"
      name="undock"
      top="10"
-     right="-28"
+     right="-53"
      width="16"
      tool_tip="Undock" />
      <button
@@ -43,7 +43,7 @@
      layout="topleft"
      name="dock"
      top="10"
-     right="-33"
+     right="-53"
      width="16"
      tool_tip="Dock"
      visible="false" />
@@ -56,7 +56,7 @@
      layout="topleft"
      name="show_help"
      top="10"
-     right="-16"
+     right="-33"
      width="16"
      tool_tip="Show Help">
         <button.commit_callback

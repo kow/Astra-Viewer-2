@@ -75,8 +75,10 @@ LLDrawPoolWater::LLDrawPoolWater() :
 
 
 	mWaterImagep = LLViewerTextureManager::getFetchedTexture(TRANSPARENT_WATER_TEXTURE);
+	llassert(mWaterImagep);
 	mWaterImagep->setNoDelete();
 	mOpaqueWaterImagep = LLViewerTextureManager::getFetchedTexture(OPAQUE_WATER_TEXTURE);
+	llassert(mOpaqueWaterImagep);
 	mWaterNormp = LLViewerTextureManager::getFetchedTexture(DEFAULT_WATER_NORMAL);
 	mWaterNormp->setNoDelete();
 
