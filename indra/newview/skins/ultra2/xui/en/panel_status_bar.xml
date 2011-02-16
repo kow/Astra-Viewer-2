@@ -106,7 +106,7 @@
      decimal_digits="0"
      follows="right|top"
      height="15"
-     increment="5"
+     increment="1"
      initial_value="64"
      layout="topleft"
      left_delta="-280"
