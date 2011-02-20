@@ -144,30 +144,30 @@
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>cdb2f5c4a5a1f9ecd75bc1dbdd4db8e9</string>
+            <string>577e89e72a6df485ee0c42ef7bfd8c34</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-darwin-20100606.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-darwin-20101004.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
             <key>md5sum</key>
             <string>91694429e391efeea1de974df26032a2</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-linux-20100527.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-linux-20100929.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>c4242416e0b2e642c0bf062a19a250e4</string>
+            <string>3bf8f0f3c960cc594b2315b986b948fb</string>
             <key>url</key>
             <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.3.0-linux64-20080909.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>4b84738eec2e21b0c096d53b79ee2681</string>
+            <string>2318e9eef0ea020878759d974a5945df</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-windows-20100611a.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-windows-20101001a.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -226,16 +226,16 @@
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>71defd179827bf172b76d6020023e0e8</string>
+            <string>3a8b4bc2ea3dde26c2a7e1481f039864</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.39.0-darwin-20100222a.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.39.0-darwin-20101004.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>4db3d74e40d149eeec06f4d97a609bb1</string>
+            <string>cb7cbafb06b878adf423db314b1787df</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.39.0-linux-20100624.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.39.0-linux-20100929a.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
@@ -247,9 +247,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>72e6e2eff5d146a107f3059b6c31fb95</string>
+            <string>de5559c2c497544b3d0da533390175dc</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.39.0-windows-20100630.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.39.0-windows-20101001a.tar.bz2</uri>
           </map>
         </map>
       </map>

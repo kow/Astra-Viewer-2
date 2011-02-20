@@ -548,9 +548,9 @@ class WindowsManifest(ViewerManifest):
         # http://www.scratchpaper.com/
         # Check two paths, one for Program Files, and one for Program Files (x86).
         # Yay 64bit windows.
-        NSIS_path = os.path.expandvars('${ProgramFiles}\\NSIS\\makensis.exe')
+        NSIS_path = os.path.expandvars('${ProgramFiles}\\NSIS\\Unicode\\makensis.exe')
         if not os.path.exists(NSIS_path):
-            NSIS_path = os.path.expandvars('${ProgramFiles(x86)}\\NSIS\\makensis.exe')
+            NSIS_path = os.path.expandvars('${ProgramFiles(x86)}\\NSIS\\Unicode\\makensis.exe')
         self.run_command('"' + proper_windows_path(NSIS_path) + '" ' + self.dst_path_of(tempfile))
         # self.remove(self.dst_path_of(tempfile))
         # If we're on a build machine, sign the code using our Authenticode certificate. JC
