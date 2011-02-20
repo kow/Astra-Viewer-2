@@ -760,6 +760,7 @@ LLVOAvatar::LLVOAvatar(const LLUUID& id,
 	mRuthDebugTimer.reset();
 	mDebugExistenceTimer.reset();
 	mPelvisOffset = LLVector3(0.0f,0.0f,0.0f);
+	mLastPelvisToFoot = 0.0f;
 }
 
 //------------------------------------------------------------------------
@@ -3463,20 +3464,13 @@ BOOL LLVOAvatar::updateCharacter(LLAgent &agent)
 
 		if (isSelf())
 		{
-			if ( !mHasPelvisOffset )
-			{
-				gAgent.setPositionAgent(getRenderPosition());
-			}
-			else 
-			{
-				gAgent.setPositionAgent( getRenderPosition() + mPelvisOffset );
-			}
+			gAgent.setPositionAgent(getRenderPosition());
 		}
 
 		root_pos = gAgent.getPosGlobalFromAgent(getRenderPosition());
 
 		resolveHeightGlobal(root_pos, ground_under_pelvis, normal);
-		F32 foot_to_ground = (F32) (root_pos.mdV[VZ] - mPelvisToFoot - ground_under_pelvis.mdV[VZ]);
+		F32 foot_to_ground = (F32) (root_pos.mdV[VZ] - mPelvisToFoot - ground_under_pelvis.mdV[VZ]);				
 		BOOL in_air = ((!LLWorld::getInstance()->getRegionFromPosGlobal(ground_under_pelvis)) || 
 						foot_to_ground > FOOT_GROUND_COLLISION_TOLERANCE);
 
@@ -3489,21 +3483,13 @@ BOOL LLVOAvatar::updateCharacter(LLAgent &agent)
 		// correct for the fact that the pelvis is not necessarily the center 
 		// of the agent's physical representation
 		root_pos.mdV[VZ] -= (0.5f * mBodySize.mV[VZ]) - mPelvisToFoot;
-
+		
 		LLVector3 newPosition = gAgent.getPosAgentFromGlobal(root_pos);
 
 		if (newPosition != mRoot.getXform()->getWorldPosition())
 		{		
-			if ( !mHasPelvisOffset )
-			{
-				mRoot.touch();
-				mRoot.setWorldPosition( newPosition ); // regular update				
-			}
-			else 
-			{
-				mRoot.touch();
-				mRoot.setWorldPosition( newPosition + mPelvisOffset ); 
-			}
+			mRoot.touch();
+			mRoot.setWorldPosition( newPosition ); // regular update				
 		}
 
 
@@ -3779,7 +3765,6 @@ BOOL LLVOAvatar::updateCharacter(LLAgent &agent)
 
 	return TRUE;
 }
-
 //-----------------------------------------------------------------------------
 // updateHeadOffset()
 //-----------------------------------------------------------------------------
@@ -3812,6 +3797,7 @@ void LLVOAvatar::setPelvisOffset( bool hasOffset, const LLVector3& offsetAmount 
 	mHasPelvisOffset = hasOffset;
 	if ( mHasPelvisOffset )
 	{
+		mLastPelvisToFoot = mPelvisToFoot;
 		mPelvisOffset = offsetAmount;
 	}
 }
@@ -3819,9 +3805,10 @@ void LLVOAvatar::setPelvisOffset( bool hasOffset, const LLVector3& offsetAmount 
 // postPelvisSetRecalc
 //------------------------------------------------------------------------
 void LLVOAvatar::postPelvisSetRecalc( void )
-{
+{	
 	computeBodySize(); 
-	mRoot.updateWorldMatrixChildren();
+	mRoot.touch();
+	mRoot.updateWorldMatrixChildren();	
 	dirtyMesh();
 	updateHeadOffset();
 }
@@ -4972,7 +4959,7 @@ void LLVOAvatar::resetSpecificJointPosition( const std::string& name )
 {
 	LLJoint* pJoint = mRoot.findJoint( name );
 	
-	if ( pJoint )
+	if ( pJoint  && pJoint->doesJointNeedToBeReset() )
 	{
 		pJoint->restoreOldXform();
 		pJoint->setId( LLUUID::null );
@@ -5010,11 +4997,15 @@ void LLVOAvatar::resetJointPositionsToDefault( void )
 	for( S32 i = 0; i < (S32)mNumJoints; ++i )
 	{
 		LLJoint* pJoint = (LLJoint*)&mSkeleton[i];
-		pJoint->setId( LLUUID::null );
-		//restore joints to default positions, however skip over the pelvis
-		if ( pJoint && pPelvis != pJoint )
+		if ( pJoint->doesJointNeedToBeReset() )
 		{
-			pJoint->restoreOldXform();
+
+			pJoint->setId( LLUUID::null );
+			//restore joints to default positions, however skip over the pelvis
+			if ( pJoint && pPelvis != pJoint )
+			{
+				pJoint->restoreOldXform();
+			}
 		}
 	}
 	//make sure we don't apply the joint offset

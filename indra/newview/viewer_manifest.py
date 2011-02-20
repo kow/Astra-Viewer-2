@@ -1,29 +1,31 @@
-#!/usr/bin/python
-# @file viewer_manifest.py
-# @author Ryan Williams
-# @brief Description of all installer viewer files, and methods for packaging
-#        them into installers for all supported platforms.
-#
-# $LicenseInfo:firstyear=2006&license=viewerlgpl$
-# Second Life Viewer Source Code
-# Copyright (C) 2010, Linden Research, Inc.
-# 
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Lesser General Public
-# License as published by the Free Software Foundation;
-# version 2.1 of the License only.
-# 
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Lesser General Public License for more details.
-# 
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-# 
-# Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
-# $/LicenseInfo$
+#!/usr/bin/env python
+"""\
+@file viewer_manifest.py
+@author Ryan Williams
+@brief Description of all installer viewer files, and methods for packaging
+       them into installers for all supported platforms.
+
+$LicenseInfo:firstyear=2006&license=viewerlgpl$
+Second Life Viewer Source Code
+Copyright (C) 2006-2011, Linden Research, Inc.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation;
+version 2.1 of the License only.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
+$/LicenseInfo$
+"""
 import sys
 import os.path
 import re
@@ -905,8 +907,6 @@ class Linux_i686Manifest(LinuxManifest):
     def construct(self):
         super(Linux_i686Manifest, self).construct()
 
-        # install either the libllkdu we just built, or a prebuilt one, in
-        # decreasing order of preference.  for linux package, this goes to bin/
         for lib, destdir in ("llkdu", "bin"), ("llcommon", "lib"):
             libfile = "lib%s.so" % lib
             try:
@@ -937,7 +937,6 @@ class Linux_i686Manifest(LinuxManifest):
 
         self.path("featuretable_linux.txt")
         #self.path("secondlife-i686.supp")
-
         if self.prefix("../../libraries/i686-linux/lib_release_client", dst="lib"):
             self.path("libapr-1.so.0")
             self.path("libaprutil-1.so.0")
