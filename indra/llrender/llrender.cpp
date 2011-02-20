@@ -1068,21 +1068,15 @@ void LLRender::setColorMask(bool writeColorR, bool writeColorG, bool writeColorB
 {
 	flush();
 
-	if (mCurrColorMask[0] != writeColorR ||
-		mCurrColorMask[1] != writeColorG ||
-		mCurrColorMask[2] != writeColorB ||
-		mCurrColorMask[3] != writeAlpha)
-	{
-		mCurrColorMask[0] = writeColorR;
-		mCurrColorMask[1] = writeColorG;
-		mCurrColorMask[2] = writeColorB;
-		mCurrColorMask[3] = writeAlpha;
+	mCurrColorMask[0] = writeColorR;
+	mCurrColorMask[1] = writeColorG;
+	mCurrColorMask[2] = writeColorB;
+	mCurrColorMask[3] = writeAlpha;
 
-		glColorMask(writeColorR ? GL_TRUE : GL_FALSE, 
-					writeColorG ? GL_TRUE : GL_FALSE,
-					writeColorB ? GL_TRUE : GL_FALSE,
-					writeAlpha ? GL_TRUE : GL_FALSE);
-	}
+	glColorMask(writeColorR ? GL_TRUE : GL_FALSE, 
+				writeColorG ? GL_TRUE : GL_FALSE,
+				writeColorB ? GL_TRUE : GL_FALSE,
+				writeAlpha ? GL_TRUE : GL_FALSE);
 }
 
 void LLRender::setSceneBlendType(eBlendType type)
@@ -1120,19 +1114,15 @@ void LLRender::setAlphaRejectSettings(eCompareFunc func, F32 value)
 {
 	flush();
 
-	if (mCurrAlphaFunc != func ||
-		mCurrAlphaFuncVal != value)
+	mCurrAlphaFunc = func;
+	mCurrAlphaFuncVal = value;
+	if (func == CF_DEFAULT)
 	{
-		mCurrAlphaFunc = func;
-		mCurrAlphaFuncVal = value;
-		if (func == CF_DEFAULT)
-		{
-			glAlphaFunc(GL_GREATER, 0.01f);
-		} 
-		else
-		{
-			glAlphaFunc(sGLCompareFunc[func], value);
-		}
+		glAlphaFunc(GL_GREATER, 0.01f);
+	} 
+	else
+	{
+		glAlphaFunc(sGLCompareFunc[func], value);
 	}
 }
 

@@ -1181,7 +1181,8 @@ BOOL LLImageGL::createGLTexture(S32 discard_level, const LLImageRaw* imageraw, S
 			mFormatType = GL_UNSIGNED_BYTE;
 			break;
 		  default:
-			llerrs << "Bad number of components for texture: " << (U32)getComponents() << llendl;
+			llwarns << "Bad number of components for texture: " << (U32)getComponents() << llendl;
+			// this MAY be due to probs with last update lets hope so KL
 		}
 
 		calcAlphaChannelOffsetAndStride() ;
