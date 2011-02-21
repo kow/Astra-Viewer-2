@@ -1182,7 +1182,7 @@ BOOL LLImageGL::createGLTexture(S32 discard_level, const LLImageRaw* imageraw, S
 			break;
 		  default:
 			llwarns << "Bad number of components for texture: " << (U32)getComponents() << llendl;
-			// this MAY be due to probs with last update lets hope so KL
+		   // Ok this is intresting seems a corrupted texture on avatars can crash clients! Make this a warn.. KL
 		}
 
 		calcAlphaChannelOffsetAndStride() ;
