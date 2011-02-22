@@ -1,0 +1,10 @@
+<llsd>
+    <map>
+    <key>skin_name</key>
+        <string>StarLight</string>
+    <key>authors</key>
+        <string>Hitomi Tiponi</string>
+    <key>description</key>
+        <string>Modified for S21.</string>
+    </map>
+</llsd>
