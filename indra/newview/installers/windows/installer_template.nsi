@@ -29,32 +29,14 @@ RequestExecutionLevel admin	; on Vista we must be admin because we write to Prog
 ;; (these files are in the same place as the nsi template but the python script generates a new nsi file in the 
 ;; application directory so we have to add a path to these include files)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-!include "%%SOURCE%%\installers\windows\lang_da.nsi"
-!include "%%SOURCE%%\installers\windows\lang_de.nsi"
+
 !include "%%SOURCE%%\installers\windows\lang_en-us.nsi"
 !include "%%SOURCE%%\installers\windows\lang_es.nsi"
-!include "%%SOURCE%%\installers\windows\lang_fr.nsi"
-!include "%%SOURCE%%\installers\windows\lang_ja.nsi"
-!include "%%SOURCE%%\installers\windows\lang_it.nsi"
-!include "%%SOURCE%%\installers\windows\lang_ko.nsi"
-!include "%%SOURCE%%\installers\windows\lang_nl.nsi"
-!include "%%SOURCE%%\installers\windows\lang_pl.nsi"
-!include "%%SOURCE%%\installers\windows\lang_pt-br.nsi"
-!include "%%SOURCE%%\installers\windows\lang_zh.nsi"
 
 # *TODO: Move these into the language files themselves
-LangString LanguageCode ${LANG_DANISH}   "da"
-LangString LanguageCode ${LANG_GERMAN}   "de"
+
 LangString LanguageCode ${LANG_ENGLISH}  "en"
 LangString LanguageCode ${LANG_SPANISH}  "es"
-LangString LanguageCode ${LANG_FRENCH}   "fr"
-LangString LanguageCode ${LANG_JAPANESE} "ja"
-LangString LanguageCode ${LANG_ITALIAN}  "it"
-LangString LanguageCode ${LANG_KOREAN}   "ko"
-LangString LanguageCode ${LANG_DUTCH}    "nl"
-LangString LanguageCode ${LANG_POLISH}   "pl"
-LangString LanguageCode ${LANG_PORTUGUESEBR} "pt"
-LangString LanguageCode ${LANG_SIMPCHINESE}  "zh"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tweak for different servers/builds (this placeholder is replaced by viewer_manifest.py)
@@ -235,7 +217,7 @@ FunctionEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function CloseSecondLife
   Push $0
-  FindWindow $0 "Second Life" ""
+  FindWindow $0 "Kirstens S21" ""
   IntCmp $0 0 DONE
   
   StrCmp $SKIP_DIALOGS "true" CLOSE
@@ -249,7 +231,7 @@ Function CloseSecondLife
     SendMessage $0 16 0 0
 
   LOOP:
-	  FindWindow $0 "Second Life" ""
+	  FindWindow $0 "Kirstens S21" ""
 	  IntCmp $0 0 DONE
 	  Sleep 500
 	  Goto LOOP
@@ -294,12 +276,12 @@ Function CheckNetworkConnection
 FunctionEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Delete files in Documents and Settings\<user>\SecondLife\cache
-; Delete files in Documents and Settings\All Users\SecondLife\cache
+; Delete files in Documents and Settings\<user>\Kirstens S21\cache
+; Delete files in Documents and Settings\All Users\Kirstens S21\cache
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Function RemoveCacheFiles
 ;
-;; Delete files in Documents and Settings\<user>\SecondLife
+;; Delete files in Documents and Settings\<user>\Kirstens S21
 ;Push $0
 ;Push $1
 ;Push $2
@@ -318,7 +300,7 @@ FunctionEnd
 ;    ExpandEnvStrings $2 $2
 ;
 ;	; When explicitly uninstalling, everything goes away
-;    RMDir /r "$2\Application Data\SecondLife\cache"
+;    RMDir /r "$2\Application Data\Kirstens S21\cache"
 ;
 ;  CONTINUE:
 ;    IntOp $0 $0 + 1
@@ -328,17 +310,17 @@ FunctionEnd
 ;Pop $1
 ;Pop $0
 ;
-;; Delete files in Documents and Settings\All Users\SecondLife
+;; Delete files in Documents and Settings\All Users\Kirstens S21
 ;Push $0
 ;  ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" "Common AppData"
 ;  StrCmp $0 "" +2
-;  RMDir /r "$0\SecondLife\cache"
+;  RMDir /r "$0\Kirstens S21\cache"
 ;Pop $0
 ;
-;; Delete filse in C:\Windows\Application Data\SecondLife
+;; Delete filse in C:\Windows\Application Data\Kirstens S21
 ;; If the user is running on a pre-NT system, Application Data lives here instead of
 ;; in Documents and Settings.
-;RMDir /r "$WINDIR\Application Data\SecondLife\cache"
+;RMDir /r "$WINDIR\Application Data\Kirstens S21\cache"
 ;
 ;FunctionEnd
 
@@ -416,13 +398,13 @@ Push $2
 	; Otherwise (preview/dmz etc) just remove cache
     StrCmp $INSTFLAGS "" RM_ALL RM_CACHE
       RM_ALL:
-        RMDir /r "$2\Application Data\SecondLife"
+        RMDir /r "$2\Application Data\Kirstens S21"
       RM_CACHE:
         # Local Settings directory is the cache, there is no "cache" subdir
-        RMDir /r "$2\Local Settings\Application Data\SecondLife"
+        RMDir /r "$2\Local Settings\Application Data\Kirstens S21"
         # Vista version of the same
-        RMDir /r "$2\AppData\Local\SecondLife"
-        Delete "$2\Application Data\SecondLife\user_settings\settings_windlight.xml"
+        RMDir /r "$2\AppData\Local\Kirstens S21"
+        Delete "$2\Application Data\Kirstens S21\user_settings\settings_windlight.xml"
 
   CONTINUE:
     IntOp $0 $0 + 1
@@ -437,13 +419,13 @@ Pop $0
 Push $0
   ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" "Common AppData"
   StrCmp $0 "" +2
-  RMDir /r "$0\SecondLife"
+  RMDir /r "$0\Kirstens S21"
 Pop $0
 
 ; Delete filse in C:\Windows\Application Data\SecondLife
 ; If the user is running on a pre-NT system, Application Data lives here instead of
 ; in Documents and Settings.
-RMDir /r "$WINDIR\Application Data\SecondLife"
+RMDir /r "$WINDIR\Application Data\Kirstens S21"
 
 FunctionEnd
 
@@ -453,7 +435,7 @@ FunctionEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function un.CloseSecondLife
   Push $0
-  FindWindow $0 "Second Life" ""
+  FindWindow $0 "Kirstens S21" ""
   IntCmp $0 0 DONE
   MessageBox MB_OKCANCEL $(CloseSecondLifeUnInstMB) IDOK CLOSE IDCANCEL CANCEL_UNINSTALL
 
@@ -465,7 +447,7 @@ Function un.CloseSecondLife
     SendMessage $0 16 0 0
 
   LOOP:
-	  FindWindow $0 "Second Life" ""
+	  FindWindow $0 "Kirstens S21" ""
 	  IntCmp $0 0 DONE
 	  Sleep 500
 	  Goto LOOP
