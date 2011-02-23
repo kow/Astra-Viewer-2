@@ -36,7 +36,6 @@ RequestExecutionLevel admin	; on Vista we must be admin because we write to Prog
 # *TODO: Move these into the language files themselves
 
 LangString LanguageCode ${LANG_ENGLISH}  "en"
-LangString LanguageCode ${LANG_SPANISH}  "es"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tweak for different servers/builds (this placeholder is replaced by viewer_manifest.py)
