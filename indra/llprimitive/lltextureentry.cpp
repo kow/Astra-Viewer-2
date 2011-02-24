@@ -423,24 +423,11 @@ S32 LLTextureEntry::setBumpShinyFullbright(U8 bump)
 
 S32 LLTextureEntry::setMediaTexGen(U8 media)
 {
-	if (mMediaFlags != media)
-	{
+	S32 result = TEM_CHANGE_NONE;
+	result |= setTexGen(media & TEM_TEX_GEN_MASK);
 		mMediaFlags = media;
-
-		// Special code for media handling
-		if( hasMedia() && mMediaEntry == NULL)
-		{
-			mMediaEntry = new LLMediaEntry;
-		}
-        else if ( ! hasMedia() && mMediaEntry != NULL)
-        {
-            delete mMediaEntry;
-            mMediaEntry = NULL;
-        }
-
-		return TEM_CHANGE_MEDIA;
-	}
-	return TEM_CHANGE_NONE;
+	result |= setMediaFlags(media & TEM_MEDIA_MASK);
+	return result;
 }
 
 S32 LLTextureEntry::setBumpmap(U8 bump)
