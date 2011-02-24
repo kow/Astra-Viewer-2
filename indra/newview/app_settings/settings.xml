@@ -1244,6 +1244,21 @@
         <real>0.75</real>
       </array>
     </map>
+  <key>CameraOffsetTopView</key>
+  <map>
+    <key>Comment</key>
+    <string>Initial camera offset from avatar in TopDown View</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Vector3</string>
+    <key>Value</key>
+    <array>
+      <real>0.0</real>
+      <real>0.0</real>
+      <real>2.75</real>
+    </array>
+  </map>
     <key>CameraOffsetFrontView</key>
     <map>
       <key>Comment</key>
@@ -3657,6 +3672,21 @@
       <key>Value</key>
       <array>
         <real>1.0</real>
+        <real>0.0</real>
+        <real>1.0</real>
+      </array>
+    </map>
+    <key>FocusOffsetTopView</key>
+    <map>
+      <key>Comment</key>
+      <string>Initial focus point offset relative to avatar for the camera preset TopDown View (x-axis is forward)</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Vector3D</string>
+      <key>Value</key>
+      <array>
+        <real>0.0</real>
         <real>0.0</real>
         <real>1.0</real>
       </array>
