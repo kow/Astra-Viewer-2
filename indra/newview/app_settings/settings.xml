@@ -1256,7 +1256,22 @@
     <array>
       <real>0.0</real>
       <real>0.0</real>
-      <real>2.75</real>
+      <real>3.75</real>
+    </array>
+  </map>
+  <key>CameraOffsetFpsView</key>
+  <map>
+    <key>Comment</key>
+    <string>Initial camera offset from avatar in FPS View</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Vector3</string>
+    <key>Value</key>
+    <array>
+      <real>0.2</real>
+      <real>0.0</real>
+      <real>0.0</real>
     </array>
   </map>
     <key>CameraOffsetFrontView</key>
@@ -3688,9 +3703,24 @@
       <array>
         <real>0.0</real>
         <real>0.0</real>
-        <real>1.0</real>
+        <real>0.0</real>
       </array>
     </map>
+  <key>FocusOffsetFpsView</key>
+  <map>
+    <key>Comment</key>
+    <string>Initial focus point offset relative to avatar for the camera preset Fps View (x-axis is forward)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Vector3D</string>
+    <key>Value</key>
+    <array>
+      <real>10.0</real>
+      <real>0.0</real>
+      <real>0.1</real>
+    </array>
+  </map>
     <key>FocusOffsetFrontView</key>
     <map>
       <key>Comment</key>

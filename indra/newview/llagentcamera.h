@@ -59,7 +59,10 @@ enum ECameraPreset
 	CAMERA_PRESET_GROUP_VIEW,
 
 	/** "Above, top down view" S21*/
-	CAMERA_PRESET_TOPDOWN_VIEW
+	CAMERA_PRESET_TOPDOWN_VIEW,
+
+	/** "Front, FPS view" S21*/
+	CAMERA_PRESET_FPS_VIEW
 };
 
 //------------------------------------------------------------------------

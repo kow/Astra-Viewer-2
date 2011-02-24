@@ -123,6 +123,22 @@
              TopDown View
            </panel_camera_item.text>
          </panel_camera_item>
+         <panel_camera_item
+          name="fps_view"
+          layout="topleft"
+          top_pad="4">
+           <panel_camera_item.mousedown_callback
+             function="CameraPresets.ChangeView"
+             parameter="fps_view" />
+           <panel_camera_item.picture
+             image_name="Cam_Preset_Back_Off" />
+           <panel_camera_item.selected_picture
+             image_name="Cam_Preset_Back_On" />
+           <panel_camera_item.text
+             name="top_view_text">
+             FPS View
+           </panel_camera_item.text>
+         </panel_camera_item>
       </panel>
       <panel
           color="Transparent"
