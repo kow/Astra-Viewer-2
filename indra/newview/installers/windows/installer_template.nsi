@@ -31,7 +31,7 @@ RequestExecutionLevel admin	; on Vista we must be admin because we write to Prog
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 !include "%%SOURCE%%\installers\windows\lang_en-us.nsi"
-!include "%%SOURCE%%\installers\windows\lang_es.nsi"
+
 
 # *TODO: Move these into the language files themselves
 

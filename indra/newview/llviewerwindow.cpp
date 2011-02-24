@@ -321,11 +321,11 @@ public:
 
 		// Draw the statistics in a light gray
 		// and in a thin font
-		mTextColor = LLColor4( 0.86f, 0.86f, 0.86f, 1.f );
+		mTextColor = LLColor4( 0.96f, 0.86f, 0.96f, 1.f ); // KL slightly brighter better to see against the background
 
 		// Draw stuff growing up from right lower corner of screen
-		U32 xpos = mWindow->getWorldViewWidthScaled() - 350;
-		U32 ypos = 64;
+		U32 xpos = mWindow->getWorldViewWidthScaled() - 450;
+		U32 ypos = 80; // KL move it up a tad more
 		const U32 y_inc = 20;
 
 		clearText();
@@ -357,7 +357,8 @@ public:
 #if LL_WINDOWS
 		if (gSavedSettings.getBOOL("DebugShowMemory"))
 		{
-			addText(xpos, ypos, llformat("Memory: %d (KB)", LLMemory::getWorkingSetSize() / 1024)); 
+			// Show memory as MegaBytes Kb is ok in the world of DOS but not in 2011 with such Huge memory requirements
+			addText(xpos, ypos, llformat("Memory: %d (MB)", LLMemory::getWorkingSetSize() / 1048576)); 
 			ypos += y_inc;
 		}
 #endif
