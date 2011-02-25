@@ -168,6 +168,7 @@ BOOL LLAgentUI::buildLocationString(std::string& str, ELocationFormat fmt,const 
 	}
 	str = buffer;
 	return TRUE;
+
 }
 BOOL LLAgentUI::buildLocationString(std::string& str, ELocationFormat fmt)
 {
