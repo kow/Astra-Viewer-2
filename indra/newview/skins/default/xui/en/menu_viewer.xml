@@ -1320,12 +1320,12 @@
         <menu_item_check
          label="Render Attached Lights"
          name="Render Attached Lights">
-            <menu_item_check.on_check
-             function="CheckControl"
-             parameter="RenderAttachedLights" />
-            <menu_item_check.on_click
-             function="ToggleControl"
-             parameter="RenderAttachedLights" />
+          <menu_item_check.on_check
+               function="CheckControl"
+               parameter="RenderAttachedLights" />
+          <menu_item_check.on_click
+           function="Advanced.HandleAttachedLightParticles"
+           parameter="RenderAttachedLights" />
          </menu_item_check>
 <menu_item_separator/>
         <menu_item_check

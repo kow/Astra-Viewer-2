@@ -1043,6 +1043,7 @@ bool LLTextureFetchWorker::doWork(S32 param)
 			mSentRequest = QUEUED;
 			mFetcher->addToNetworkQueue(this);
 			setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority);
+			
 			return false;
 		}
 		else
