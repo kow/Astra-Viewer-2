@@ -762,7 +762,7 @@
      follows="left|top"
      halign="right"
      layout="topleft"
-     right="-100"
+     right="-120"
      name="linked_set_count"
      top="144"
      width="80">
@@ -777,7 +777,7 @@
      halign="right"
      layout="topleft"
 	 top_delta="0"
-     right="-10"
+     right="-8"
      name="linked_set_cost"
      tool_tip="Cost of currently selected linked sets as [prims],[physics complexity]" 
      width="80">
@@ -791,7 +791,7 @@
      halign="right"
      layout="topleft"
      top_pad="5"
-     right="-100"
+     right="-120"
      name="object_count"
      width="80">
         Objects: [COUNT]
@@ -804,7 +804,7 @@
      halign="right"
      layout="topleft"
 	 top_delta="0"
-     right="-10"
+     right="-8"
      name="object_cost"
      tool_tip="Cost of currently selected objects as [prims] / [physics complexity]"
      width="80">
@@ -848,7 +848,8 @@
      tab_height="25"
      top="173"
      width="295">
-	<panel
+	
+<panel
 	 border="false"
 	 follows="all"
 	 label="General"
@@ -960,7 +961,7 @@
              length="1"
              follows="left|top"
              left_pad="0"
-             height="30"
+             height="20"
              layout="topleft"
              name="Creator Name"
              top_delta="0"
@@ -977,7 +978,7 @@
              height="19"
              layout="topleft"
              name="Owner:"
-             top_pad="3"
+             top_pad="13"
              width="90">
                 Owner:
             </text>
@@ -986,7 +987,7 @@
              type="string"
              length="1"
              follows="left|top"
-             height="30"
+             height="20"
              layout="topleft"
              name="Owner Name"
              left_pad="0"
@@ -1004,7 +1005,7 @@
              left="10"
              height="18"
              name="Group:"
-             top_pad="7"
+             top_pad="17"
              width="75">
                 Group:
             </text>
@@ -1542,17 +1543,18 @@ even though the user gets a free copy.
              layout="topleft"
              left_delta="0"
              name="label physicsshapetype"
-             top_pad="10"
+             top_pad="50"
              width="121">
                 Physics Shape Type:
             </text>
 			<combo_box
 			   height="23"
+			   top_delta="-5" 
 			   layout="topleft"
 			   follows="left|top"
 			   name="Physics Shape Type Combo Ctrl"
 			   tool_tip="Choose the physics shape type"
-			   left_pad="0"
+			   left_pad="5"
 			   width="108"/>
 
             <spinner
