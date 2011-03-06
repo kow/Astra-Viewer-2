@@ -265,18 +265,41 @@
 			function="BuildTool.selectComponent"/>
 	</check_box>
 
-   <text
-   text_color="LtGray_50"
-   follows="top|left"
-   halign="left"
-   left="13"
-   name="RenderingCost"
-   tool_tip="Shows the rendering cost calculated for this object"
-   top_pad="0"
-   type="string"
-   width="100">
-   þ: [COUNT]
-   </text>
+   <button
+     follows="left|top"
+     height="23"
+     label="Link"
+     top_pad="2"
+     layout="topleft"
+     left="5"
+     name="link_btn"
+     width="50">
+	  <button.commit_callback
+	     function="BuildTool.LinkObjects"/>
+    </button>
+    <button
+     follows="left|top"
+     height="23"
+     label="Unlink"
+     layout="topleft"
+     left_pad="2"
+     name="unlink_btn"
+     width="50">
+	  <button.commit_callback
+	     function="BuildTool.UnlinkObjects"/>
+    </button>
+    <text
+	   text_color="LtGray_50"
+	   follows="top|left"
+	   halign="left"
+	   left_pad="3"
+	   name="RenderingCost"
+	   tool_tip="Shows the rendering cost calculated for this object"
+	   top_delta="11"
+	   type="string"
+	   width="100">
+	   þ: [COUNT]
+	   </text>
 	<check_box
      control_name="ScaleUniform"
      height="19"
@@ -846,7 +869,7 @@
      tab_min_width="40"
      tab_position="top"
      tab_height="25"
-     top="173"
+     top="183"
      width="295">
 	
 <panel
@@ -965,10 +988,11 @@
              layout="topleft"
              name="Creator Name"
              top_delta="0"
+             translate="false"
              width="190"
              word_wrap="true"
              use_ellipses="true">
-                Mrs. Esbee Linden (esbee.linden)
+                TestString PleaseIgnore (please.ignore)
             </text>
             <text
              type="string"
@@ -992,10 +1016,11 @@
              name="Owner Name"
              left_pad="0"
              top_delta="0"
+             translate="false"
              width="190"
              word_wrap="true"
              use_ellipses="true">
-                Mrs. Erica "Moose" Linden (erica.linden)
+                TestString PleaseIgnore (please.ignore)
             </text>
            <text
              type="string"
