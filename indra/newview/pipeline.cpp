@@ -75,6 +75,7 @@
 #include "lltool.h"
 #include "lltoolmgr.h"
 #include "llviewercamera.h"
+#include "llviewermediafocus.h"
 #include "llviewertexturelist.h"
 #include "llviewerobject.h"
 #include "llviewerobjectlist.h"
@@ -823,6 +824,7 @@ void LLPipeline::releaseGLBuffers()
 		mGlow[i].release();
 	}
 
+	gBumpImageList.destroyGL();
 	LLVOAvatar::resetImpostors();
 }
 
@@ -945,6 +947,8 @@ void LLPipeline::createGLBuffers()
 			addDeferredAttachments(mGIMap);
 		}
 	}
+
+	gBumpImageList.restoreGL();
 }
 
 void LLPipeline::restoreGL() 
@@ -2741,7 +2745,7 @@ void LLPipeline::stateSort(LLDrawable* drawablep, LLCamera& camera)
 
 	if (LLViewerCamera::sCurCameraID == LLViewerCamera::CAMERA_WORLD)
 	{
-		if (drawablep->isVisible())
+		//if (drawablep->isVisible()) isVisible() check here is redundant, if it wasn't visible, it wouldn't be here
 		{
 			if (!drawablep->isActive())
 			{
@@ -5786,8 +5790,7 @@ void LLPipeline::resetVertexBuffers(LLDrawable* drawable)
 	for (S32 i = 0; i < drawable->getNumFaces(); i++)
 	{
 		LLFace* facep = drawable->getFace(i);
-		facep->mVertexBuffer = NULL;
-		facep->mLastVertexBuffer = NULL;
+		facep->clearVertexBuffer();
 	}
 }
 
@@ -6179,23 +6182,54 @@ void LLPipeline::renderBloom(BOOL for_snapshot, F32 zoom_factor, int subfield)
 		static F32 start_distance = 16.f;
 		static F32 transition_time = 1.f;
 
-		LLVector3 eye = LLViewerCamera::getInstance()->getOrigin();
-		F32 target_distance = LLViewerCamera::getInstance()->getAtAxis() * (gDebugRaycastIntersection-eye);
+		LLVector3 focus_point;
+
+		LLViewerObject* obj = LLViewerMediaFocus::getInstance()->getFocusedObject();
+		if (obj && obj->mDrawable && obj->isSelected())
+		{
+			S32 face_idx = LLViewerMediaFocus::getInstance()->getFocusedFace();
+			if (obj && obj->mDrawable)
+			{
+				LLFace* face = obj->mDrawable->getFace(face_idx);
+				if (face)
+				{
+					focus_point = face->getPositionAgent();
+				}
+			}
+		}
 		
+		if (focus_point.isExactlyZero())
+		{
+			if (LLViewerJoystick::getInstance()->getOverrideCamera())
+			{
+				focus_point = gDebugRaycastIntersection;
+			}
+			else
+			{
+				LLViewerObject* obj = gAgentCamera.getFocusObject();
+				if (obj)
+				{
+					focus_point = LLVector3(gAgentCamera.getFocusGlobal()-gAgent.getRegion()->getOriginGlobal());
+				}
+			}
+		}
+
+		LLVector3 eye = LLViewerCamera::getInstance()->getOrigin();
+		F32 target_distance = 16.f;
+		if (!focus_point.isExactlyZero())
+		{
+			target_distance = LLViewerCamera::getInstance()->getAtAxis() * (focus_point-eye);
+		}
+
 		if (transition_time >= 1.f &&
 			fabsf(current_distance-target_distance)/current_distance > 0.01f)
 		{ //large shift happened, interpolate smoothly to new target distance
-			llinfos << "start" << llendl;
 			transition_time = 0.f;
 			start_distance = current_distance;
 		}
 		else if (transition_time < 1.f)
 		{ //currently in a transition, continue interpolating
 			transition_time += 1.f/gSavedSettings.getF32("CameraFocusTransitionTime")*gFrameIntervalSeconds;
-			if (transition_time >= 1.f)
-			{
-				llinfos << "stop" << llendl;
-			}
 			transition_time = llmin(transition_time, 1.f);
 
 			F32 t = cosf(transition_time*F_PI+F_PI)*0.5f+0.5f;
@@ -6209,8 +6243,13 @@ void LLPipeline::renderBloom(BOOL for_snapshot, F32 zoom_factor, int subfield)
 		//convert to mm
 		F32 subject_distance = current_distance*1000.f;
 		F32 fnumber = gSavedSettings.getF32("CameraFNumber");
-		const F32 default_focal_length = gSavedSettings.getF32("CameraFocalLength");
-		
+		F32 default_focal_length = gSavedSettings.getF32("CameraFocalLength");
+
+		if (LLToolMgr::getInstance()->inBuildMode())
+		{ //squish focal length when in build mode so DoF doesn't make editing objects difficult
+			default_focal_length = 5.f;
+		}
+
 		F32 fov = LLViewerCamera::getInstance()->getView();
 		
 		const F32 default_fov = gSavedSettings.getF32("CameraFieldOfView") * F_PI/180.f;
@@ -7008,7 +7047,6 @@ void LLPipeline::renderDeferredLighting()
 
 			gDeferredBlurLightProgram.uniform2f("delta", 1.f, 0.f);
 			gDeferredBlurLightProgram.uniform1f("dist_factor", dist_factor);
-			//gDeferredBlurLightProgram.uniform3fv("kern[0]", kern_length, gauss[0].mV);
 			gDeferredBlurLightProgram.uniform3fv("kern", kern_length, gauss[0].mV);
 			gDeferredBlurLightProgram.uniform1f("kern_scale", blur_size * (kern_length/2.f - 0.5f));
 		
@@ -7333,9 +7371,7 @@ void LLPipeline::renderDeferredLighting()
 					if (count == max_count || fullscreen_lights.empty())
 					{
 						gDeferredMultiLightProgram.uniform1i("light_count", count);
-					//	gDeferredMultiLightProgram.uniform4fv("light[0]", count, (GLfloat*) light);
 						gDeferredMultiLightProgram.uniform4fv("light", count, (GLfloat*) light);
-					//	gDeferredMultiLightProgram.uniform4fv("light_col[0]", count, (GLfloat*) col);
 						gDeferredMultiLightProgram.uniform4fv("light_col", count, (GLfloat*) col);
 						gDeferredMultiLightProgram.uniform1f("far_z", far_z);
 						far_z = 0.f;
