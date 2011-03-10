@@ -1270,7 +1270,7 @@
              function="CheckControl"
              parameter="RenderAttachedLights" />
             <menu_item_check.on_click
-             function="ToggleControl"
+             function="Advanced.HandleAttachedLightParticles"
              parameter="RenderAttachedLights" />
          </menu_item_check>
 <menu_item_separator/>
@@ -2676,6 +2676,16 @@
           <menu_item_check.on_click
            function="Advanced.ToggleInfoDisplay"
            parameter="face area" />
+        </menu_item_check>
+        <menu_item_check
+         label="LOD Info"
+         name="LOD Info">
+          <menu_item_check.on_check
+           function="Advanced.CheckInfoDisplay"
+           parameter="lod info" />
+          <menu_item_check.on_click
+           function="Advanced.ToggleInfoDisplay"
+           parameter="lod info" />
         </menu_item_check>
         <menu_item_check
          label="Build Queue"

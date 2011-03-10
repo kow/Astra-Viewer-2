@@ -63,7 +63,7 @@
     background_visible="true"
   >
     <panel_container
-      name="panel_container_me"
+      name="panel_container"
       default_panel_name="panel_me"
       width="333"
     >

@@ -179,9 +179,10 @@
      left_pad="0"
              name="Creator Name"
 		     top_delta="0"
+		     translate="false"
          use_ellipses="true" 
 		     width="225">
-	        YouShouldNeverSeeText
+	        TestString PleaseIgnore
 	     </text>
 	    <text
 			 type="string"
@@ -204,9 +205,10 @@
 			    left_pad="0"
 			    name="Owner Name"
 			    top_delta="0"
+			    translate="false"
           use_ellipses="true" 
-			    width="210">
-			    YouShouldNeverSeeText
+			    width="225">
+			    TestString PleaseIgnore
 	     </text>
 	    	    <text
 			 type="string"

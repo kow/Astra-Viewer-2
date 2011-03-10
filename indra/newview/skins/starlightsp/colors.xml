@@ -125,6 +125,9 @@
 	 name="SL-Background_66"
 	 value="0.945 0.698 0.839 0.66" />
 	<color
+	 name="SL-Background_86"
+	 value="0.945 0.698 0.839 0.86" />
+	<color
 	 name="SL-Foreground"
 	 value="0 0 0 1" />
 	<color

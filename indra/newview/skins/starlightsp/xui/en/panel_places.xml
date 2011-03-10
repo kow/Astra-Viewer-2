@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <panel
-background_visible="true"
+background_visible="false"
  default_tab_group="1"
  follows="all"
  height="570"
@@ -25,7 +25,7 @@ background_visible="true"
      layout="topleft"
      left="10"
      label="Filter My Places"
-     max_length="300"
+     max_length_bytes="300"
      name="Filter"
      top="3"
      width="303" />
@@ -54,7 +54,7 @@ background_visible="true"
      name="panel_place_profile"
      top="5"
      visible="false"
-     width="313" />
+     width="315" />
     <panel
      class="panel_landmark_info"
      filename="panel_landmark_info.xml"
@@ -66,14 +66,14 @@ background_visible="true"
      name="panel_landmark_info"
      top="5"
      visible="false"
-     width="313" />
+     width="315" />
     <panel
      follows="bottom|left|right"
      height="23"
      layout="topleft"
-     left="2"
+     left="4"
      name="button_panel"
-     width="313">
+     width="315">
      
        <layout_stack
      	follows="bottom|left|right"
@@ -81,10 +81,10 @@ background_visible="true"
 		layout="topleft"
 		mouse_opaque="false"
 		name="bottom_bar_ls0"
-		left="1"
+		left="4"
 		orientation="horizontal"
 		top="0"
-		width="311">	
+		width="315">	
 			<layout_panel
 			follows="bottom|left|right"
 			height="23"
@@ -94,7 +94,7 @@ background_visible="true"
 			name="lp1"
 		    user_resize="false" 
 		    auto_resize="true"
-			width="200">
+			width="193">
 			
 		<!--*********************** Teleport, Map buttons ***********************-->
      	
@@ -107,7 +107,7 @@ background_visible="true"
 				left="0"
 				orientation="horizontal"
 				top="0"
-				width="200">	
+				width="193">	
 					<layout_panel
 					follows="bottom|left|right"
 					height="23"
@@ -163,7 +163,7 @@ background_visible="true"
 			name="lp2"
 		    user_resize="false" 
 		    auto_resize="true"
-			width="111">
+			width="116">
 			
 		<!--*********************** Edit, Options buttons ***********************-->		
 		
@@ -176,7 +176,7 @@ background_visible="true"
 				left="0"
 				orientation="horizontal"
 				top="0"
-				width="111">
+				width="113">
 		
 					<layout_panel
 					follows="bottom|left|right"
@@ -208,15 +208,18 @@ background_visible="true"
 					left_pad="0"
 					mouse_opaque="false"
 					name="overflow_btn_lp"
-				      user_resize="false" 
-				      auto_resize="true"
+				    user_resize="false" 
+				    auto_resize="true"
 					width="24">
 						<menu_button
 				         follows="bottom|left|right"
 				         height="23"
-                                 image_overlay="OptionsMenu_Off"
+                         image_disabled="ComboButton_Off"
+                         image_unselected="ComboButton_Off"
+                         image_pressed="ComboButton_Off"
+                         image_pressed_selected="ComboButton_Off"
 				         layout="topleft"
-				         mouse_opaque="false"
+						 mouse_opaque="false"
 				         name="overflow_btn"
 				         tool_tip="Show additional options"
 				         top="0"
@@ -236,7 +239,7 @@ background_visible="true"
 				left="0"
 				orientation="horizontal"
 				top="0"
-				width="111">		
+				width="110">		
 					<layout_panel
 					follows="bottom|left|right"
 					height="23"
@@ -246,7 +249,7 @@ background_visible="true"
 					name="profile_btn_lp"
 				    user_resize="false" 
 				    auto_resize="true"
-					width="108">
+					width="102">
 						<button
 				         follows="bottom|left|right"
 				         height="23"
@@ -257,7 +260,7 @@ background_visible="true"
 				         left="1"
 				         tool_tip="Show place profile"
 				         top="0"
-				         width="107" />		
+				         width="101" />		
 					</layout_panel>
 				</layout_stack>
 		
@@ -272,7 +275,7 @@ background_visible="true"
 				left="0"
 				orientation="horizontal"
 				top="0"
-				width="111">
+				width="112">
 					<layout_panel
 					follows="bottom|left|right"
 					height="23"
@@ -283,7 +286,7 @@ background_visible="true"
 					top="0"
 				    user_resize="false" 
 				    auto_resize="true"
-					width="61">
+					width="51">
 						<button
 				         follows="bottom|left|right"
 				         height="23"
@@ -293,7 +296,7 @@ background_visible="true"
 				         name="close_btn"
 				         left="1"
 				         top="0"
-				         width="60" />	
+				         width="50" />	
 					</layout_panel>
 				</layout_stack>
 
