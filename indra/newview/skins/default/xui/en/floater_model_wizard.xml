@@ -18,12 +18,15 @@
 	 enabled="false"
 	 label="5. Upload"
 	 border="false"
-	 image_unselected="model_wizard/middle_button_off.png"
-	 image_selected="model_wizard/middle_button_press.png"
-	 image_hover_unselected="model_wizard/middle_button_over.png"
-	 image_disabled="model_wizard/middle_button_disabled.png"
-	 image_disabled_selected="model_wizard/middle_button_disabled.png"
-	 width="110"/>
+	 image_unselected="BreadCrumbBtn_Right_Off"
+	 image_selected="BreadCrumbBtn_Right_Press"
+	 image_hover_unselected="BreadCrumbBtn_Right_Over"
+	 image_disabled="BreadCrumbBtn_Right_Disabled"
+	 image_disabled_selected="BreadCrumbBtn_Right_Disabled"
+	 width="110">
+		<button.commit_callback
+		function="Wizard.Upload"/>
+	</button>
 	<button
 	 top="32"
 	 left="310"
@@ -33,12 +36,15 @@
 	 label="4. Review"
 	 enabled="false"
 	 border="false"
-	 image_unselected="model_wizard/middle_button_off.png"
-	 image_selected="model_wizard/middle_button_press.png"
-	 image_hover_unselected="model_wizard/middle_button_over.png"
-	 image_disabled="model_wizard/middle_button_disabled.png"
-	 image_disabled_selected="model_wizard/middle_button_disabled.png"
-	 width="110"/>
+	 image_unselected="BreadCrumbBtn_Middle_Off"
+	 image_selected="BreadCrumbBtn_Middle_Press"
+	 image_hover_unselected="BreadCrumbBtn_Middle_Over"
+	 image_disabled="BreadCrumbBtn_Middle_Disabled"
+	 image_disabled_selected="BreadCrumbBtn_Middle_Disabled"
+	 width="110">
+		<button.commit_callback
+		function="Wizard.Review"/>
+	</button>
 	<button
 	 top="32"
 	 left="210"
@@ -48,12 +54,15 @@
 	 tab_stop="false"
 	 enabled="false"
 	 border="false"
-	 image_unselected="model_wizard/middle_button_off.png"
-	 image_selected="model_wizard/middle_button_press.png"
-	 image_hover_unselected="model_wizard/middle_button_over.png"
-	 image_disabled="model_wizard/middle_button_disabled.png"
-	 image_disabled_selected="model_wizard/middle_button_disabled.png"
-	 width="110"/>
+	 image_unselected="BreadCrumbBtn_Middle_Off"
+	 image_selected="BreadCrumbBtn_Middle_Press"
+	 image_hover_unselected="BreadCrumbBtn_Middle_Over"
+	 image_disabled="BreadCrumbBtn_Middle_Disabled"
+	 image_disabled_selected="BreadCrumbBtn_Middle_Disabled"
+	 width="110">
+		<button.commit_callback
+		function="Wizard.Physics"/>
+	</button>
 	<button
 	 top="32"
 	 left="115"
@@ -62,12 +71,15 @@
 	 tab_stop="false"
 	 height="32"
 	 border="false"
-	 image_unselected="model_wizard/middle_button_off.png"
-	 image_selected="model_wizard/middle_button_press.png"
-	 image_hover_unselected="model_wizard/middle_button_over.png"
-	 image_disabled="model_wizard/middle_button_disabled.png"
-	 image_disabled_selected="model_wizard/middle_button_disabled.png"
-	 width="110"/>
+	 image_unselected="BreadCrumbBtn_Middle_Off"
+	 image_selected="BreadCrumbBtn_Middle_Press"
+	 image_hover_unselected="BreadCrumbBtn_Middle_Over"
+	 image_disabled="BreadCrumbBtn_Middle_Disabled"
+	 image_disabled_selected="BreadCrumbBtn_Middle_Disabled"
+	 width="110">
+		<button.commit_callback
+		function="Wizard.Optimize"/>
+	</button>
 	<button
 	 top="32"
 	 left="15"
@@ -76,17 +88,20 @@
 	 enabled="false"
 	 label="1. Choose File"
 	 height="32"
-	 image_unselected="model_wizard/left_button_off.png"
-	 image_selected="model_wizard/left_button_press.png"
-	 image_hover_unselected="model_wizard/left_button_over.png"
-	 image_disabled="model_wizard/left_button_disabled.png"
-	 image_disabled_selected="model_wizard/left_button_disabled.png"
-	 width="110"/>
+	 image_unselected="BreadCrumbBtn_Left_Off"
+	 image_selected="BreadCrumbBtn_Left_Press"
+	 image_hover_unselected="BreadCrumbBtn_Left_Over"
+	 image_disabled="BreadCrumbBtn_Left_Disabled"
+	 image_disabled_selected="BreadCrumbBtn_Left_Disabled"
+	 width="110">
+		<button.commit_callback
+		function="Wizard.Choose"/>
+	</button>
 	<panel
 		 height="388"
 		 top_pad="0"
 		 name="choose_file_panel"
-		 visible="false"
+		 visible="true"
 		 width="530"
 		 left="0">
 		<panel
@@ -181,7 +196,7 @@
 			 top_pad="0"
 			 name="preview_panel"
 			 bevel_style="none"
-			 border_style="line"
+			 highlight_light_color="0.09 0.09 0.09 1"
 			 border="true"
 			 height="150"
 			 follows="all"
@@ -380,7 +395,7 @@ Advanced users familiar with 3d content creation tools may prefer to use the [se
 				Model Preview:
 			</text>
 			<combo_box left_pad="5" top_delta="-2"  follows="left|top" list_position="below" height="18"
-	     name="preview_lod_combo" width="90" tool_tip="LOD to view in preview render">
+	     name="preview_lod_combo2" width="90" tool_tip="LOD to view in preview render">
 				<combo_item name="high">
 					High
 				</combo_item>
@@ -399,6 +414,7 @@ Advanced users familiar with 3d content creation tools may prefer to use the [se
 				 top_pad="5"
 				 name="preview_panel"
 				 bevel_style="none"
+				 highlight_light_color="0.09 0.09 0.09 1"
 				 border_style="line"
 				 border="true"
 				 height="175"
@@ -585,7 +601,7 @@ Advanced users familiar with 3d content creation tools may prefer to use the [se
 		 height="388"
 		 top_delta="0"
 		 name="review_panel"
-		 visible="true"
+		 visible="false"
 		 width="530"
 		 left="0">
 		<panel
@@ -655,6 +671,7 @@ Advanced users familiar with 3d content creation tools may prefer to use the [se
 				 top_pad="10"
 				 name="preview_panel"
 				 bevel_style="none"
+				 highlight_light_color="0.09 0.09 0.09 1"
 				 border_style="line"
 				 border="true"
 				 height="190"
