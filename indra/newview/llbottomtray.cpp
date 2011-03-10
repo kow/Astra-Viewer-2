@@ -1458,7 +1458,7 @@ void LLBottomTray::processExtendButton(EResizeState processed_object_type, S32& 
 
 	if (possible_extend_width > 0)
 	{
-		// let calculate real width to extend
+		// let calculate real width to extend.
 
 		// 1. apply all possible width
 		available_width -= possible_extend_width;
