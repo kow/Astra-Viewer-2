@@ -55,13 +55,5 @@
            function="Button.SetDockableFloaterToggle"
            parameter="nearby_chat" />
     </button>
-     <icon
-         
-         follows="right"
-         height="28"
-         image_name="spacer24-2.tga"
-	 top="2"
-         layout="topleft"
-	 left_pad="-3"
-         width="10" />
+     
 </panel>

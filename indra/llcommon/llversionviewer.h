@@ -29,7 +29,7 @@
 
 const S32 LL_VERSION_MAJOR = 2;  // These numbers correspond to the Linden Basecode version we are using.
 const S32 LL_VERSION_MINOR = 7;
-const S32 LL_VERSION_PATCH = 0;
+const S32 LL_VERSION_PATCH = 2;
 const S32 LL_VERSION_BUILD = 6; // Kirstens Viewer Build Number 
 
 const char * const LL_CHANNEL = "Kirstens S21";  // This is OUR channel TPV compliance

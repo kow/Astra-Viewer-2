@@ -334,7 +334,14 @@ void LLDrawPoolAvatar::renderPostDeferred(S32 pass)
 		9, //rigged glow
 	};
 
-	render(actual_pass[pass]);
+	pass = actual_pass[pass];
+
+	if (LLPipeline::sImpostorRender)
+	{ //HACK for impostors so actual pass ends up being proper pass
+		pass -= 2;
+	}
+
+	render(pass);
 }
 
 
@@ -1130,7 +1137,7 @@ void LLDrawPoolAvatar::renderAvatars(LLVOAvatar* single_avatar, S32 pass)
 
 		if (impostor)
 		{
-			if (LLPipeline::sRenderDeferred && avatarp->mImpostor.isComplete()) 
+			if (LLPipeline::sRenderDeferred && !LLPipeline::sReflectionRender && avatarp->mImpostor.isComplete()) 
 			{
 				if (normal_channel > -1)
 				{

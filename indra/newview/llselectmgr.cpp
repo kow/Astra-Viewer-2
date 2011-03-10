@@ -177,7 +177,6 @@ LLObjectSelection *get_null_object_selection()
 
 // Build time optimization, generate this function once here
 template class LLSelectMgr* LLSingleton<class LLSelectMgr>::getInstance();
-
 //-----------------------------------------------------------------------------
 // LLSelectMgr()
 //-----------------------------------------------------------------------------
@@ -3903,6 +3902,26 @@ void LLSelectMgr::sendDelink()
 		return;
 	}
 
+	struct f : public LLSelectedObjectFunctor
+	{ //on delink, any modifyable object should
+		f() {}
+
+		virtual bool apply(LLViewerObject* object)
+		{
+			if (object->permModify())
+			{
+				if (object->getPhysicsShapeType() == LLViewerObject::PHYSICS_SHAPE_NONE)
+				{
+					object->setPhysicsShapeType(LLViewerObject::PHYSICS_SHAPE_CONVEX_HULL);
+					object->updateFlags();
+				}
+			}
+			return true;
+		}
+	} sendfunc;
+	getSelection()->applyToObjects(&sendfunc);
+
+
 	// Delink needs to send individuals so you can unlink a single object from
 	// a linked set.
 	sendListToRegions(
@@ -5567,7 +5586,10 @@ void pushWireframe(LLDrawable* drawable)
 		for (S32 i = 0; i < drawable->getNumFaces(); ++i)
 		{
 			LLFace* face = drawable->getFace(i);
-			pushVerts(face, LLVertexBuffer::MAP_VERTEX);
+			if (face->verify())
+			{
+				pushVerts(face, LLVertexBuffer::MAP_VERTEX);
+			}
 		}
 	}
 }

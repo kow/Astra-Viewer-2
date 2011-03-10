@@ -6204,12 +6204,22 @@ void LLPipeline::renderBloom(BOOL for_snapshot, F32 zoom_factor, int subfield)
 			{
 				focus_point = gDebugRaycastIntersection;
 			}
+			else if (gAgentCamera.cameraMouselook())
+			{
+				gViewerWindow->cursorIntersect(-1, -1, 512.f, NULL, -1, FALSE,
+											  NULL,
+											  &focus_point);
+			}
 			else
 			{
 				LLViewerObject* obj = gAgentCamera.getFocusObject();
 				if (obj)
 				{
 					focus_point = LLVector3(gAgentCamera.getFocusGlobal()-gAgent.getRegion()->getOriginGlobal());
+				}
+				else
+				{
+					focus_point = gDebugRaycastIntersection;
 				}
 			}
 		}
@@ -6952,7 +6962,7 @@ void LLPipeline::renderDeferredLighting()
 						unbindDeferredShader(gLuminanceGatherProgram);
 						mLuminanceMap.flush();
 						gGL.getTexUnit(0)->bindManual(LLTexUnit::TT_TEXTURE, mLuminanceMap.getTexture(), true);
-						gGL.getTexUnit(0)->setTextureFilteringOption(LLTexUnit::TFO_TRILINEAR);
+						gGL.getTexUnit(0)->setTextureFilteringOption(LLTexUnit::TFO_BILINEAR); // S21 
 						glGenerateMipmap(GL_TEXTURE_2D);
 					}
 				}

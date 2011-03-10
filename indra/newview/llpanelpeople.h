@@ -76,7 +76,6 @@ private:
 	void					updateNearbyList();
 	void					updateRecentList();
 
-	bool					isFriendOnline(const LLUUID& id);
 	bool					isItemsFreeOfFriends(const uuid_vec_t& uuids);
 
 	void					updateButtons();
