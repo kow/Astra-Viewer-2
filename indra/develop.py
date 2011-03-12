@@ -509,7 +509,7 @@ class WindowsSetup(PlatformSetup):
                             break
                         else:
                             print >> sys.stderr, 'Cannot find any Visual Studio installation'
-                            sys.exit(1)
+                            #sys.exit(1)
         return self._generator
 
     def _set_generator(self, gen):
