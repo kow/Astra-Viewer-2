@@ -1050,11 +1050,11 @@ BOOL LLPanelRegionTextureInfo::sendUpdate()
 {
 	llinfos << "LLPanelRegionTextureInfo::sendUpdate()" << llendl;
 
-	// Make sure user hasn't chosen wacky textures.
-	if (!validateTextureSizes())
-	{
-		return FALSE;
-	}
+	// Make sure user hasn't chosen wacky textures.   Revolution - Disabled, let them choose wacky textures!
+	//if (!validateTextureSizes())
+	//{
+	//	return FALSE;
+	//}
 
 	LLTextureCtrl* texture_ctrl;
 	std::string buffer;

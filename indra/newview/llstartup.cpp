@@ -232,6 +232,8 @@ static BOOL gRememberPassword = TRUE;
 
 static U64 gFirstSimHandle = 0;
 static LLHost gFirstSim;
+static U32 first_sim_size_x = 256;
+static U32 first_sim_size_y = 256;
 static std::string gFirstSimSeedCap;
 static LLVector3 gAgentStartLookAt(1.0f, 0.f, 0.f);
 static std::string gAgentStartLocation = "safe";
@@ -1201,7 +1203,7 @@ bool idle_startup()
 
 		gAgent.initOriginGlobal(from_region_handle(gFirstSimHandle));
 
-		LLWorld::getInstance()->addRegion(gFirstSimHandle, gFirstSim);
+		LLWorld::getInstance()->addRegion(gFirstSimHandle, gFirstSim, first_sim_size_x, first_sim_size_y);
 
 		LLViewerRegion *regionp = LLWorld::getInstance()->getRegionFromHandle(gFirstSimHandle);
 		LL_INFOS("AppInit") << "Adding initial simulator " << regionp->getOriginGlobal() << LL_ENDL;
@@ -2971,6 +2973,15 @@ bool process_login_success_response()
 		gFirstSimHandle = to_region_handle(region_x, region_y);
 	}
 	
+	std::string region_size_x = response("region_size_x");
+	if(!region_size_x.empty()) {
+		first_sim_size_x = strtoul(region_size_x.c_str(), NULL, 10);
+		LLViewerParcelMgr::getInstance()->init(first_sim_size_x);
+	}
+	
+	std::string region_size_y = response("region_size_y");
+	if(!region_size_y.empty()) first_sim_size_y = strtoul(region_size_y.c_str(), NULL, 10);
+			
 	const std::string look_at_str = response["look_at"];
 	if (!look_at_str.empty())
 	{
@@ -3091,6 +3102,21 @@ bool process_login_success_response()
 		map_server_url = gSavedSettings.getString("MapServerURL"); 
 		gSavedSettings.setString("CurrentMapServerURL", map_server_url); 
 		LL_INFOS("LLStartup") << "map-server-url : no map-server-url answer, we use the default setting for the map : " << map_server_url << LL_ENDL;
+	}
+
+	std::string web_profile_url = response["web_profile_url"];
+	if(!web_profile_url.empty())
+	{
+		// We got an answer from the grid -> use that for map for the current session
+		gSavedSettings.setString("WebProfileURL", web_profile_url); 
+		LL_INFOS("LLStartup") << "map-server-url : we got an answer from the grid : " << web_profile_url << LL_ENDL;
+	}
+	else
+	{
+		// No answer from the grid -> use the default setting for current session 
+		web_profile_url = "https://my.secondlife.com/[AGENT_NAME]";
+		gSavedSettings.setString("WebProfileURL", web_profile_url); 
+		LL_INFOS("LLStartup") << "web_profile_url : no web_profile_url answer, we use the default setting for the web : " << web_profile_url << LL_ENDL;
 	}
 	
 	// Default male and female avatars allowing the user to choose their avatar on first login.
