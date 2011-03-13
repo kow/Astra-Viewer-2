@@ -449,7 +449,7 @@ void LLPanelTopInfoBar::onContextMenuItemClicked(const LLSD::String& item)
 
 void LLPanelTopInfoBar::onInfoButtonClicked()
 {
-	LLSideTray::getInstance()->showPanel("panel_places", LLSD().with("type", "agent"));
+	LLFloaterReg::showInstance("about_land");
 }
 
 void LLPanelTopInfoBar::onInfoButtonRightClicked()
