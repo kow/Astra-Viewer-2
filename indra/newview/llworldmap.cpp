@@ -322,7 +322,7 @@ LLSimInfo* LLWorldMap::simInfoFromPosGlobal(const LLVector3d& pos_global)
 	return simInfoFromHandle(handle);
 }
 
-LLSimInfo* LLWorldMap::simInfoFromHandle(const U64 handle)
+LLSimInfo* LLWorldMap::simInfoFromHandle(const U64 findhandle)
 {
 	std::map<U64, LLSimInfo*>::const_iterator it;
 	for (it = LLWorldMap::getInstance()->mSimInfoMap.begin(); it != LLWorldMap::getInstance()->mSimInfoMap.end(); ++it)

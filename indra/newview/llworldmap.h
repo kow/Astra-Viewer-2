@@ -144,8 +144,10 @@ public:
 	const LLSimInfo::item_info_list_t& getLandForSaleAdult() const { return mLandForSaleAdult; }
 	const LLSimInfo::item_info_list_t& getAgentLocation() const { return mAgentLocations; }
 
-private:
+public:
 	U64 mHandle;				// This is a hash of the X and Y world coordinates of the SW corner of the sim
+	S32 msizeX;
+	S32 msizeY;
 	std::string mName;			// Region name
 
 	F64 mAgentsUpdateTime;		// Time stamp giving the last time the agents information was requested for that region

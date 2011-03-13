@@ -66,6 +66,7 @@
 #include "llworld.h"
 #include "llspatialpartition.h"
 #include "stringize.h"
+#include "llviewerparcelmgr.h"
 
 #ifdef LL_WINDOWS
 	#pragma warning(disable:4355)
