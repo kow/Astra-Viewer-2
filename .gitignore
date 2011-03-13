@@ -1,0 +1,33 @@
+# 
+# This file contains names (and wildcards) of files that
+# Git should ignore.
+# 
+# Since we only care about the actual source code files,
+# all the artwork and libraries are ignored, as are the
+# files that are created when you compile.
+# 
+
+# LIBRARIES
+
+LICENSES/
+LICENSE-libraries-*.txt
+libraries/
+indra/newview/app_settings/mozilla*/
+indra/newview/fonts/
+indra/newview/lib/
+indra/newview/dbghelp.dll
+indra/newview/linux_tools/client-readme-voice.txt
+indra/newview/vivox-runtime/
+indra/newview/*.lproj/
+indra/newview/mozilla-theme/
+indra/test_apps/
+
+
+# COMPILED STUFF
+
+indra/viewer-*
+indra/build-*
+installed.xml
+*.pyc
+
+
