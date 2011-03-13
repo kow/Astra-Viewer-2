@@ -3669,7 +3669,8 @@ shortcut="control|F1">
 
     <menu_item_check
      label="Show Admin Menu"
-     name="View Admin Options">
+     name="View Admin Options"
+     shortcut="control|alt|V">
       <menu_item_check.on_check
        function="Advanced.CheckViewAdminOptions"
        parameter="ViewAdminOptions" />
