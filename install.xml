@@ -247,9 +247,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>a34e7fffdb94a6a4d8a2966b1f216da3</string>
+            <string>98be22c8833aa2bca184b9fa09fbb82b</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.45.0-linux-20110310.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.45.0-windows-20110124.tar.bz2</uri>
           </map>
         </map>
       </map>
