@@ -247,9 +247,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>72e6e2eff5d146a107f3059b6c31fb95</string>
+            <string>a34e7fffdb94a6a4d8a2966b1f216da3</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.39.0-windows-20100630.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.45.0-linux-20110310.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -884,9 +884,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>caf152cfc730737c124f7612cf68fbd3</string>
+            <string>afff2018e6a887c281b072eecdd9343e</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/jsoncpp-svn-r69-windows-20090922.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/jsoncpp-0.5.0-windows-20110208.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -1134,9 +1134,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>b678c4d18ea8e4fab42b20f8d0b2629a</string>
+            <string>999b265a3af47eb13e9a380d042a1763</string>
             <key>url</key>
-            <uri>http://viewer-source-downloads.s3.amazonaws.com/install_pkgs/llqtwebkit-windows-qt4.7.1-20101221.tar.bz2</uri>
+            <uri>https://github.com/downloads/siana/SingularityViewer/llqtwebkit-4.7.1-windows-20110320.tar.bz2</uri>
           </map>
         </map>
       </map>

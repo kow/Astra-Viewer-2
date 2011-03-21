@@ -15,7 +15,7 @@ else (STANDALONE)
   set(Boost_INCLUDE_DIRS ${LIBS_PREBUILT_DIR}/include)
 
   if (WINDOWS)
-    set(BOOST_VERSION 1_39)
+    set(BOOST_VERSION 1_45)
     if (MSVC71)
       set(BOOST_PROGRAM_OPTIONS_LIBRARY 
           optimized libboost_program_options-vc71-mt-s-${BOOST_VERSION}
@@ -26,7 +26,8 @@ else (STANDALONE)
       set(BOOST_SIGNALS_LIBRARY 
           optimized libboost_signals-vc71-mt-s-${BOOST_VERSION}
           debug libboost_signals-vc71-mt-sgd-${BOOST_VERSION})
-    else (MSVC71)
+          
+    elseif (MSVC80)
       set(BOOST_PROGRAM_OPTIONS_LIBRARY 
           optimized libboost_program_options-vc80-mt-${BOOST_VERSION}
           debug libboost_program_options-vc80-mt-gd-${BOOST_VERSION})
@@ -36,6 +37,16 @@ else (STANDALONE)
       set(BOOST_SIGNALS_LIBRARY 
           optimized libboost_signals-vc80-mt-${BOOST_VERSION}
           debug libboost_signals-vc80-mt-gd-${BOOST_VERSION})
+    elseif (MSVC100)
+      set(BOOST_PROGRAM_OPTIONS_LIBRARY 
+          optimized libboost_program_options-vc100-mt-${BOOST_VERSION}
+          debug libboost_program_options-vc100-mt-gd-${BOOST_VERSION})
+      set(BOOST_REGEX_LIBRARY
+          optimized libboost_regex-vc100-mt-${BOOST_VERSION}
+          debug libboost_regex-vc100-mt-gd-${BOOST_VERSION})
+      set(BOOST_SIGNALS_LIBRARY 
+          optimized libboost_signals-vc100-mt-${BOOST_VERSION}
+          debug libboost_signals-vc100-mt-gd-${BOOST_VERSION})
     endif (MSVC71)
   elseif (DARWIN)
     set(BOOST_PROGRAM_OPTIONS_LIBRARY boost_program_options-xgcc40-mt)

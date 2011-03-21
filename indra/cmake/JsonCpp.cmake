@@ -10,9 +10,19 @@ if (STANDALONE)
 else (STANDALONE)
   use_prebuilt_binary(jsoncpp)
   if (WINDOWS)
-    set(JSONCPP_LIBRARIES 
-      debug json_vc80d
-      optimized json_vc80)
+    if (MSVC80)
+      set(JSONCPP_LIBRARIES 
+        debug json_vc80d
+        optimized json_vc80)
+    elseif (MSVC90)
+      set(JSONCPP_LIBRARIES 
+        debug json_vc90d
+        optimized json_vc90)
+    elseif (MSVC10)
+      set(JSONCPP_LIBRARIES 
+        debug json_vc100debug_libmt
+        optimized json_vc100_libmt)    
+	endif(MSVC80)
   elseif (DARWIN)
     set(JSONCPP_LIBRARIES json_mac-universal-gcc_libmt)
   elseif (LINUX)
