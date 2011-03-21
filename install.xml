@@ -247,9 +247,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>98be22c8833aa2bca184b9fa09fbb82b</string>
+            <string>b5a7ac5b792af97aa29bf94e1694de54</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/boost-1.45.0-windows-20110124.tar.bz2</uri>
+            <uri>https://github.com/downloads/kow/Astra-Viewer-2/boost-1.45.0-windows-20110124.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -683,9 +683,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>0859d47242990125f17eaab30bece2ff</string>
+            <string>d95501b8d54d06b9e3b648c9c178695e</string>
             <key>url</key>
-            <uri>http://viewer-source-downloads.s3.amazonaws.com/install_pkgs/google_breakpad-0.0.0-rev599-windows-20100524.tar.bz2</uri>
+            <uri>https://github.com/downloads/kow/Astra-Viewer-2/google_breakpad-0.0.0-rev599-windows-20110218.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -884,9 +884,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>afff2018e6a887c281b072eecdd9343e</string>
+            <string>8d9fb7df796b1729527587ead3d1327d</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/jsoncpp-0.5.0-windows-20110208.tar.bz2</uri>
+            <uri>https://github.com/downloads/kow/Astra-Viewer-2/jsoncpp-0.5.0-windows-20110208.tar.bz2</uri>
           </map>
         </map>
       </map>
