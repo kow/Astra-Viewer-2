@@ -43,6 +43,9 @@
 #if LL_MSVC
 // disable warning about boost::lexical_cast unreachable code
 // when it fails to parse the string
+#ifdef LL_MSVC10
+#pragma warning(push) // workaround pop warning of no matching push
+#endif //LL_MSVC10
 #pragma warning (disable:4702)
 #endif
 

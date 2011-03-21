@@ -83,9 +83,15 @@
 	#ifndef LL_MSVC
 		#define LL_MSVC 1
 	#endif
-	#if _MSC_VER < 1400
-		#define LL_MSVC7 //Visual C++ 2003 or earlier
-	#endif
+    #if _MSC_VER < 1400
+        #define LL_MSVC7 //Visual C++ 2003 or earlier
+    #elif (_MSC_VER < 1500)
+        #define LL_MSVC8
+    #elif (_MSC_VER < 1600)
+        #define LL_MSVC9
+    #else
+        #define LL_MSVC10
+    #endif
 #endif
 
 // Deal with minor differences on Unixy OSes.
@@ -152,6 +158,20 @@
 #pragma warning (disable : 4251) // member needs to have dll-interface to be used by clients of class
 #pragma warning (disable : 4275) // non dll-interface class used as base for dll-interface class
 #endif	//	LL_MSVC
+
+//Deal with Visual Studio 10 
+//Microsoft bug 621653 Workaround for project lscript-compile
+//http://connect.microsoft.com/VisualStudio/feedback/details/621653/including-stdint-after-intsafe-generates-warnings
+#ifdef LL_MSVC10  //Depends on vwr-24610
+#pragma warning (push)
+#pragma warning (disable : 4005)
+#include <intsafe.h>
+#include <stdint.h>
+#pragma warning (pop)
+#ifndef  BOOST_BIND_ENABLE_STDCALL
+#define BOOST_BIND_ENABLE_STDCALL
+#endif //BOOST_BIND_ENABLE_STDCALL
+#endif //LL_MSVC10
 
 #if LL_WINDOWS
 #define LL_DLLEXPORT __declspec(dllexport)

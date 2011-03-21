@@ -53,6 +53,9 @@
 
 #if LL_MSVC
 // disable boost::lexical_cast warning
+#ifdef LL_MSVC10
+#pragma warning(push) //workaround pop warning of no matching push
+#endif // LL_MSVC10
 #pragma warning (disable:4702)
 #endif
 
